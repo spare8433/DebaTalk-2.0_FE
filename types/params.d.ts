@@ -15,5 +15,7 @@ declare module 'params' {
     readonly title : string,
     readonly content : string,
   }
-
+  type GetDebateKeywords = {
+    readonly limit : number,
+  }
 }

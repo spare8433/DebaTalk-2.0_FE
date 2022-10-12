@@ -1,13 +1,15 @@
 import { AnyAction, CombinedState, combineReducers, ReducersMapObject } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
-import user, { UserState } from './slices/user';
-
-import debatePost, { debatePostState } from './slices/debatePost';
 import { Reducer } from 'react';
+
+import user, { UserState } from './slices/user';
+import debatePost, { debatePostState } from './slices/debatePost';
+import debatePosts, { debatePostsState } from './slices/debatePosts';
 
 export interface ReducerStates {
   user: UserState;
   debatePost: debatePostState
+	debatePosts: debatePostsState
 }
 
 // CombinedState<ReducerStates>  === ReducerStates
@@ -20,6 +22,7 @@ const rootReducer = (state:ReducerStates, action: AnyAction): Reducer<CombinedSt
 			const combinedReducers = combineReducers({
 				user: user,
 				debatePost: debatePost,
+				debatePosts: debatePosts,
 			})
 			return combinedReducers(state,action)
 	}
