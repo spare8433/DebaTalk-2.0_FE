@@ -12,6 +12,7 @@ export const IndexContainor = styled.div`
 export const HeaderContainor = styled.div`
   width: 100%;
   border-bottom: #b2bec3 2px solid;
+  min-width: 1160px;
 `
 
 export const HeaderBox = styled.div`

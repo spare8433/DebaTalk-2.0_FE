@@ -2,11 +2,18 @@ import { AppLayout, ImgBox } from '@styles/commonStyle'
 import styled from 'styled-components'
 
 export const FooterLayout = styled(AppLayout)`
+  width: 100%;
+  min-width: 1160px;
+  background-color: #2B2B2B;
+`
+
+export const FooterContainor = styled.div`
+  margin: 16px 0;
+  padding: 32px 16px;
+  width: 1160px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  background-color: #2B2B2B;
-  margin: 16px 0;
-  padding: 32px 16px;  
 `
 
 export const FooterContentBox = styled.div`
