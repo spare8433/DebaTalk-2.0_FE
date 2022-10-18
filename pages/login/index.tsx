@@ -1,12 +1,10 @@
 import React from 'react'
-import styled from 'styled-components';
 import useInput from '@hooks/useInput';
 import { Containor, ImgBox, InputBox, Line, MainButton, SubButton} from '@styles/commonStyle';
-import { LoginBox, LoginContainor, LogoBox, SubBox } from './styles';
+import { LoginBox, LoginContainor, LogoBox, SubBox } from '@styles/pages/login.style';
 import { useAppDispatch } from '@store/store';
 import { useRouter } from 'next/router';
 import { logIn } from '@store/slices/user';
-import { AxiosError } from 'axios';
 
 
 const LoginPage = () => {

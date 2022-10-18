@@ -1,3 +1,4 @@
+import checkWH from '@utils/checkWH'
 import styled from 'styled-components'
 
 interface BasicStyle {
@@ -19,16 +20,6 @@ interface ButtonStlye extends BasicStyle {
 
 interface InputBoxStyle extends BasicStyle {
   cssStyle?: string
-}
-
-const checkWH: (wh: string | undefined) => string = (wh) => {
-  if (typeof wh === 'undefined' || wh === '' ){
-    return 'auto'
-  }
-  if(String(wh).indexOf('%') > 0)
-    return wh;
-  else
-    return wh + 'px';
 }
 
 export const AppLayout = styled.div<BasicStyle>`
@@ -204,6 +195,7 @@ export const SubButton = styled(BasicButton)`
   color: ${({theme})=>theme.colors.main};
   border: 1px solid ${({theme})=>theme.colors.gray_3};
 `
+
 export const LightGrayButton = styled(BasicButton)`
   background-color: white;
   color: ${({theme})=> theme.colors.gray_1};

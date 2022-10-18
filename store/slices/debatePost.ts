@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { loginAPI, sginUpAPI } from '@api/user'
 import { createDebatePostAPI } from '@api/debatePost'
 import { CreateDebatePostParam } from 'params'
 
@@ -21,11 +20,11 @@ export interface debatePostState {
     category: string,
     title: string,
     content: string,
-    imgUrl?: string,
+    imgUrl: string | null,
     hits: number
     createdAt: string,
     updatedAt: string,
-  } | null
+  } | { readonly id: string, }| null
 }
 
 const initialState: debatePostState = {
@@ -41,13 +40,21 @@ const initialState: debatePostState = {
 	debatePostData: null
 }
 
+// export const createDebatePost = createAsyncThunk(
+// "debatePost/create",
+//   async (loginData: CreateDebatePostParam) => {
+//     const response = await createDebatePostAPI(loginData);
+//     return response.data;
+//   },
+// );
+
 export const createDebatePost = createAsyncThunk(
-"debatePost/create",
-  async (loginData: CreateDebatePostParam) => {
-    const response = await createDebatePostAPI(loginData);
-    return response.data;
-  },
-);
+  "debatePost/create",
+    async (data: CreateDebatePostParam) => {
+      const response = await createDebatePostAPI(data);
+      return response.data;
+    },
+  );
 
 export const debatePost = createSlice({
   name: 'debatePost',

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import {  GetDebateKeywords } from 'params'
-import { getDebateHotTopicsAPI, getDebateKeywordsAPI } from '@api/debatePosts'
+import {  GetDebateKeywords, GetDebatePostsParam } from 'params'
+import { getDebateHotTopicsAPI, getDebateKeywordsAPI, getDebatePostsAPI } from '@api/debatePosts'
 
 
 export interface debatePostData {
@@ -25,16 +25,16 @@ export interface debateKeywordsData {
 }
 
 export interface debatePostsState {
-  getPostsLoading: boolean,
-  getPostsDone: boolean,
-  getPostsError: null,
+  getDebatePostsLoading: boolean,
+  getDebatePostsDone: boolean,
+  getDebatePostsError: null | Error | unknown,
 	getDebateHotTopicsLoading: boolean,
 	getDebateHotTopicsDone: boolean,
 	getDebateHotTopicsError: null | Error | unknown,
   getKeywordsLoading: boolean,
 	getKeywordsDone: boolean,
 	getKeywordsError: null | Error | unknown,
-  debatePostData: debatePostData[] | null,
+  debatePostsData: debatePostData[] | null,
   debateKeywordsData:debateKeywordsData[] | null,
   hotDebateTopics: {
     subject:debatePostData[],
@@ -44,27 +44,27 @@ export interface debatePostsState {
 }
 
 const initialState: debatePostsState = {
-  getPostsLoading: false,
-  getPostsDone: false,
-  getPostsError: null,
+  getDebatePostsLoading: false,
+  getDebatePostsDone: false,
+  getDebatePostsError: null,
 	getKeywordsLoading: false,
 	getKeywordsDone: false,
 	getKeywordsError: null,
   getDebateHotTopicsLoading: false,
 	getDebateHotTopicsDone: false,
 	getDebateHotTopicsError: null,
-	debatePostData: null,
+	debatePostsData: null,
   debateKeywordsData: null,
   hotDebateTopics: null,
 }
 
-// export const createDebatePost = createAsyncThunk(
-// "debatePost/create",
-//   async (loginData: CreateDebatePostParam) => {
-//     const response = await createDebatePostAPI(loginData);
-//     return response.data;
-//   },
-// );
+export const getDebatePosts = createAsyncThunk(
+"debatePost/create",
+  async (data: GetDebatePostsParam) => {
+    const response = await getDebatePostsAPI(data);
+    return response.data;
+  },
+);
 
 export const getDebateKeywords = createAsyncThunk(
   "debatePosts/getDebateKeywords",
@@ -91,6 +91,21 @@ export const debatePosts = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getDebatePosts.pending, (state, action) => {
+      state.getDebatePostsLoading = true
+      state.getDebatePostsDone = false
+      state.getDebatePostsError = null
+    })
+    builder.addCase(getDebatePosts.fulfilled, (state, action) => {
+      state.getDebatePostsLoading = false
+      state.getDebatePostsDone = true
+      state.debatePostsData = action.payload
+    })
+    builder.addCase(getDebatePosts.rejected, (state, action) => {
+      state.getDebatePostsLoading = false
+      state.getDebatePostsError = action.error
+    })
+
     builder.addCase(getDebateKeywords.pending, (state, action) => {
       state.getKeywordsLoading = true
       state.getKeywordsDone = false

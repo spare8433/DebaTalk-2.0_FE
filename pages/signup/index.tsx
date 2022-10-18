@@ -1,6 +1,6 @@
 import React from 'react'
 import { Containor, InputBox } from '@styles/commonStyle'
-import { SginUpBox, SginUpButton, SginUpContainor } from './style'
+import { SginUpBox, SginUpButton, SginUpContainor } from '@styles/pages/signup.style'
 import useCheckInput from '@hooks/useCheckInput'
 import { useAppDispatch } from '@store/store'
 import { signUp } from '@store/slices/user'
