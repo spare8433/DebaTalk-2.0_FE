@@ -9,21 +9,21 @@ export const CarouselBox = styled.div<{height:string}>`
   width: 100%;
   height: ${(props) => props.height + 'px'};
   margin: 30px 0;
-  overflow-x :hidden ;
 `
 
 export const CarouselContent = styled.div`
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  position: relative;
+  overflow-x :hidden;
 `
 
 export const CarouselTrack = styled.div<{contetWidth:number,currentSlide:number}>`
-  width: ${({contetWidth}) => contetWidth.toString() + 'px'};
+  width: ${({contetWidth}) => contetWidth.toString() + 'px'};;
   height: 100%;
   position: absolute;
   left: ${({contetWidth,currentSlide}) => {
-    return (contetWidth * currentSlide).toString() + 'px'
+    return (contetWidth * currentSlide * -1).toString() + 'px'
   }};
   top: 0;
   display: flex;
@@ -46,4 +46,9 @@ export const CarouselButton = styled.div`
   &.next{
     right: 0px;
   }
+`
+
+export const SlidePage = styled.div<{contetWidth:number}>`
+ min-width: ${({contetWidth}) => contetWidth.toString() + 'px'};
+ height: 100%;
 `

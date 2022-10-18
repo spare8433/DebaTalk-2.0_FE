@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, ReactElement } from 'react'
 import styled from 'styled-components'
-import Carousel from '@components/carousel'
+import Carousel from '@components/common/carousel'
 import { useAppDispatch, useAppSelector } from '@store/store'
 import { ReducerStates } from '@store/rootReducer'
-import { Slide } from './style'
+import { Slide } from '@styles/pages/home.style'
 import Link from 'next/link'
 
 const Keyword = styled.div`

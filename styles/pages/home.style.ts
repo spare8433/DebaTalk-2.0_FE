@@ -22,6 +22,7 @@ export const ContentBox = styled.div`
 `
 
 export const Slide = styled.div`
+  width: 100%;
   padding: 0 36px;
 `
 

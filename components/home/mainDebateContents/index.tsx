@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '@store/store'
 import { debatePostData } from '@store/slices/debatePosts'
 import Link from 'next/link'
 
-export const MainDebateContent = () => {
+const MainDebateContent = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
@@ -97,3 +97,5 @@ export const MainDebateContent = () => {
     </MainDebate>
   )
 }
+
+export default MainDebateContent

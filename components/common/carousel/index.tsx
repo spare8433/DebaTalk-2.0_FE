@@ -1,7 +1,7 @@
 import { AppLayout, CarouselButton } from '@styles/commonStyle';
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { FC } from 'react'
-import { CarouselBox, CarouselContainor, CarouselContent, CarouselTrack } from './style';
+import { CarouselBox, CarouselContainor, CarouselContent, CarouselTrack, SlidePage } from './style';
 
 
 interface SlideProps {
@@ -69,7 +69,10 @@ const Carousel = ({option, banner, children}:CarouselProps) => {
         <CarouselBox ref={_carouselBox} height={option.height}>
           <CarouselContent>
             <CarouselTrack contetWidth={_carouselBox.current !== null ? _carouselBox.current.offsetWidth : 0} currentSlide={currentSlide}>
-              {children}
+              {Array.isArray(children) 
+                ? children.map((res, index) => <SlidePage key={'slidepage_' + index} contetWidth={_carouselBox.current !== null ? _carouselBox.current.offsetWidth : 0}>{res}</SlidePage>)
+                : children
+              }
             </CarouselTrack>
               {banner 
                 ? banner

@@ -5,10 +5,11 @@ import {
   NotiDropDown, NotiIconImgBox, ProfileBox 
 } from './style'
 import { ImgBox } from '@styles/commonStyle'
-import  Profile  from '@components/Profile'
+import  Profile  from '@components/common/profile'
 import user, { logOut } from '@store/slices/user'
 import { useAppDispatch, useAppSelector } from '@store/store'
 import { ReducerStates } from '@store/rootReducer'
+import Link from 'next/link'
 
 
 const Header = () => {
@@ -66,7 +67,9 @@ const Header = () => {
       <HeaderContainor>
         <HeaderBox>
           {/* 좌측 로고 */}
-          <div onClick={()=>router.push('/')}><img alt='logo' src='./img/logo.png'></img></div>
+          <Link href='/home'>
+            <ImgBox width='250'><img alt='logo' src='./img/logo.png'></img></ImgBox>
+          </Link>
 
           {/* 중앙 navi */}
           <ul>
@@ -77,14 +80,15 @@ const Header = () => {
               { !isDebateForumListToggleOn? '':
                 <DebateForumDropDown>
                   <ul>
-                    <li onClick={()=>router.push('/debate-forum')}>토론 게시판</li>
-                    <li onClick={()=>router.push('/debate-topic-board')}>주제 선정 게시판</li>
+                    <li><Link href='/debate-forum'>토론 게시판</Link></li>
+                    <li><Link href='/debate-topic-board'>주제 선정 게시판</Link></li>
                   </ul>
                 </DebateForumDropDown>
               }
             </li>
-            <li onClick={()=>router.push('/community')}>커뮤니티</li>
-            <li>랭킹</li>
+            
+            <li><Link href='/community'>커뮤니티</Link></li>
+            <li><Link href='/'>랭킹</Link></li>
           </ul>
           
           {/* 우측 프로필 정보 */}
@@ -111,7 +115,7 @@ const Header = () => {
             
             
             {/* 로그인 or 프로필 사진 + 닉네임 */}
-            <Profile onClick={()=>router.push('/profile')} />
+            <Profile link='./profile' />
 
             {/* 로그인시 표시되는 상세 메뉴 및 아이콘 */}
             {user.myData === null ? '' :
@@ -123,7 +127,7 @@ const Header = () => {
                     <img src='/img/drop-tail.png' alt=''></img>
                     
                     <ul>
-                      <li onClick={()=> router.push('/profile')}>마이 페이지</li>
+                      <li><Link href='/profile'>마이 페이지</Link></li>
                       <li onClick={()=> logout()}>로그아웃</li>
                     </ul>
                   </DropDown>
@@ -134,10 +138,7 @@ const Header = () => {
         </HeaderBox>
       </HeaderContainor>
 
-      
-        {(!!breadcrumb && breadcrumb !== '>') && <HeaderBreadcrumb>{breadcrumb}</HeaderBreadcrumb>}
-      
-      
+      {(!!breadcrumb && breadcrumb !== '>') && <HeaderBreadcrumb>{breadcrumb}</HeaderBreadcrumb>}
     </IndexContainor>
   )
 }

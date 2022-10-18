@@ -18,4 +18,13 @@ declare module 'params' {
   type GetDebateKeywords = {
     readonly limit : number,
   }
+  type GetDebatePostsParam = {
+    readonly method ?: string,
+    readonly category ?: string,
+    readonly title ?: string,
+    readonly limit ?: number,
+    readonly page ?: number,
+    readonly key ?: createdAt | hits,
+    readonly order ?: DESC | ASC,
+  }
 }

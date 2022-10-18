@@ -2,7 +2,7 @@ import { ImgBox } from '@styles/commonStyle'
 import React from 'react'
 import { MainSearchBox } from './style'
 
-export const MainSearch = () => {
+const MainSearch = () => {
   return (
     <>
       <MainSearchBox>
@@ -12,3 +12,5 @@ export const MainSearch = () => {
     </>
   )
 }
+
+export default MainSearch
