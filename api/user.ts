@@ -4,13 +4,13 @@ import { axiosInstance } from '.'
 
 
 // 로그인 api
-export const loginAPI:axiosAPI<LoginParam> = data => axiosInstance('user').post('login', data)
+export const loginAPI:axiosAPIwithParam<LoginParam> = data => axiosInstance('user').post('login', data)
 
 // 로그아웃 api
-export const logoutAPI:axiosAPI<LoginParam> = () => axiosInstance('user').post('logout')
+export const logoutAPI:axiosAPI = () => axiosInstance('user').post('logout')
 
 //회원가입 api
-export const sginUpAPI:axiosAPI<SignUpParam> = data => axiosInstance('user').post('', data)
+export const sginUpAPI:axiosAPIwithParam<SignUpParam> = data => axiosInstance('user').post('', data)
 
 // // 유저 정보 가져오기
 // export const getUserAPI = data => instanceWithAuth('users').get('')

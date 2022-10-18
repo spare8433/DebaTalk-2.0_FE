@@ -1,13 +1,16 @@
-import axios from 'axios'
 import { CreateDebatePostParam } from 'params'
+import { axiosInstance } from '.'
 
 // debate-post 등록
-export const createDebatePostAPI:axiosAPI<CreateDebatePostParam> = data => axios.post('debate-posts',data)
+export const createDebatePostAPI:axiosAPIwithParam<CreateDebatePostParam> = data => axiosInstance('debate-post').post('',data)
 
-// debate-post 불러오기
-// export const getDebatePostsAPI = querry => axios.get(
-//   `all?limit=${querry.limit}&skip=${querry.skip}&key=${querry.key}&title=${querry.title}&category=${querry.category}`
+
+// 샘플
+// export const getDebatePostsAPI:axiosAPI<GetDebatePostParam> = (initData = {limit:12}) => axiosInstance('debate-post').get(
+//   `all?limit=${initData.limit}&skip=${initData.skip}&key=${initData.key}&title=${initData.title}&category=${initData.category}`
 // )
+
+
 
 // debate-post 특정 게시물 가져오기
 // export const getOneDebatePostAPI = id => instanceWithAuth('debate-posts').get(`one/${id}`)
