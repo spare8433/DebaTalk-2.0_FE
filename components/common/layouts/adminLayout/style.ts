@@ -64,9 +64,11 @@ export const ProfileBox = styled.div`
 
 export const MainBox = styled.div`
   width: 100%;
+  height: 100%;
+  overflow-y: auto;
 `
 
-// main 헤더부분
+// MainBox 헤더부분
 export const HeaderBox = styled.div`
   display: flex;
   align-items: center;
