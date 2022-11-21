@@ -12,8 +12,8 @@ export const logoutAPI:axiosAPI = () => axiosInstance('user').post('logout')
 //회원가입 api
 export const sginUpAPI:axiosAPIwithParam<SignUpParam> = data => axiosInstance('user').post('', data)
 
-// // 유저 정보 가져오기
-// export const getUserAPI = data => instanceWithAuth('users').get('')
+// 유저 정보 가져오기
+export const getUserAPI:axiosAPI = () => axiosInstance('user').get('')
 
 // // 프로필 사진 업데이트
 // export const uploadUserImageAPI = data => instanceWithAuth('users').patch('image', data)

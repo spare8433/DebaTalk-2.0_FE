@@ -6,6 +6,8 @@ const colors = {
   gray_1: "#707070",
   gray_2: "#9B9B9B",
   gray_3: "#ACACAC",
+  soft_blue: "#7291E6",
+  soft_pink: "#E67292",
 };
 
 

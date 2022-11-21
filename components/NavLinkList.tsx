@@ -26,7 +26,7 @@ const Itmes = styled.div<{current:boolean}>`
 `
 
 type WrapperProps = {
-  children: React.ReactElement,
+  children?: React.ReactElement
   setValue: React.Dispatch<React.SetStateAction<any>>,
   value: string,
   category: string,
@@ -38,9 +38,12 @@ const NavLinkList = ({children,setValue,value,category,items}:WrapperProps) => {
   return (
     <NavContainor>
 
-      <Itmes current={value===children.props.value} onClick={()=>{
-        setValue(children.props.value)
-      }}>{children}</Itmes>
+      { children !== undefined
+        ? <Itmes current={value===children.props.value} onClick={()=>{
+          setValue(children.props.value)
+        }}>{children}</Itmes> : <></>
+      }
+      
 
       {items.map((res,index)=>{ 
         return <Itmes key={category + 'Items' + index} current={value===res.props.value} onClick={()=>{

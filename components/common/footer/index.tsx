@@ -30,7 +30,7 @@ const Footer = () => {
         </FooterContentBox>
 
         <FooterImgBox>
-          <img src="./img/logo_white.png" alt="" />
+          <img src="/img/logo_white.png" alt="" />
         </FooterImgBox>
       </FooterContainor>
      

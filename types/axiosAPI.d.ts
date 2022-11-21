@@ -1,5 +1,5 @@
 declare type axiosAPIwithParam<T = any> = {
-  (data:T):Promise<AxiosResponse>
+  (data:T, ...etc):Promise<AxiosResponse>
 }
 
 declare type axiosAPI = {

@@ -1,8 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { LoginParam, SignUpParam } from 'params'
-import { loginAPI, logoutAPI, sginUpAPI } from '@api/user'
+import { getUserAPI, loginAPI, logoutAPI, sginUpAPI } from '@api/user'
 
+export interface UserDataState {
+  readonly id: number,
+  readonly userId: string,
+  email: string,
+  nickname: string,
+  level: number,
+  point: number,
+  imgUrl?: string,
+  createdAt: string,
+  updatedAt: string,
+}
 
 export interface UserState {
   loadMyInfoLoading: boolean,
@@ -17,17 +28,7 @@ export interface UserState {
   logOutLoading: boolean,
 	logOutDone: boolean,
 	logOutError: null | Error | unknown,
-  myData: {
-    readonly id: string,
-    readonly userId: string,
-    email: string,
-    nickname: string,
-    level: number,
-    point: number,
-    imgUrl?: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null
+  myData: UserDataState | null
 }
 
 const initialState: UserState = {
@@ -67,9 +68,16 @@ export const signUp = createAsyncThunk(
   },
 );
 
+export const loadMyInfo = createAsyncThunk(
+  "user/loadMyInfo",
+    async () => {
+      const response = await getUserAPI();
+      return response.data;
+    },
+  );
+
 export const userSlice = createSlice({
   name: 'user',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     increment: (state) => {
@@ -120,6 +128,21 @@ export const userSlice = createSlice({
     builder.addCase(logOut.rejected, (state, action) => {
       state.logOutLoading = false
       state.logOutError = action.error
+    })
+    // 사용자 정보 가져오기
+    builder.addCase(loadMyInfo.pending, (state, action) => {
+      state.loadMyInfoLoading = true
+      state.loadMyInfoDone = false
+      state.loadMyInfoError = null
+    })
+    builder.addCase(loadMyInfo.fulfilled, (state, action) => {
+      state.loadMyInfoLoading = false
+      state.loadMyInfoDone = true
+      state.myData = action.payload
+    })
+    builder.addCase(loadMyInfo.rejected, (state, action) => {
+      state.loadMyInfoLoading = false
+      state.loadMyInfoError = action.error
     })
   },
 })

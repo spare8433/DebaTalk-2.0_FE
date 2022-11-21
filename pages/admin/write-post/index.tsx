@@ -17,6 +17,8 @@ const WritePost = () => {
 
   //  폼 데이터들
   const [title,onChangeTitle] = useInput('')
+  const [optionA,onChangeOptionA] = useInput('')
+  const [optionB,onChangeOptionB] = useInput('')
   const [description,onChangeDescription] = useInput('')
   const [issue1,onChangeIssue1] = useInput('')
   const [issue2,onChangeIssue2] = useInput('')
@@ -57,19 +59,19 @@ const WritePost = () => {
       switch (method) {
         case '이슈토론':
           formData.append('data',JSON.stringify({
-            method, category, title, description, issue1, article,
+            category, title, description, issue1, article,
           }))
           await dispatch(createIssueDebatePost(formData)).unwrap()
           break;
         case '찬반토론':
           formData.append('data',JSON.stringify({
-            method, category, title, description, issue1, issue2, article,
+            category, title, description, issue1, issue2, article,
           }))
           await dispatch(createProsConsDebatePost(formData)).unwrap()
           break;
         case '밸런스토론':
           formData.append('data',JSON.stringify({
-            method, category, title, description, issue1, issue2, article,
+            category, title, optionA, optionB, description, issue1, issue2, article,
           }))
           await dispatch(createBalanceDebatePost(formData)).unwrap()
           break;
@@ -82,7 +84,7 @@ const WritePost = () => {
     } catch (error) {
       return alert('게시물 생성 실패 : ' + (error as Error).message)
     }
-  },[method, category, title, description, issue1, issue2, article, imgData, imageFile ])
+  },[method, category, title, description, issue1, issue2, optionA, optionB, article, imgData, imageFile ])
 
 
   return ( 
@@ -134,6 +136,20 @@ const WritePost = () => {
           <h4>[ 설명 ]</h4>
           <textarea value={description} onChange={onChangeDescription}></textarea>
 
+          {/* 밸런스 토론 선택지 */}
+          {method === '밸런스토론' 
+            ? <>
+              <h4>[ A 선택지 ]</h4>
+              <InputBox width='400' height='30'>
+                <input placeholder='A 선택지를 입력해주세요' value={optionA} onChange={onChangeOptionA} />
+              </InputBox>
+              <h4>[ B 선택지 ]</h4>
+              <InputBox width='400' height='30'>
+                <input placeholder='B 선택지를 입력해주세요' value={optionB} onChange={onChangeOptionB} />
+              </InputBox>
+            </> : <></>
+          } 
+
           <h4>[ 기사 ]</h4>
           <Article article={article} setArticle={setArticle} />
 
@@ -161,18 +177,14 @@ const WritePost = () => {
               <textarea value={issue2} onChange={onChangeIssue2}></textarea>
             </> : <></>
           } 
-          
         </ContentBox>        
         
-        {/* 
-          <EditBox><Editor value={content} setValue={setContent}></Editor></EditBox> 
-        */}
+        {/* <EditBox><Editor value={content} setValue={setContent}></Editor></EditBox> */}
 
         <BasicButtonBox width={'100%'}>
           <MainButton type='submit' width='180' height='40' fontSize='18'>게시물 등록</MainButton>
         </BasicButtonBox>
       </form>
-      
     </Containor>
   )
 }

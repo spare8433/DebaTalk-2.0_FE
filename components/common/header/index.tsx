@@ -67,8 +67,8 @@ const Header = () => {
       <HeaderContainor>
         <HeaderBox>
           {/* 좌측 로고 */}
-          <Link href='/home'>
-            <ImgBox width='250'><img alt='logo' src='./img/logo.png'></img></ImgBox>
+          <Link href='/'>
+            <ImgBox width='250'><img alt='logo' src='/img/logo.png'></img></ImgBox>
           </Link>
 
           {/* 중앙 navi */}
