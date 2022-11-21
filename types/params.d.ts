@@ -19,13 +19,25 @@ declare module 'params' {
     readonly limit : number,
   }
   type GetDebatePostsParam = {
-    readonly method ?: string,
     readonly category ?: string,
-    readonly title ?: string,
+    readonly searchText ?: string,
     readonly limit ?: number,
     readonly page ?: number,
-    readonly key ?: createdAt | hits,
-    readonly order ?: DESC | ASC,
+    readonly key ?: 'createdAt' | 'hits' | string,
+    readonly order ?: 'DESC' | 'ASC' | string,
+  }
+
+  type CreateBalanceOpinionParam = {
+    readonly postId : number,
+    readonly selection : string,
+    readonly content : string,
+  }
+
+  type CreateBalanceReplyParam = {
+    readonly opinionId : number,
+    readonly content : string,
+    readonly writerId : number,
+    readonly targetId : number,
   }
 
   // form data 안의 데이타 형식
