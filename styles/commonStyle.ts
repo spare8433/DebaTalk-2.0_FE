@@ -58,7 +58,7 @@ export const TitleBox=styled.div`
 
 export const ImgBox = styled.div<ImageBoxStyle>`
   width: ${({width})=>checkWH(width)};
-  height: auto;    
+  height: auto;
   img{
     width: 100%;
     ${({shadow})=> {return shadow ? 'filter: drop-shadow(0px 2px 8px rgb(99 99 99 / 30%))' : ''}}
@@ -66,6 +66,15 @@ export const ImgBox = styled.div<ImageBoxStyle>`
 `
 
 export const FitImgBox = styled(ImgBox)`
+  height:${({height})=>checkWH(height)};
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+  }
+`
+
+export const ThumbnailImgBox = styled(ImgBox)`
   height:${({height})=>checkWH(height)};
   img{
     width: 100%;
@@ -94,22 +103,6 @@ export const HeaderInfoBox=styled.div`
       font-weight: 600;
     }
   }
-`
-
-export const ThumbnailImgBox = styled(ImgBox)`
-  height:${({height})=>checkWH(height)};
-  overflow:hidden;
-  img{
-    width: 100%;
-    height: 100%;
-    object-fit:cover;
-  }
-`
-
-export const CircleImgBox = styled(ThumbnailImgBox)`
-  height:${({width})=>checkWH(width)};
-  border-radius: 70%;
-  box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 0px;
 `
 
 export const StyledCategory = styled.div`
@@ -227,7 +220,7 @@ export const InputBox = styled.div<InputBoxStyle>`
 
   input,select{
     width: 100%;
-    height: ${({height})=> height === '' ? 'inherit' : height +'px'};
+    height: ${({height})=>checkWH(height)};
     font-size: 16px;
     font-weight: 500;
     outline: none;

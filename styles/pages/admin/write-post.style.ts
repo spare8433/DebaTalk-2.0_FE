@@ -52,9 +52,11 @@ export const ImgInputLine = styled.div`
 
 export const PreviewImgBox = styled(FitImgBox)`
   border: solid 0.5px ${({theme}) => theme.colors.gray_3};
+  margin-bottom: 20px;
 `
 
 export const ImageUploadBox = styled.div`
+  margin-bottom: 20px;
   display: block;
   input[type=file]{
     display: none;
@@ -64,8 +66,11 @@ export const ImageUploadBox = styled.div`
   }
 `
 
+export const ContentTitle = styled.h4`
+  margin-bottom: 16px;
+`
+
 export const ContentBox = styled.div`
-  margin-bottom: 30px;
   h4 {
     width: 100%;
   }
@@ -73,6 +78,7 @@ export const ContentBox = styled.div`
     width: 100%;
     resize: none;
     height: 8em;
+    margin-bottom: 16px;
   }
 `
 

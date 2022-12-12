@@ -7,6 +7,7 @@ import {
 } from './style';
 import { useRouter } from 'next/router';
 import AdminNav from './adminNav';
+import Link from 'next/link';
 
 type WrapperProps = {
 	children: React.ReactNode;
@@ -49,14 +50,16 @@ const AdminLayout = ({children}:WrapperProps) => {
   return (
     <AdminContainor height='100%'>
       <Nav>
-        <LogoBox>
-          <ImgBox width='200'><img alt='logo' src='/img/temp_logo_white.png'></img></ImgBox>
-        </LogoBox>
-
-        <ProfileBox> <Profile mode='dark' link='/profile'/> </ProfileBox>
-
-        <MenuBox> <AdminNav data = {adminListData} /> </MenuBox>
+        <Link href={'/admin'}>
+          <a>
+            <LogoBox>
+              <ImgBox width='200'><img alt='logo' src='/img/temp_logo_white.png'></img></ImgBox>
+            </LogoBox>
+          </a>
+        </Link>
         
+        <ProfileBox><Profile mode='dark' link='/profile'/> </ProfileBox>
+        <MenuBox><AdminNav data={adminListData} /></MenuBox>
       </Nav>
       <MainBox>
         <HeaderBox> {!!breadcrumb && breadcrumb} </HeaderBox>

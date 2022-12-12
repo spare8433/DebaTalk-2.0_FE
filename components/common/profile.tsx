@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react'
-import { CircleImgBox } from '@styles/commonStyle'
+import { ImgBox } from '@styles/commonStyle'
 import styled from 'styled-components'
 import { ReducerStates } from '@store/rootReducer'
 import { useAppDispatch, useAppSelector } from '@store/store'
@@ -45,9 +45,9 @@ const Profile = ({mode = 'white', link}:propTypes) => {
 				<ProfileLine>
 					<Link href={link}>
 						<>
-							<CircleImgBox width='32'>
-								<img alt='userImg' src={user.myData.imgUrl ? user.myData.imgUrl : './img/default_user.png'}></img>
-							</CircleImgBox>
+							<ImgBox width='32' shadow={true}>
+								<img alt='userImg' src={user.myData.imgUrl ? user.myData.imgUrl : '/img/default_user.png'}></img>
+							</ImgBox>
 							<span>{!!user && user.myData.nickname}</span>
 						</>
 					</Link>

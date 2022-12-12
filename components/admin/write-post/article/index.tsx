@@ -3,6 +3,11 @@ import { InputBox, MainButton } from '@styles/commonStyle'
 import React, { useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 
+const IndexContainor = styled.div`
+  width: 100%;
+  margin-bottom:16px;
+`
+
 const InsertBox = styled.div`
   display: flex;
   justify-content: space-between;
@@ -10,12 +15,12 @@ const InsertBox = styled.div`
 
 const ArticleList = styled.div`
   a{ width:100% }
-  
 `
 
 const ArticleItem = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 6px 8px;
   p {
     cursor: pointer;
   }
@@ -49,7 +54,7 @@ const Article = ({article,setArticle}:WrapperProps) => {
   
 
   return (
-    <div>
+    <IndexContainor>
       <InsertBox>
         <InputBox width='80%' height='40'>
           <input value={text} onChange={onChangeText} placeholder='링크를 입력해주세요'></input>
@@ -68,7 +73,7 @@ const Article = ({article,setArticle}:WrapperProps) => {
         })}
       </ArticleList>
       
-    </div>
+    </IndexContainor>
   )
 }
 
