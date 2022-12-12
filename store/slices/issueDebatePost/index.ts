@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { createBalanceDebatePostAPI, createBalanceOpinionAPI, createBalanceReplyAPI, getBalanceDebatePostAPI } from '@api/balanceDebatePost'
-import { CreateBalanceOpinionParam, CreateBalanceReplyParam } from 'params'
-import { BalanceDebatePostState } from './type'
+import { createIssueDebatePostAPI, createIssueOpinionAPI, createIssueReplyAPI, getIssueDebatePostAPI } from '@api/issueDebatePost'
+import { IssueDebatePostState } from './type';
+import { CreateIssueOpinionParam, CreateIssueReplyParam } from 'params';
 
-const initialState: BalanceDebatePostState = {
+const initialState: IssueDebatePostState = {
   getPostLoading: false,
   getPostDone: false,
   getPostError: null,
@@ -23,103 +23,102 @@ const initialState: BalanceDebatePostState = {
 	postData: null
 }
 
-export const createBalanceDebatePost = createAsyncThunk(
-  "balanceDebatePost/create",
+export const createIssueDebatePost = createAsyncThunk(
+  "issueDebatePost/create",
     async (data:FormData) => {
-      const response = await createBalanceDebatePostAPI(data);
+      const response = await createIssueDebatePostAPI(data);
       return response.data;
     },
   );
 
-export const getBalanceDebatePost = createAsyncThunk(
-  "balanceDebatePost/get",
+export const getIssueDebatePost = createAsyncThunk(
+  "issueDebatePost/get",
     async (id:string) => {
-      const response = await getBalanceDebatePostAPI(id);
+      const response = await getIssueDebatePostAPI(id);
+      return response.data;
+    },
+  );
+  
+export const createIssueOpinion = createAsyncThunk(
+  "issueDebatePost/opinion/create",
+    async (data:CreateIssueOpinionParam) => {
+      const response = await createIssueOpinionAPI(data);
       return response.data;
     },
   );
 
-export const createBalanceOpinion = createAsyncThunk(
-  "balanceDebatePost/opinion/create",
-    async (data:CreateBalanceOpinionParam) => {
-      const response = await createBalanceOpinionAPI(data);
-      return response.data;
-    },
-  );
-
-export const createBalanceReply = createAsyncThunk(
-  "balanceDebatePost/reply/create",
-    async (data:CreateBalanceReplyParam) => {
-      const response = await createBalanceReplyAPI(data);
+export const createIssueReply = createAsyncThunk(
+  "issueDebatePost/reply/create",
+    async (data:CreateIssueReplyParam) => {
+      const response = await createIssueReplyAPI(data);
       return response.data;
     },
   ); 
+  
 
-export const balanceDebatePost = createSlice({
-  name: 'balanceDebatePost',
+export const issueDebatePost = createSlice({
+  name: 'issueDebatePost',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(createBalanceDebatePost.pending, (state) => {
+    builder.addCase(createIssueDebatePost.pending, (state) => {
       state.createPostLoading = true
       state.createPostDone = false
       state.createPostError = null
     })
-    builder.addCase(createBalanceDebatePost.fulfilled, (state) => {
+    builder.addCase(createIssueDebatePost.fulfilled, (state) => {
       state.createPostLoading = false
       state.createPostDone = true
     })
-    builder.addCase(createBalanceDebatePost.rejected, (state, action) => {
+    builder.addCase(createIssueDebatePost.rejected, (state, action) => {
       state.createPostLoading = false
       state.createPostError = action.error
     })
 
-    builder.addCase(getBalanceDebatePost.pending, (state) => {
+    builder.addCase(getIssueDebatePost.pending, (state) => {
       state.getPostLoading = true
       state.getPostDone = false
       state.getPostError = null
     })
-    builder.addCase(getBalanceDebatePost.fulfilled, (state, action) => {
+    builder.addCase(getIssueDebatePost.fulfilled, (state, action) => {
       state.getPostLoading = false
       state.getPostDone = true
       state.postData = action.payload
     })
-    builder.addCase(getBalanceDebatePost.rejected, (state, action) => {
+    builder.addCase(getIssueDebatePost.rejected, (state, action) => {
       state.getPostLoading = false
       state.getPostError = action.error
     })
 
-    builder.addCase(createBalanceOpinion.pending, (state) => {
+    builder.addCase(createIssueOpinion.pending, (state) => {
       state.createOpinionLoading = true
       state.createOpinionDone = false
       state.createOpinionError = null
     })
-    builder.addCase(createBalanceOpinion.fulfilled, (state) => {
+    builder.addCase(createIssueOpinion.fulfilled, (state) => {
       state.createOpinionLoading = false
       state.createOpinionDone = true
     })
-    builder.addCase(createBalanceOpinion.rejected, (state, action) => {
+    builder.addCase(createIssueOpinion.rejected, (state, action) => {
       state.createOpinionLoading = false
       state.createOpinionError = action.error
     })
 
-    builder.addCase(createBalanceReply.pending, (state) => {
+    builder.addCase(createIssueReply.pending, (state) => {
       state.createReplyLoading = true
       state.createReplyDone = false
       state.createReplyError = null
     })
-    builder.addCase(createBalanceReply.fulfilled, (state) => {
+    builder.addCase(createIssueReply.fulfilled, (state) => {
       state.createReplyLoading = false
       state.createReplyDone = true
     })
-    builder.addCase(createBalanceReply.rejected, (state, action) => {
+    builder.addCase(createIssueReply.rejected, (state, action) => {
       state.createReplyLoading = false
       state.createReplyError = action.error
     })
   },
 })
 
-// export const {} = balanceDebatePost.actions
-export default balanceDebatePost.reducer
-
-
+// export const { } = issueDebatePost.actions
+export default issueDebatePost.reducer

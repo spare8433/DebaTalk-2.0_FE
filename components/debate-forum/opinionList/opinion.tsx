@@ -1,5 +1,5 @@
 import { BalanceDebateOpinonDataState } from '@store/slices/balanceDebatePost/type'
-import { CircleImgBox, ImgBox } from '@styles/commonStyle'
+import { ImgBox } from '@styles/commonStyle'
 import { useState } from 'react'
 import dayjs from 'dayjs'
 import { 
@@ -9,11 +9,13 @@ import {
 } from './style'
 import WriteReply from './writeReply'
 import DebateReply from './debateReply'
+import { IssueDebateOpinionDataState } from '@store/slices/issueDebatePost/type'
+import { ProsConsDebateOpinonDataState } from '@store/slices/prosConsDebatePost/type'
 
 
 type WrapperProps = {
-  opinion: BalanceDebateOpinonDataState,
-  mode: string
+  opinion: BalanceDebateOpinonDataState | IssueDebateOpinionDataState | ProsConsDebateOpinonDataState,
+  mode: 'balance' | 'issue' | 'prosCons'
 }
 
 const Opinion = ({opinion, mode}:WrapperProps) => {
@@ -21,12 +23,18 @@ const Opinion = ({opinion, mode}:WrapperProps) => {
   const [isShowReplyListBox, setIsShowReplyListBox] = useState(false)
   const isBalancePost = (mode: string, target: any): target is BalanceDebateOpinonDataState => mode === 'balance';
 
+  const opinionType:{ [index:string]: 'BalanceReplys' | 'IssueReplys' |  'ProsConsReplys' } = {
+    'balance' : 'BalanceReplys',
+    'issue' : 'IssueReplys',
+    'prosCons' : 'ProsConsReplys',
+  }
+
   return (
     <IndexContainor>
       <OpinionBox>
         <OpinionInfoLine>
           <OpinionInfo>
-            <CircleImgBox width='24'><img src={opinion.User.imgUrl ? opinion.User.imgUrl : '/img/default_user.png'} alt="" /></CircleImgBox>
+            <ImgBox width='24'><img src={opinion.User.imgUrl ? opinion.User.imgUrl : '/img/default_user.png'} alt="" /></ImgBox>
             <h3>{opinion.User.nickname}</h3>
             { isBalancePost(mode, opinion) 
               ? <UserOpinion>님의 <Selection selection={opinion.selection}>{opinion.selection}</Selection> 선택 의견</UserOpinion> 
@@ -40,9 +48,9 @@ const Opinion = ({opinion, mode}:WrapperProps) => {
 
         <InteractButtonLine>
           <ShowRepliesButton onClick={() => setIsShowReplyListBox(!isShowReplyListBox)}> 
-            {opinion.BalanceReplys.length > 0
+            {opinion.Replys.length > 0
               ? <>
-                  <span>답글 {opinion.BalanceReplys.length} 개</span>
+                  <span>답글 {opinion.Replys.length} 개</span>
                   <ImgBox width='20'>
                     <img src={isShowReplyListBox ? "/img/slideUp_gray.png" : "/img/slideDown_gray.png"} alt="slideDown" />
                   </ImgBox>  
@@ -82,7 +90,7 @@ const Opinion = ({opinion, mode}:WrapperProps) => {
       {/* 답글 리스트 부분 */}
       { isShowReplyListBox
         ? <ReplyListBox>
-          {opinion.BalanceReplys.map((reply,index) => {
+          {opinion.Replys.map((reply,index) => {
             return(
               <ReplyItem key={'replyItem_' + index}>
                 <DebateReply reply={reply} mode={mode} WriterId={opinion.User.id}></DebateReply>

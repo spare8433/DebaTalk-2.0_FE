@@ -12,6 +12,7 @@ import { getBalanceDebatePosts } from '@store/slices/balanceDebatePosts'
 import useCounter from '@hooks/useCounter'
 import { loadMyInfo } from '@store/slices/user'
 import axios from 'axios'
+import { getIssueDebatePosts } from '@store/slices/issueDebatePosts'
 
 const LIMIT = 4;
 
@@ -24,7 +25,7 @@ const ORDER_OPTION:{
 
 const DebateForumPage = () => {
   const dispatch = useAppDispatch()
-  const [debateMode,setDebateMode] = useState('이슈토론');
+  const [debateMode,setDebateMode] = useState<"이슈토론" | "밸런스토론" | "찬반토론">('이슈토론');
   const [debateCategory,setDebateCategory] = useState('자유');
   const [searchText,onChangeSearchText] = useInput('')
   const [selectOption,onChangeselectOption] = useInput('최신순')
@@ -42,7 +43,7 @@ const DebateForumPage = () => {
 
       switch (debateMode) {
         case '이슈토론':
-          // dispatch()
+          await dispatch(getIssueDebatePosts(searchContent))
           break;
         case '밸런스토론':
           await dispatch(getBalanceDebatePosts(searchContent))
@@ -133,7 +134,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store)=> async ({r
     axios.defaults.headers.Cookie = cookie
   }
 
-  await store.dispatch(getBalanceDebatePosts({ limit:4 }));
+  await store.dispatch(getIssueDebatePosts({ limit:4 }));
   await store.dispatch(loadMyInfo())
   return {props: {}}
 })

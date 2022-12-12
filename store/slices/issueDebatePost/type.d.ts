@@ -1,6 +1,6 @@
-export type BalanceDebateReplyDataState = {
+export type IssueDebateReplyDataState = {
   readonly id:number
-  BalanceOpinionId:number
+  IssueOpinionId:number
   content:string
   Target:{ readonly id: number, nickname: string, imgUrl: string | null }
   hits:number
@@ -9,37 +9,32 @@ export type BalanceDebateReplyDataState = {
   User:{ readonly id: number, nickname: string, imgUrl: string | null }
 }
 
-export type BalanceDebateOpinonDataState = {
+export type IssueDebateOpinionDataState = {
   id:number
   content:string
-  selection: 'A' | 'B'
+  score:number
   createdAt: string
   updatedAt: string
   User:{ readonly id: number, nickname: string, imgUrl: string | null }
-  Replys: BalanceDebateReplyDataState[] | any[]
+  Replys: IssueDebateReplyDataState[] | any[]
 }
 
-export type BalanceDebatePostDataState = {
+export interface IssueDebatePostDataState{
   readonly id: string
   method?: string
   category?: string
   title?: string
-  optionA?: string
-  optionB?: string
   description?: string
   issue1?: string
-  issue2?: string
   article?: string
   imgUrl?: string | null
   hits?: number
   createdAt?: string
   updatedAt?: string
-  OptionAList?: { UserId: number }[]
-  OptionBList?: { UserId: number }[]
-  BalanceOpinions:BalanceDebateOpinonDataState[]
+  IssueOpinions:IssueDebateOpinionDataState[]
 }
 
-export type BalanceDebatePostState = {
+export interface IssueDebatePostState {
   getPostLoading: boolean
   getPostDone: boolean
   getPostError: null | Error | unknown
@@ -55,6 +50,5 @@ export type BalanceDebatePostState = {
 	deletePostLoading: boolean
 	deletePostDone: boolean
 	deletePostError: null | Error | unknown
-  postData: BalanceDebatePostDataState | null
+  postData: IssueDebatePostDataState | null
 }
-

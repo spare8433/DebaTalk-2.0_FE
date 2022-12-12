@@ -1,22 +1,27 @@
 import { BalanceDebateReplyDataState } from '@store/slices/balanceDebatePost/type'
-import { CircleImgBox, ImgBox } from '@styles/commonStyle'
-import React, { useState, useRef } from 'react'
+import { ImgBox } from '@styles/commonStyle'
+import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import { 
   InteractButtonItem, OpinionInfo, OpinionInfoLine, PostContentLine,
   ReplyIcon, ReplyInteractButtonLine, ReplyWriteReplyBox } from './style'
 import WriteReply from './writeReply'
 import { UserTag } from './writeReply/style'
+import { IssueDebateReplyDataState } from '@store/slices/issueDebatePost/type'
+import { ProsConsDebateReplyDataState } from '@store/slices/prosConsDebatePost/type'
 
 type WrapperProps = {
-  reply: BalanceDebateReplyDataState,
-  mode: string
+  reply: BalanceDebateReplyDataState | IssueDebateReplyDataState | ProsConsDebateReplyDataState
+  mode: 'balance' | 'issue' | 'prosCons'
   WriterId: number
 }
 
 const DebateReply = ({reply, mode, WriterId}:WrapperProps) => {
+
   const idType:{ [index:string]: number } = {
-    'balance' : reply.BalanceOpinionId
+    'balance' : (reply as BalanceDebateReplyDataState).BalanceOpinionId,
+    'issue' : (reply as IssueDebateReplyDataState).IssueOpinionId,
+
   }
   const [isOnWriteReply, setIsOnWriteReply] = useState(false)
 
@@ -24,7 +29,7 @@ const DebateReply = ({reply, mode, WriterId}:WrapperProps) => {
     <>
       <OpinionInfoLine>
         <OpinionInfo>
-          <CircleImgBox width='24'><img src={reply.User.imgUrl ? reply.User.imgUrl : '/img/default_user.png'} alt="" /></CircleImgBox>
+          <ImgBox width='24'><img src={reply.User.imgUrl ? reply.User.imgUrl : '/img/default_user.png'} alt="" /></ImgBox>
           <h3>{reply.User.nickname}</h3>
         </OpinionInfo>
         

@@ -1,43 +1,40 @@
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement, useEffect, useMemo, useRef } from 'react'
 import { ImgBox, ThumbnailImgBox } from '@styles/commonStyle'
 import Comment from '@components/common/comment'
 import useInput from '@hooks/useInput'
 import { useAppDispatch, useAppSelector, wrapper } from '@store/store'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { createBalanceOpinion, getBalanceDebatePost } from '@store/slices/balanceDebatePost'
 import HeaderFooterLayout from '@components/common/layouts/headerFooterLayout'
 import { 
   CommentBox,ContentBox, ContentTitle, DebateRulesBox, DetailDevateContainor,
   HeaderButtonBox,HeaderCategoryLine,HeaderInfoBox, IndexContainor, OpinionListBox, PostContentBox, 
-  PostHeaderBox, RelatedPostsBox, OpinionSelect, OpinionSelectBox
+  PostCurrentSituationBox,PostHeaderBox, RelatedPostsBox, OpinionSelect, OpinionSelectBox, ArticleItem
 } from '@styles/pages/debate-forum/common-post.style'
-import { 
-  BalanceOption, BalancePostCurrentSituationBox
-} from '@styles/pages/debate-forum/balance-post.style'
 import OpinionList from '@components/debate-forum/opinionList'
 import axios from 'axios'
 import { loadMyInfo } from '@store/slices/user'
 import dayjs from 'dayjs'
+import { createProsConsOpinion, getProsConsDebatePost } from '@store/slices/prosConsDebatePost'
 
 
-const BalancePostPage = () => {
+const IssuePostPage = () => {
   const dispatch = useAppDispatch();
   const router = useRouter()
   const [comment,onChangeComment, setComment] = useInput('')
-  const [selection,onChangeSelection] = useInput('A')
+  const [selection,onChangeSelection] = useInput('찬성')
 
   const { pid } = router.query
-  const postData = useAppSelector(state => state.balanceDebatePost.postData)
+  const postData = useAppSelector(state => state.prosConsDebatePost.postData)
 
   const submitComment = async () => {
     try {
-      await dispatch(createBalanceOpinion({
+      await dispatch(createProsConsOpinion({
         postId:parseInt(pid as string),
         content:comment,
         selection,
       })).unwrap()
-      await  dispatch(getBalanceDebatePost(pid as string)).unwrap()
+      await  dispatch(getProsConsDebatePost(pid as string)).unwrap()
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +44,7 @@ const BalancePostPage = () => {
     if(postData !== null || !pid) return
     const fetchData = async () => {
       try {
-        await dispatch( getBalanceDebatePost(pid as string)).unwrap() 
+        await dispatch( getProsConsDebatePost(pid as string)).unwrap() 
       } catch (error) {
         console.log(error);
       }
@@ -66,8 +63,7 @@ const BalancePostPage = () => {
           <h1>{postData.title}</h1>
 
           <HeaderCategoryLine>
-            <span>[{dayjs(postData.createdAt).format("YYYY-MM-DD HH:mm:ss") + ' - ' + '밸런스토론' + ' - ' + postData.category}]</span>
-            {postData.createdAt}
+            <span>[{dayjs(postData.createdAt).format("YYYY-MM-DD HH:mm:ss") + ' - ' + '이슈토론' + ' - ' + postData.category}]</span>
             <HeaderButtonBox>
               <ImgBox></ImgBox>
             </HeaderButtonBox>
@@ -92,17 +88,14 @@ const BalancePostPage = () => {
           <ContentTitle>[ 기사 ]</ContentTitle>
           <ContentBox>
             { postData.article 
-              ? postData.article.split(',').map((res, index) => <Link href={res}>{res}</Link>)
+              ? postData.article.split(',').map((res, index) => 
+                <ArticleItem key={'articleLink_'+ index}><Link href={res}><a >{res}</a></Link></ArticleItem>)
               : ''
             }
           </ContentBox>
           
-          <ContentTitle>[ 찬성 의견 ]</ContentTitle>
+          <ContentTitle>[ 주요 의견 ]</ContentTitle>
           <ContentBox><p>{postData.issue1}</p></ContentBox>
-          
-
-          <ContentTitle>[ 반대 의견 ]</ContentTitle>
-          <ContentBox><p>{postData.issue2}</p></ContentBox>
         </PostContentBox>
 
         {/* 관련 포스트 추천 박스*/}
@@ -110,28 +103,17 @@ const BalancePostPage = () => {
 
         {/* 토론 현황 박스 */}
         <ContentTitle>[ 현황 ]</ContentTitle>
-        <BalancePostCurrentSituationBox>
-          
-          <BalanceOption>
-            {postData.OptionAList!.length > postData.OptionBList!.length 
-              ? <ImgBox width='24'><img src='/img/crown.png' /></ImgBox> 
-              : <></>
-            }
-            <h4>A. {postData.optionA}</h4>
-            <p>{postData.OptionAList?.length} 명</p>
-          </BalanceOption>
-
-          <span>VS</span>
-
-          <BalanceOption>
-            {postData.OptionAList!.length < postData.OptionBList!.length 
-              ? <ImgBox width='24'><img src='/img/crown.png' /></ImgBox> 
-              : <></>
-            }
-            <h4>B. {postData.optionB}</h4>
-            <p>{postData.OptionBList?.length} 명</p>
-          </BalanceOption>
-        </BalancePostCurrentSituationBox>
+        <PostCurrentSituationBox>
+            <OpinionSelectBox>
+              <span>선택지 :</span>
+              <OpinionSelect onChange={onChangeSelection} value={selection}>
+                <option value="찬성">찬성</option>
+                <option value="반대">반대</option>
+              </OpinionSelect>
+              <p>* 두 가지 선택지 중 한 가지를 선택해주세요.</p>
+        </OpinionSelectBox>
+        
+        </PostCurrentSituationBox>
 
         {/* 토론규칙 */}
         <DebateRulesBox>
@@ -145,12 +127,16 @@ const BalancePostPage = () => {
         
         {/* 밸런스 선택 */}
         <OpinionSelectBox>
-          <span>선택지 :</span>
+          <span>점수 :</span>
           <OpinionSelect onChange={onChangeSelection} value={selection}>
-            <option value="A">A. {postData.optionA}</option>
-            <option value="B">B. {postData.optionB}</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="0">0</option>
           </OpinionSelect>
-          <p>* 두 가지 선택지 중 한 가지를 선택해주세요.</p>
+          <p>* 토론 주제가 이슈화되기에 적절한지 여부를 0 ~ 5 까지의 점수로 의견을 나타내주세요.</p>
         </OpinionSelectBox>
         
         {/* 의견 및 댓글 (따로 컴포넌트)*/}
@@ -166,14 +152,14 @@ const BalancePostPage = () => {
 
         <ContentTitle>[ 의견 ]</ContentTitle>  
         <OpinionListBox>
-          <OpinionList data={postData.BalanceOpinions} mode='balance'/>
-        </OpinionListBox>
+          <OpinionList data={postData.ProsConsOpinions} mode='issue'/>
+        </OpinionListBox>     
       </DetailDevateContainor>
     </IndexContainor>
   )
 }
 
-BalancePostPage.getLayout = function getLayout(page: ReactElement) {
+IssuePostPage.getLayout = function getLayout(page: ReactElement) {
   return <HeaderFooterLayout>{page}</HeaderFooterLayout>
 }
 
@@ -184,9 +170,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store)=> async ({r
   if (req && cookie) { // 서버쪽 쿠키 공유 버그
     axios.defaults.headers.Cookie = cookie
   }
-  if(pid) await store.dispatch(getBalanceDebatePost(pid as string));
+  if(pid) await store.dispatch(getProsConsDebatePost(pid as string));
   await store.dispatch(loadMyInfo())
   return {props: {}}
 })
 
-export default BalancePostPage
+export default IssuePostPage

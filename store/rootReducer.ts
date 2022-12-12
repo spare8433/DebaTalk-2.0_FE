@@ -3,21 +3,34 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer } from 'react';
 
 import user, { UserState } from './slices/user';
-import debatePost, { debatePostState } from './slices/debatePost';
 import debatePosts, { debatePostsState } from './slices/debatePosts';
 import balanceDebatePosts from './slices/balanceDebatePosts';
 import balanceDebatePost from './slices/balanceDebatePost';
+import issueDebatePosts from './slices/issueDebatePosts';
+import issueDebatePost from './slices/issueDebatePost';
+import prosConsDebatePosts from './slices/prosConsDebatePosts';
+import prosConsDebatePost from './slices/prosConsDebatePost';
 
 import { BalanceDebatePostsState } from './slices/balanceDebatePosts/type';
 import { BalanceDebatePostState } from './slices/balanceDebatePost/type';
+// import { IssueDebatePostsState } from './slices/issueDebatePosts/type';
+import { IssueDebatePostState } from './slices/issueDebatePost/type';
+import { IssueDebatePostsState } from './slices/issueDebatePosts/type';
+
+import { ProsConsDebatePostsState } from './slices/prosConsDebatePosts/type';
+import { ProsConsDebatePostState } from './slices/prosConsDebatePost/type';
+
 
 
 export interface ReducerStates {
   user: UserState;
-  debatePost: debatePostState
 	debatePosts: debatePostsState
-	balanceDebatePosts : BalanceDebatePostsState
-	balanceDebatePost : BalanceDebatePostState
+	balanceDebatePosts: BalanceDebatePostsState
+	balanceDebatePost: BalanceDebatePostState
+	issueDebatePost: IssueDebatePostState
+	issueDebatePosts: IssueDebatePostsState
+	prosConsDebatePosts: ProsConsDebatePostsState
+	prosConsDebatePost: ProsConsDebatePostState
 }
 
 // CombinedState<ReducerStates>  === ReducerStates
@@ -29,10 +42,13 @@ const rootReducer = (state:ReducerStates, action: AnyAction): Reducer<CombinedSt
 		default : 
 			const combinedReducers = combineReducers({
 				user,
-				debatePost,
 				debatePosts,
 				balanceDebatePosts,
-				balanceDebatePost
+				balanceDebatePost,
+				issueDebatePost,
+				issueDebatePosts,
+				prosConsDebatePosts,
+				prosConsDebatePost,
 			})
 			return combinedReducers(state,action)
 	}

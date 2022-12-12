@@ -1,6 +1,6 @@
-export type BalanceDebateReplyDataState = {
+export type ProsConsDebateReplyDataState = {
   readonly id:number
-  BalanceOpinionId:number
+  ProsConsOpinionId:number
   content:string
   Target:{ readonly id: number, nickname: string, imgUrl: string | null }
   hits:number
@@ -9,26 +9,23 @@ export type BalanceDebateReplyDataState = {
   User:{ readonly id: number, nickname: string, imgUrl: string | null }
 }
 
-export type BalanceDebateOpinonDataState = {
+export type ProsConsDebateOpinonDataState = {
   id:number
   content:string
-  selection: 'A' | 'B'
+  selection: '찬성' | '반대'
   createdAt: string
   updatedAt: string
   User:{ readonly id: number, nickname: string, imgUrl: string | null }
-  Replys: BalanceDebateReplyDataState[] | any[]
+  Replys: ProsConsDebateReplyDataState[] | any[]
 }
 
-export type BalanceDebatePostDataState = {
+export type ProsConsDebatePostDataState = {
   readonly id: string
   method?: string
   category?: string
   title?: string
-  optionA?: string
-  optionB?: string
   description?: string
   issue1?: string
-  issue2?: string
   article?: string
   imgUrl?: string | null
   hits?: number
@@ -36,10 +33,10 @@ export type BalanceDebatePostDataState = {
   updatedAt?: string
   OptionAList?: { UserId: number }[]
   OptionBList?: { UserId: number }[]
-  BalanceOpinions:BalanceDebateOpinonDataState[]
+  ProsConsOpinions:ProsConsDebateOpinonDataState[]
 }
 
-export type BalanceDebatePostState = {
+export type ProsConsDebatePostState = {
   getPostLoading: boolean
   getPostDone: boolean
   getPostError: null | Error | unknown
@@ -55,6 +52,6 @@ export type BalanceDebatePostState = {
 	deletePostLoading: boolean
 	deletePostDone: boolean
 	deletePostError: null | Error | unknown
-  postData: BalanceDebatePostDataState | null
+  postData: ProsConsDebatePostDataState | null
 }
 

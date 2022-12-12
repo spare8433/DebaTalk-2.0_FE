@@ -1,13 +1,15 @@
 import useInput from '@hooks/useInput'
-import { createBalanceOpinion, createBalanceReply } from '@store/slices/balanceDebatePost'
+import { createBalanceReply, getBalanceDebatePost } from '@store/slices/balanceDebatePost'
+import { createIssueReply, getIssueDebatePost } from '@store/slices/issueDebatePost'
 import { useAppDispatch, useAppSelector } from '@store/store'
-import { BasicButtonBox, InputBox, MainButton, SubButton } from '@styles/commonStyle'
+import { BasicButtonBox, MainButton, SubButton } from '@styles/commonStyle'
+import { useRouter } from 'next/router'
 import { CreateBalanceReplyParam } from 'params'
-import { TextareaHTMLAttributes, useCallback, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { ReplyTextArea, IndexContainor, ReplyTextAreaBox, UserTag } from './style'
 
 type WrapperProps = {
-  mode:string,
+  mode:'balance' | 'issue' | 'prosCons',
   opinionId:number,
   targetUser: { id: number, nickname: string, imgUrl: string | null},
   isNestedReply?: boolean,
@@ -16,6 +18,8 @@ type WrapperProps = {
 
 const WriteReply = ({mode, opinionId, targetUser, isNestedReply, changeState}:WrapperProps):JSX.Element => {
   const dispatch = useAppDispatch()
+  const router = useRouter()
+  const { pid } = router.query
   const user = useAppSelector(state=> state.user)
 
   const turnOff = () => changeState(false)
@@ -42,10 +46,17 @@ const WriteReply = ({mode, opinionId, targetUser, isNestedReply, changeState}:Wr
       switch (mode) {
         case 'balance':
           await dispatch(createBalanceReply(data)).unwrap()
-          break;      
+          await dispatch(getBalanceDebatePost(pid as string)).unwrap()
+          break;  
+        case 'issue':
+          await dispatch(createIssueReply(data)).unwrap()
+          await dispatch(getIssueDebatePost(pid as string)).unwrap()
+          break;    
         default:
           break;
       }
+      turnOff()
+      setContent('')
     } catch (error) {
       console.log(error);
     }

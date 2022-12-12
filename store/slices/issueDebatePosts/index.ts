@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { getBalanceDebatePostsAPI } from '@api/balanceDebatePosts'
 import { GetDebatePostsParam } from 'params'
-import { BalanceDebatePostsState } from './type'
+import { IssueDebatePostsState } from './type'
+import { getIssueDebatePostsAPI } from '@api/issueDebatePosts'
 
-const initialState: BalanceDebatePostsState = {
+const initialState: IssueDebatePostsState = {
   getPostsLoading: false,
   getPostsDone: false,
   getPostsError: null,
@@ -17,30 +17,30 @@ const initialState: BalanceDebatePostsState = {
 	postsData: null
 }
 
-export const getBalanceDebatePosts = createAsyncThunk(
-  "balanceDebatePosts/get",
+export const getIssueDebatePosts = createAsyncThunk(
+  "issueDebatePosts/get",
     async (data:GetDebatePostsParam) => {
-      const response = await getBalanceDebatePostsAPI(data);
+      const response = await getIssueDebatePostsAPI(data);
       return response.data;
     },
   );
 
-export const balanceDebatePosts = createSlice({
-  name: 'balanceDebatePosts',
+export const issueDebatePosts = createSlice({
+  name: 'issueDebatePosts',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getBalanceDebatePosts.pending, (state) => {
+    builder.addCase(getIssueDebatePosts.pending, (state) => {
       state.getPostsLoading = true
       state.getPostsDone = false
       state.getPostsError = null
     })
-    builder.addCase(getBalanceDebatePosts.fulfilled, (state, action) => {
+    builder.addCase(getIssueDebatePosts.fulfilled, (state, action) => {
       state.getPostsLoading = false
       state.getPostsDone = true
       state.postsData = action.payload
     })
-    builder.addCase(getBalanceDebatePosts.rejected, (state, action) => {
+    builder.addCase(getIssueDebatePosts.rejected, (state, action) => {
       state.getPostsLoading = false
       state.getPostsError = action.error
     })
@@ -48,4 +48,4 @@ export const balanceDebatePosts = createSlice({
 })
 
 // export const {} = balanceDebatePost.actions
-export default balanceDebatePosts.reducer
+export default issueDebatePosts.reducer

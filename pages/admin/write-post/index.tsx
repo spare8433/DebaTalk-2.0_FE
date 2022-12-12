@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { DebateCategoryMenus, DebateModeMenus } from '@data/staticData'
 import Article from '@components/admin/write-post/article'
 import { createBalanceDebatePost } from '@store/slices/balanceDebatePost'
-import { CategoryLine, ContentBox, ImageUploadBox, ImgInputLine, PreviewImgBox, TitleLine, TopInputBox } from '@styles/pages/admin/write-post.style'
+import { CategoryLine, ContentBox, ContentTitle, ImageUploadBox, ImgInputLine, PreviewImgBox, TitleLine, TopInputBox } from '@styles/pages/admin/write-post.style'
 import { createProsConsDebatePost } from '@store/slices/prosConsDebatePost'
 import { createIssueDebatePost } from '@store/slices/issueDebatePost'
 
@@ -133,47 +133,47 @@ const WritePost = () => {
         
         <ContentBox>
         {/* 게시물 내용들 */}
-          <h4>[ 설명 ]</h4>
+          <ContentTitle>[ 설명 ]</ContentTitle>
           <textarea value={description} onChange={onChangeDescription}></textarea>
 
           {/* 밸런스 토론 선택지 */}
           {method === '밸런스토론' 
             ? <>
-              <h4>[ A 선택지 ]</h4>
+              <ContentTitle>[ A 선택지 ]</ContentTitle>
               <InputBox width='400' height='30'>
                 <input placeholder='A 선택지를 입력해주세요' value={optionA} onChange={onChangeOptionA} />
               </InputBox>
-              <h4>[ B 선택지 ]</h4>
+              <ContentTitle>[ B 선택지 ]</ContentTitle>
               <InputBox width='400' height='30'>
                 <input placeholder='B 선택지를 입력해주세요' value={optionB} onChange={onChangeOptionB} />
               </InputBox>
             </> : <></>
           } 
 
-          <h4>[ 기사 ]</h4>
+          <ContentTitle>[ 기사 ]</ContentTitle>
           <Article article={article} setArticle={setArticle} />
 
           {method === '이슈토론' 
             ? <>
-              <h4>[ 이슈 ]</h4>
+              <ContentTitle>[ 이슈 ]</ContentTitle>
               <textarea value={issue1} onChange={onChangeIssue1}></textarea>
             </> : <></>
           }    
 
           {method === '찬반토론' 
             ? <>
-              <h4>[ 찬성입장 ]</h4>
+              <ContentTitle>[ 찬성입장 ]</ContentTitle>
               <textarea value={issue1} onChange={onChangeIssue1}></textarea>
-              <h4>[ 반대입장 ]</h4>
+              <ContentTitle>[ 반대입장 ]</ContentTitle>
               <textarea value={issue2} onChange={onChangeIssue2}></textarea>
             </> : <></>
           }
 
           {method === '밸런스토론' 
             ? <>
-              <h4>[ A 선택의견 ]</h4>
+              <ContentTitle>[ A 선택의견 ]</ContentTitle>
               <textarea value={issue1} onChange={onChangeIssue1}></textarea>
-              <h4>[ B 선택의견 ]</h4>
+              <ContentTitle>[ B 선택의견 ]</ContentTitle>
               <textarea value={issue2} onChange={onChangeIssue2}></textarea>
             </> : <></>
           } 

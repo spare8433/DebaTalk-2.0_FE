@@ -40,6 +40,19 @@ declare module 'params' {
     readonly targetId : number,
   }
 
+  type CreateProsConsOpinionParam = {
+    readonly postId : number,
+    readonly selection : string,
+    readonly content : string,
+  }
+
+  type CreateProsConsReplyParam = {
+    readonly opinionId : number,
+    readonly content : string,
+    readonly writerId : number,
+    readonly targetId : number,
+  }
+
   // form data 안의 데이타 형식
   // type CreateBalanceDebatePostParam = {
   //   readonly method : string,
@@ -51,4 +64,17 @@ declare module 'params' {
   //   readonly article : string[],
   //   readonly imgData ?: FormData,
   // }
+
+  type CreateIssueOpinionParam = {
+    readonly postId : number,
+    readonly score : number,
+    readonly content : string,
+  }
+
+  type CreateIssueReplyParam = {
+    readonly opinionId : number,
+    readonly content : string,
+    readonly writerId : number,
+    readonly targetId : number,
+  }
 }

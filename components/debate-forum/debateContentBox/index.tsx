@@ -3,36 +3,35 @@ import React, { useEffect, useRef } from 'react'
 import { useAppSelector } from '@store/store'
 import Link from 'next/link'
 import { BlueText, ContentBox, OtherInfoLine, PostBox, RedText, TextBox, TextContentLine } from './style'
+import { BalanceDebatePostDataState } from '@store/slices/balanceDebatePost/type'
+import { IssueDebatePostDataState } from '@store/slices/issueDebatePost/type'
 
 type WrapperProps = {
-  method : string
+  method : '밸런스토론' | '이슈토론' | '찬반토론'
 }
 
 const DebateContentBox = ({method}:WrapperProps) => {
   const balanceDebatePosts = useAppSelector(state => state.balanceDebatePosts.postsData)
+  const issueDebatePosts = useAppSelector(state => state.issueDebatePosts.postsData)
   const postData = useRef<Array<any>>([])
   const detailLink = useRef<string>('')
   
-  useEffect(()=>{
-    const fetchContent = async () => {
+  const postType: { [index:string]: BalanceDebatePostDataState[] | IssueDebatePostDataState[] | null } = {
+    '밸런스토론' : balanceDebatePosts,
+    '이슈토론' : issueDebatePosts,
+    '찬반토론' : null
+  }
 
-      switch (method) {
-        case '밸런스토론':
-          postData.current = balanceDebatePosts !== null  ? balanceDebatePosts : []
-          detailLink.current = 'balance-post'
-          break;      
-        default:
-          break;
-      }
-    }
-
-    fetchContent();
-  },[balanceDebatePosts,method])
+  const detailLinkType: { [index:string] : string } = {
+    '밸런스토론' : 'balance-post',
+    '이슈토론' : 'issue-post',
+    '찬반토론' : 'proscons-post'
+  }
 
   return (
     <ContentBox>
-      {postData.current.map((res,index)=>{
-        return <Link href={{pathname: `/debate-forum/${detailLink.current}/[pid]`, query: { pid: res.id }}} key={'debatePostItmes'+index}>
+      { postType[method] !== null && postType[method]!.map((res,index)=>{
+        return <Link href={{pathname: `/debate-forum/${detailLinkType[method]}/[pid]`, query: { pid: res.id }}} key={'debatePostItmes'+index}>
           <a>
             <PostBox>
               <ImgBox shadow={true} width='160'><img src={res.imgUrl === null ? '/img/default-thumbnail.png' : res.imgUrl} alt=''></img></ImgBox>

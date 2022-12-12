@@ -1,4 +1,4 @@
-import { ImgBox, Line } from '@styles/commonStyle'
+import { Line } from '@styles/commonStyle'
 import styled from 'styled-components'
 
 export const DebateForumContainor = styled.div`
