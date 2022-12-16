@@ -1,5 +1,5 @@
 import { AppLayout, CarouselButton } from '@styles/commonStyle';
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import React, { ReactElement, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { FC } from 'react'
 import { CarouselBox, CarouselContainor, CarouselContent, CarouselTrack, SlidePage } from './style';
 
@@ -25,13 +25,14 @@ function isReactElements(arg: any): arg is React.ReactElement<SlideProps>[] {
 }
 
 const Carousel = ({option, banner, children}:CarouselProps) => {
-
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isAutoPlay,setIsAutoPlay] = useState(true)
+  const [boxSize, setBoxSize] = useState<number | undefined>()
 
   const _carouselBox = useRef<HTMLDivElement>(null)
   const timer = useRef<NodeJS.Timeout>()
 
+  // 다음 슬라이드로 이동
   const next = useCallback(() => {
     if(!isReactElements(children)) return
     
@@ -42,6 +43,7 @@ const Carousel = ({option, banner, children}:CarouselProps) => {
     }
   },[currentSlide,children])
 
+  // 이전 슬라이드로 이동
   const prev = useCallback(() => {
     if(!isReactElements(children)) return
     
@@ -52,13 +54,19 @@ const Carousel = ({option, banner, children}:CarouselProps) => {
     }
   },[currentSlide,children])
 
+  const pause = useCallback(() => setIsAutoPlay(false), [])
+  const start = useCallback(() => setIsAutoPlay(true), [])
+
+  // 자동 넘기기 기능
   useEffect(() => {
     clearTimeout(timer.current)
     if(isAutoPlay) timer.current = setTimeout(next, 2000)
   }, [next,isAutoPlay])
 
-  const pause = () => setIsAutoPlay(false)
-  const start = () => setIsAutoPlay(true)
+  // 가변적인 화면사이즈 대응
+  useLayoutEffect(() => {
+    setBoxSize(_carouselBox.current?.offsetWidth)
+  }, [_carouselBox.current?.offsetWidth])
 
   return (
     <AppLayout>
@@ -68,21 +76,16 @@ const Carousel = ({option, banner, children}:CarouselProps) => {
         
         <CarouselBox ref={_carouselBox} height={option.height}>
           <CarouselContent>
-            <CarouselTrack contetWidth={_carouselBox.current !== null ? _carouselBox.current.offsetWidth : 0} currentSlide={currentSlide}>
+            <CarouselTrack contetWidth={boxSize ? boxSize : 0} currentSlide={currentSlide}>
               {Array.isArray(children) 
-                ? children.map((res, index) => <SlidePage key={'slidepage_' + index} contetWidth={_carouselBox.current !== null ? _carouselBox.current.offsetWidth : 0}>{res}</SlidePage>)
+                ? children.map((res, index) => <SlidePage key={'slidepage_' + index} contetWidth={boxSize ? boxSize : 0}>{res}</SlidePage>)
                 : children
               }
             </CarouselTrack>
-              {banner 
-                ? banner
-                : ''
-              }
+              {banner ? banner: ''}
           </CarouselContent>
-
         </CarouselBox>
       </CarouselContainor>
-      
     </AppLayout>
   )
 }

@@ -2,26 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {  GetDebateKeywords, GetDebatePostsParam } from 'params'
 import { getDebateHotTopicsAPI, getDebateKeywordsAPI, getDebatePostsAPI } from '@api/debatePosts'
+import { BalanceDebatePostDataState } from '../balanceDebatePost/type'
+import { IssueDebatePostDataState } from '../issueDebatePost/type'
+import { ProsConsDebatePostDataState } from '../prosConsDebatePost/type'
 
 
-export interface debatePostData {
-  readonly id: string,
-  method: string,
-  category: string,
-  title: string,
-  content: string,
-  imgUrl: string | null,
-  hits: number
-  createdAt: string,
-  updatedAt: string,
-}
-
-export interface debateKeywordsData {
+export interface debateKeywordData {
   readonly id: string,
   category: string,
   title: string,
-  createdAt: string,
-  updatedAt: string,
 }
 
 export interface debatePostsState {
@@ -31,16 +20,28 @@ export interface debatePostsState {
 	getDebateHotTopicsLoading: boolean,
 	getDebateHotTopicsDone: boolean,
 	getDebateHotTopicsError: null | Error | unknown,
+
   getKeywordsLoading: boolean,
 	getKeywordsDone: boolean,
 	getKeywordsError: null | Error | unknown,
-  debatePostsData: debatePostData[] | null,
-  debateKeywordsData:debateKeywordsData[] | null,
-  hotDebateTopics: {
-    subject:debatePostData[],
-    prosCons:debatePostData[],
-    balance:debatePostData[],
-  } | null
+
+  debatePostsData: {
+    balance:BalanceDebatePostDataState[],
+    issue:IssueDebatePostDataState[],
+    prosCons:ProsConsDebatePostDataState[],
+  } | null,
+
+  debateKeywordsData:{
+    balanceKeyword:debateKeywordData[],
+    issueKeyword:debateKeywordData[],
+    prosConsKeyword:debateKeywordData[],
+  } | null,
+
+  // hotDebateTopics: {
+  //   subject:debatePostData[],
+  //   prosCons:debatePostData[],
+  //   balance:debatePostData[],
+  // } | null
 }
 
 const initialState: debatePostsState = {
@@ -55,7 +56,6 @@ const initialState: debatePostsState = {
 	getDebateHotTopicsError: null,
 	debatePostsData: null,
   debateKeywordsData: null,
-  hotDebateTopics: null,
 }
 
 export const getDebatePosts = createAsyncThunk(
@@ -129,7 +129,7 @@ export const debatePosts = createSlice({
     builder.addCase(getDebateHotTopics.fulfilled, (state, action) => {
       state.getDebateHotTopicsLoading = false
       state.getDebateHotTopicsDone = true
-      state.hotDebateTopics = action.payload
+      state.debatePostsData = action.payload
     })
     builder.addCase(getDebateHotTopics.rejected, (state, action) => {
       state.getDebateHotTopicsLoading = false

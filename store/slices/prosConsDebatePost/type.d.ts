@@ -31,8 +31,8 @@ export type ProsConsDebatePostDataState = {
   hits?: number
   createdAt?: string
   updatedAt?: string
-  OptionAList?: { UserId: number }[]
-  OptionBList?: { UserId: number }[]
+  OptionAgreeList: { UserId: number }[]
+  OptionOpposeList: { UserId: number }[]
   ProsConsOpinions:ProsConsDebateOpinonDataState[]
 }
 

@@ -42,8 +42,8 @@ const Home = () => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store)=> async ({req}) => {
-  // await store.dispatch(getDebateKeywords(querry));
-  // await store.dispatch(getDebateHotTopics())
+  await store.dispatch(getDebateKeywords(querry));
+  await store.dispatch(getDebateHotTopics())
   const cookie = req ? req.headers.cookie : ''
   
   if (req && cookie) { // 서버쪽 쿠키 공유 버그

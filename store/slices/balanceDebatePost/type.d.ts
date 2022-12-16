@@ -34,8 +34,8 @@ export type BalanceDebatePostDataState = {
   hits?: number
   createdAt?: string
   updatedAt?: string
-  OptionAList?: { UserId: number }[]
-  OptionBList?: { UserId: number }[]
+  OptionAList: { UserId: number }[]
+  OptionBList: { UserId: number }[]
   BalanceOpinions:BalanceDebateOpinonDataState[]
 }
 
