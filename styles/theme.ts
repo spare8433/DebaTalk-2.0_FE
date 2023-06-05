@@ -10,7 +10,6 @@ const colors = {
   soft_pink: "#E67292",
 };
 
-
 const theme: DefaultTheme = {
   colors,
 };

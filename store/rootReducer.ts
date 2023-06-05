@@ -1,6 +1,5 @@
-import { AnyAction, CombinedState, combineReducers, ReducersMapObject } from 'redux';
+import { AnyAction, CombinedState, combineReducers } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import { Reducer } from 'react';
 
 import user, { UserState } from './slices/user';
 import debatePosts, { debatePostsState } from './slices/debatePosts';
@@ -20,10 +19,8 @@ import { IssueDebatePostsState } from './slices/issueDebatePosts/type';
 import { ProsConsDebatePostsState } from './slices/prosConsDebatePosts/type';
 import { ProsConsDebatePostState } from './slices/prosConsDebatePost/type';
 
-
-
 export interface ReducerStates {
-  user: UserState;
+	user: UserState
 	debatePosts: debatePostsState
 	balanceDebatePosts: BalanceDebatePostsState
 	balanceDebatePost: BalanceDebatePostState
@@ -35,23 +32,28 @@ export interface ReducerStates {
 
 // CombinedState<ReducerStates>  === ReducerStates
 // Reducer<CombinedState<ReducerStates>, AnyAction>
-const rootReducer = (state:ReducerStates, action: AnyAction): Reducer<CombinedState<ReducerStates>, AnyAction> | any => {
-	switch (action.type) {
-		case HYDRATE:
-			return action.payload
-		default : 
-			const combinedReducers = combineReducers({
-				user,
-				debatePosts,
-				balanceDebatePosts,
-				balanceDebatePost,
-				issueDebatePost,
-				issueDebatePosts,
-				prosConsDebatePosts,
-				prosConsDebatePost,
-			})
-			return combinedReducers(state,action)
-	}
+
+type RootReducerType = {
+	(state:ReducerStates, action: AnyAction):CombinedState<ReducerStates>
+}
+const rootReducer:RootReducerType = (state, action) => {
+  switch (action.type) {
+    case HYDRATE:
+      return action.payload
+    default: {
+      const combinedReducer = combineReducers({
+        user,
+        debatePosts,
+        balanceDebatePosts,
+        balanceDebatePost,
+        issueDebatePost,
+        issueDebatePosts,
+        prosConsDebatePosts,
+        prosConsDebatePost,
+      })
+      return combinedReducer(state, action)
+		}
+  }
 };
 
-export default rootReducer; 
+export default rootReducer

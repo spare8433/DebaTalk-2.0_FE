@@ -1,11 +1,23 @@
 import { Test } from '@components/test'
-import React from 'react'
+import { getBalanceDebatePosts } from '@store/slices/balanceDebatePosts'
+import { wrapper } from '@store/store'
+import React, { useState } from 'react'
 
 
-export const test = () => {
+const test = () => {
+  const [a,setA] = useState(1)
   return (
     <div>
-      <Test></Test>
+      테스트 페이지 a : {a}
+
+      <button onClick={()=>setA(a + 1)}></button>
     </div>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps((store)=> async () => {
+  await store.dispatch(getBalanceDebatePosts({}));
+  return {props: {}}
+})
+
+export default test

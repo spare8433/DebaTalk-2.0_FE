@@ -1,21 +1,21 @@
-import { AnyAction, configureStore, getDefaultMiddleware, Reducer } from '@reduxjs/toolkit'
+import { AnyAction, configureStore, Reducer } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
+import logger from 'redux-logger'
+import { createWrapper } from 'next-redux-wrapper';
 import type { TypedUseSelectorHook } from 'react-redux'
 
-import {createWrapper, HYDRATE} from 'next-redux-wrapper';
 import rootReducer, { ReducerStates } from './rootReducer';
-import logger from 'redux-logger'
 
 const makeStore = () => configureStore({
   reducer: rootReducer as Reducer<ReducerStates, AnyAction>,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: true,
-})  
+})
 
-export type AppStore = ReturnType<typeof makeStore>;  // `store` type
-export type AppState = ReturnType<AppStore['getState']>;  // `state` type in `store`
+export type AppStore = ReturnType<typeof makeStore>; // `store` type
+export type AppState = ReturnType<AppStore['getState']>; // `state` type in `store`
 
-export type AppDispatch = AppStore["dispatch"];  // `dispatch` in `store`
+export type AppDispatch = AppStore['dispatch']; // `dispatch` in `store`
 
 export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
@@ -35,6 +35,4 @@ export const wrapper = createWrapper<AppStore>(makeStore);
 
 // export const useAppDispatch: () => AppDispatch = useDispatch
 // export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
-//export default store
-
-
+// export default store

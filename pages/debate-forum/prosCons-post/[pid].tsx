@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useMemo, useRef } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { ImgBox, ThumbnailImgBox } from '@styles/commonStyle'
 import Comment from '@components/common/comment'
 import useInput from '@hooks/useInput'
@@ -6,10 +6,11 @@ import { useAppDispatch, useAppSelector, wrapper } from '@store/store'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import HeaderFooterLayout from '@components/common/layouts/headerFooterLayout'
-import { 
-  CommentBox,ContentBox, ContentTitle, DebateRulesBox, DetailDevateContainor,
-  HeaderButtonBox,HeaderCategoryLine,HeaderInfoBox, IndexContainor, OpinionListBox, PostContentBox, 
-  PostCurrentSituationBox,PostHeaderBox, RelatedPostsBox, OpinionSelect, OpinionSelectBox, ArticleItem
+import {
+  CommentBox, ContentBox, ContentTitle, DebateRulesBox, DetailDevateContainor,
+  HeaderButtonBox, HeaderCategoryLine, HeaderInfoBox, IndexContainor, OpinionListBox,
+  PostContentBox, PostCurrentSituationBox, PostHeaderBox, RelatedPostsBox, OpinionSelect,
+  OpinionSelectBox, ArticleItem,
 } from '@styles/pages/debate-forum/common-post.style'
 import OpinionList from '@components/debate-forum/opinionList'
 import axios from 'axios'
@@ -17,42 +18,41 @@ import { loadMyInfo } from '@store/slices/user'
 import dayjs from 'dayjs'
 import { createProsConsOpinion, getProsConsDebatePost } from '@store/slices/prosConsDebatePost'
 
-
 const IssuePostPage = () => {
   const dispatch = useAppDispatch();
   const router = useRouter()
-  const [comment,onChangeComment, setComment] = useInput('')
-  const [selection,onChangeSelection] = useInput('찬성')
+  const [comment, onChangeComment, setComment] = useInput('')
+  const [selection, onChangeSelection] = useInput('찬성')
 
   const { pid } = router.query
-  const postData = useAppSelector(state => state.prosConsDebatePost.postData)
+  const postData = useAppSelector((state) => state.prosConsDebatePost.postData)
 
   const submitComment = async () => {
     try {
       await dispatch(createProsConsOpinion({
-        postId:parseInt(pid as string),
-        content:comment,
+        postId: parseInt(pid as string, 10),
+        content: comment,
         selection,
       })).unwrap()
-      await  dispatch(getProsConsDebatePost(pid as string)).unwrap()
+      await dispatch(getProsConsDebatePost(pid as string)).unwrap()
     } catch (error) {
       console.log(error);
     }
   }
 
-  useEffect(()=>{
-    if(postData !== null || !pid) return
+  useEffect(() => {
+    if (postData !== null || !pid) return
     const fetchData = async () => {
       try {
-        await dispatch( getProsConsDebatePost(pid as string)).unwrap() 
+        await dispatch(getProsConsDebatePost(pid as string)).unwrap()
       } catch (error) {
         console.log(error);
       }
     }
     fetchData()
-  },[pid])
+  }, [dispatch, pid, postData])
 
-  if (postData === null || postData === undefined) return
+  // if (postData === null || postData === undefined) return
 
   return (
     <IndexContainor>
@@ -79,21 +79,21 @@ const IssuePostPage = () => {
 
         <PostContentBox>
           <ThumbnailImgBox height='200' shadow={true}>
-            <img src={postData.imgUrl ? postData.imgUrl : '/img/default-thumbnail.png' } alt="thumbnail-img" />
+            <img src={postData.imgUrl ? postData.imgUrl : '/img/default-thumbnail.png'} alt="thumbnail-img" />
           </ThumbnailImgBox>
 
           <ContentTitle>[ 설명 ]</ContentTitle>
           <ContentBox><p>{postData.description}</p></ContentBox>
-          
+
           <ContentTitle>[ 기사 ]</ContentTitle>
           <ContentBox>
-            { postData.article 
-              ? postData.article.split(',').map((res, index) => 
+            { postData.article
+              ? postData.article.split(',').map((res, index) =>
                 <ArticleItem key={'articleLink_'+ index}><Link href={res}><a >{res}</a></Link></ArticleItem>)
               : ''
             }
           </ContentBox>
-          
+
           <ContentTitle>[ 주요 의견 ]</ContentTitle>
           <ContentBox><p>{postData.issue1}</p></ContentBox>
         </PostContentBox>
@@ -104,15 +104,15 @@ const IssuePostPage = () => {
         {/* 토론 현황 박스 */}
         <ContentTitle>[ 현황 ]</ContentTitle>
         <PostCurrentSituationBox>
-            <OpinionSelectBox>
+          <OpinionSelectBox>
               <span>선택지 :</span>
               <OpinionSelect onChange={onChangeSelection} value={selection}>
                 <option value="찬성">찬성</option>
                 <option value="반대">반대</option>
               </OpinionSelect>
               <p>* 두 가지 선택지 중 한 가지를 선택해주세요.</p>
-        </OpinionSelectBox>
-        
+            </OpinionSelectBox>
+
         </PostCurrentSituationBox>
 
         {/* 토론규칙 */}
@@ -124,7 +124,7 @@ const IssuePostPage = () => {
             비방 및 욕설은 삭제 조치되고 차후 사이트 이용에 제제가 있을 수 있습니다.
           </p>
         </DebateRulesBox>
-        
+
         {/* 밸런스 선택 */}
         <OpinionSelectBox>
           <span>점수 :</span>
@@ -138,22 +138,22 @@ const IssuePostPage = () => {
           </OpinionSelect>
           <p>* 토론 주제가 이슈화되기에 적절한지 여부를 0 ~ 5 까지의 점수로 의견을 나타내주세요.</p>
         </OpinionSelectBox>
-        
+
         {/* 의견 및 댓글 (따로 컴포넌트)*/}
         <ContentTitle>[ 의견작성 ]</ContentTitle>
         <CommentBox>
-          <Comment 
-            textState={comment} 
-            setState={setComment} 
-            onChangeState={onChangeComment} 
-            submitFn={submitComment} 
+          <Comment
+            textState={comment}
+            setState={setComment}
+            onChangeState={onChangeComment}
+            submitFn={submitComment}
           />
         </CommentBox>
 
-        <ContentTitle>[ 의견 ]</ContentTitle>  
+        <ContentTitle>[ 의견 ]</ContentTitle>
         <OpinionListBox>
           <OpinionList data={postData.ProsConsOpinions} mode='issue'/>
-        </OpinionListBox>     
+        </OpinionListBox>
       </DetailDevateContainor>
     </IndexContainor>
   )
@@ -163,16 +163,16 @@ IssuePostPage.getLayout = function getLayout(page: ReactElement) {
   return <HeaderFooterLayout>{page}</HeaderFooterLayout>
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store)=> async ({req, query}) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
   const { pid } = query
   const cookie = req ? req.headers.cookie : ''
-  
+
   if (req && cookie) { // 서버쪽 쿠키 공유 버그
     axios.defaults.headers.Cookie = cookie
   }
-  if(pid) await store.dispatch(getProsConsDebatePost(pid as string));
+  if (pid) await store.dispatch(getProsConsDebatePost(pid as string));
   await store.dispatch(loadMyInfo())
-  return {props: {}}
+  return { props: {} }
 })
 
 export default IssuePostPage

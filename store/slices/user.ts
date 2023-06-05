@@ -76,7 +76,7 @@ export const loadMyInfo = createAsyncThunk(
     },
   );
 
-export const userSlice = createSlice({
+export const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -147,7 +147,5 @@ export const userSlice = createSlice({
   },
 })
 
-export const { increment } = userSlice.actions
-export default userSlice.reducer
-
-
+export const { increment } = user.actions
+export default user.reducer

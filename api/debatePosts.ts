@@ -12,3 +12,5 @@ export const getDebateKeywordsAPI:axiosAPIwithParam<GetDebateKeywords> = (initDa
 // 메인 노출 토론 게시물
 export const getDebateHotTopicsAPI:axiosAPI = () => axiosInstance('debate-posts').get(`hotTopics`)
 
+// 토론 게시물 통합 검색
+export const getIntegrateDebatePostsAPI:axiosAPIwithParam<string> = (searchText) => axiosInstance('debate-posts').get(`integrate-search?searchText=${searchText}`)
