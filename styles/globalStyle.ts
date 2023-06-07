@@ -1,12 +1,16 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 import { normalize } from 'styled-normalize'
 
 const GlobalStyles = createGlobalStyle`
     ${normalize}
+    * {
+      box-sizing: border-box;
+    }
     html, body, #__next{
       width: 100%;
       height: 100%;
     }
+    html {font-size: 10px;}
     body {
       background-color: #F5F5F5;
       font-weight: 400;
@@ -32,6 +36,6 @@ const GlobalStyles = createGlobalStyle`
     select,input,textarea{
       font-family: 'Noto Sans KR', sans-serif;   
     }
-`;
+`
 
 export default GlobalStyles
