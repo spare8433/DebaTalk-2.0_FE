@@ -1,64 +1,83 @@
-import React, { memo, useEffect } from 'react'
-import { ImgBox } from '@styles/commonStyle'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { ReducerStates } from '@store/rootReducer'
-import { useAppDispatch, useAppSelector } from '@store/store'
-import { useRouter } from 'next/router'
+import { useAppSelector } from '@store/store'
 import Link from 'next/link'
+import { NextImageBox } from '@styles/commonStyle/imgBox'
+import { CssRem, CssString } from 'types/customCssType'
+import FitNextImage from './fitNextImage'
 
 interface ProfileTheme {
-	mode: 'dark' | 'white'
+  mode: 'dark' | 'white'
 }
 
 const ProfileContainor = styled.div<ProfileTheme>`
-	display: flex;
-	align-items: center;
-	/* justify-content: center; */
-	font-size: 18px;
-	color : ${({mode,theme})=> mode === 'dark' ? 'white' : theme.colors.gray_1};
-`
-
-const ProfileLine = styled.div`
   display: flex;
   align-items: center;
-  span{
-    color: ${({theme})=> theme.colors.gray_1};
-    margin-left: 10px;
+  /* justify-content: center; */
+  font-size: 18px;
+  color: ${({ mode, theme }) => (mode === 'dark' ? 'white' : theme.colors.mainBlack)};
+
+  a {
+    display: flex;
+    align-items: center;
+    color: inherit;
   }
 `
 
-const LoginLineStyle = styled.div`
-	cursor: pointer;
+const ProfileLine = styled.div`
+  width: 100%;
+
+  span {
+    color: inherit;
+    margin-left: 2rem;
+  }
 `
 
-interface propTypes {
-	mode?: 'dark' | 'white',
-	link:	string
+const LoginLine = styled.div`
+  width: 100%;
+  a {
+    color: inherit;
+    justify-content: center;
+  }
+`
+
+interface PropTypes {
+  mode?: 'dark' | 'white'
+  link: string
 }
 
-const Profile = ({mode = 'white', link}:propTypes) => {
-	const user = useAppSelector((state:ReducerStates) => state.user);
+const Profile = ({ mode = 'white', link }: PropTypes) => {
+  const user = useAppSelector((state: ReducerStates) => state.user)
 
   return (
     <ProfileContainor mode={mode}>
-			{user.myData !== null ? 
-				<ProfileLine>
-					<Link href={link}>
-						<>
-							<ImgBox width='32' shadow={true}>
-								<img alt='userImg' src={user.myData.imgUrl ? user.myData.imgUrl : '/img/default_user.png'}></img>
-							</ImgBox>
-							<span>{!!user && user.myData.nickname}</span>
-						</>
-					</Link>
-					
-				</ProfileLine> 
-			: 
-				<Link href='/login'>
-					<LoginLineStyle>로그인</LoginLineStyle>
-				</Link>
-			}
-		</ProfileContainor>
+      {user.myData !== null ? (
+        <ProfileLine>
+          <Link href={link}>
+            <>
+              <NextImageBox
+                styleOption={{
+                  width: new CssRem(3.2),
+                  height: new CssRem(3.2),
+                  boxShadow: new CssString('rgba(99, 99, 99, 0.3) 0px 2px 8px 0px'),
+                }}
+              >
+                <FitNextImage
+                  alt="userImg"
+                  src={user.myData.imgUrl ? user.myData.imgUrl : '/img/default_user.png'}
+                />
+              </NextImageBox>
+              <span>{!!user && user.myData.nickname}</span>
+            </>
+          </Link>
+        </ProfileLine>
+      ) : (
+        <LoginLine>
+          <Link href="/login">로그인</Link>
+        </LoginLine>
+      )}
+    </ProfileContainor>
   )
 }
 
