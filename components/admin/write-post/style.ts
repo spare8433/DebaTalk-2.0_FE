@@ -1,0 +1,84 @@
+import { BasicSelect, CommonInput } from '@styles/commonStyle/inputs'
+import styled from 'styled-components'
+
+export const Containor = styled.div`
+  width: 100%;
+`
+
+export const TopInputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+
+  h3 {
+    color: ${({ theme }) => theme.colors.gray};
+    margin-bottom: 1rem;
+  }
+  span {
+    margin: 0 8px;
+  }
+  ${BasicSelect} {
+    height: 3rem;
+    margin: 0 !important;
+    margin-left: 1rem;
+    margin-right: 3rem;
+    color: ${({ theme }) => theme.colors.deepGray};
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+  }
+`
+
+export const TitleLine = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 16px;
+  ${CommonInput} {
+    margin: 0;
+    input {
+      margin: 0 !important;
+    }
+  }
+`
+
+export const CategoryLine = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`
+
+export const ContentTitle = styled.h4`
+  margin-bottom: 16px;
+`
+
+export const ContentBox = styled.div`
+  h4 {
+    width: 100%;
+  }
+  textarea {
+    width: 100%;
+    resize: none;
+    height: 8em;
+    margin-bottom: 16px;
+  }
+`
+
+export const EditBox = styled.div`
+  margin: 10px 0 30px;
+  .ql-editor {
+    h3 {
+      border-bottom: 2px ${({ theme }) => theme.colors.gray} solid;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+    }
+    strong {
+      font-weight: bold;
+    }
+  }
+`
+
+export const ButtonLine = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`

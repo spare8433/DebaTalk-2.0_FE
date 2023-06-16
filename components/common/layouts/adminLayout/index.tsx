@@ -1,68 +1,65 @@
-import React, { useEffect, useState } from 'react'
-import Profile from '@components/common/profile';
-import { ImgBox } from '@styles/commonStyle';
-import { 
-  AdminContainor, ContentBox, HeaderBox, LogoBox, MainBox, MenuBox, 
-  Nav, ProfileBox,
-} from './style';
-import { useRouter } from 'next/router';
-import AdminNav from './adminNav';
-import Link from 'next/link';
+import React from 'react'
+import Profile from '@components/common/profile'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { NextImageBox } from '@styles/commonStyle/imgBox'
+import FitNextImage from '@components/common/fitNextImage'
+import { CssRem } from 'types/customCssType'
+import AdminNav from './adminNav'
+import {
+  AdminContainor,
+  ContentBox,
+  HeaderBox,
+  LogoBox,
+  MainBox,
+  MenuBox,
+  Nav,
+  ProfileBox,
+} from './style'
 
 type WrapperProps = {
-	children: React.ReactNode;
+  children: React.ReactNode
 }
 
-const AdminLayout = ({children}:WrapperProps) => {
+const AdminLayout = ({ children }: WrapperProps) => {
   const router = useRouter()
-  const [breadcrumb,setBreadcrumb] = useState('')
-
-  useEffect(()=>{
-    var result = '';
-    router.pathname.slice(1).split('/').map(res => {
-      result += res + ' 〉 ';
-      return 0;
-    })
-    setBreadcrumb(result)
-  },[router.pathname])
-
-
-  const adminListData = [
-    {
-      title:{ name:'사용자 관리', imgUrl:'/img/edit_white.png'},
-      list:[
-        { name:'사용자 리스트', link:'/admin/user-list' },
-      ]
-    }, {
-      title:{ name:'게시물 관리', imgUrl:'/img/form_white.png'},
-      list:[
-        { name:'글 쓰기', link:'/admin/write-post' },
-        { name:'게시물 목록', link:'/admin/manage-post' },
-      ]
-    }, {
-      title:{ name:'신고 관리', imgUrl:'/img/megaphone_white.png'},
-      list:[
-        { name:'신고 현황', link:'/report-list' },
-      ]
-    }
-  ]
 
   return (
-    <AdminContainor height='100%'>
+    <AdminContainor>
       <Nav>
-        <Link href={'/admin'}>
-          <a>
-            <LogoBox>
-              <ImgBox width='200'><img alt='logo' src='/img/temp_logo_white.png'></img></ImgBox>
-            </LogoBox>
-          </a>
-        </Link>
-        
-        <ProfileBox><Profile mode='dark' link='/profile'/> </ProfileBox>
-        <MenuBox><AdminNav data={adminListData} /></MenuBox>
+        <LogoBox>
+          <Link href="/admin">
+            <NextImageBox styleOption={{ width: new CssRem(20), height: new CssRem(4.8) }}>
+              <FitNextImage alt="logo" src="/img/temp_logo_white.png" />
+            </NextImageBox>
+          </Link>
+        </LogoBox>
+
+        <ProfileBox>
+          <Profile mode="dark" link="/profile" />
+        </ProfileBox>
+        <MenuBox>
+          <AdminNav />
+        </MenuBox>
       </Nav>
       <MainBox>
-        <HeaderBox> {!!breadcrumb && breadcrumb} </HeaderBox>
+        <HeaderBox>
+          {router.pathname
+            .slice(1)
+            .split('/')
+            .map((res, index, arr) => {
+              let href = '/'
+              for (let count = 0; count <= index; count += 1) {
+                href += `${arr[count]}/`
+              }
+              return (
+                <>
+                  <Link href={href}>{res}</Link>
+                  <span>{'>'}</span>
+                </>
+              )
+            })}
+        </HeaderBox>
         <ContentBox> {children} </ContentBox>
       </MainBox>
     </AdminContainor>
