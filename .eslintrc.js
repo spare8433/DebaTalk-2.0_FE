@@ -10,6 +10,7 @@ module.exports = {
     'airbnb',
     'airbnb/hooks',
     'airbnb-typescript',
+    'plugin:prettier/recommended',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -20,6 +21,12 @@ module.exports = {
   },
   plugins: [],
   rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
     'no-console': 'off',
     'no-alert': 'off',
     'linebreak-style': 'off',

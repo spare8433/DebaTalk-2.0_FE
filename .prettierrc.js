@@ -18,7 +18,7 @@ module.exports = {
   bracketSpacing: true,
 
   //  파일 맨 뒤에 엔터 (운영체제에 따라 autoscan 가능)
-  endOfLine: 'lf',
+  endOfLine: 'auto',
 
   //  JSX 내에서의 작은따옴표 <a href='/home'> <a href="/home">
   jsxSingleQuote: false,
