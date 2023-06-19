@@ -1,7 +1,7 @@
-import "axios";
+import 'axios'
 
-declare module "axios" {
+declare module 'axios' {
   export interface HeadersDefaults {
-    Cookie?: string;
+    Cookie?: string
   }
 }
