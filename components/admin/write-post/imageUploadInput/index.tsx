@@ -2,15 +2,18 @@ import FitNextImage from '@components/common/fitNextImage'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { CssRem } from 'types/customCssType'
+import { CssRem, CssString } from 'types/customCssType'
 
 const ImgInputLine = styled.div`
   margin: 20px 0;
   display: flex;
   font-size: 16px;
   label {
+    span {
+      margin-bottom: 1rem;
+    }
     display: flex;
-    align-items: center;
+    flex-direction: column;
     color: ${({ theme }) => theme.colors.gray};
     margin: 0 10px;
   }
@@ -62,11 +65,19 @@ const ImageUploadInput = ({ previewImage, setPreviewImage, setImageFile }: Props
     <ImageUploadBox>
       <input type="file" id="fileElem" onChange={onLoadFile} accept="image/*" />
       <ImgInputLine>
-        <label htmlFor="fileElem">이미지 업로드</label>
+        <label htmlFor="fileElem">
+          <span>이미지 업로드</span>
+          <PreviewImgBox
+            styleOption={{
+              width: new CssRem(80),
+              height: new CssRem(25),
+              objectFit: new CssString('cover'),
+            }}
+          >
+            <FitNextImage src={previewImage} alt="previewImg" />
+          </PreviewImgBox>
+        </label>
       </ImgInputLine>
-      <PreviewImgBox styleOption={{ width: new CssRem(80), height: new CssRem(25) }}>
-        <FitNextImage src={previewImage} alt="previewImg" />
-      </PreviewImgBox>
     </ImageUploadBox>
   )
 }

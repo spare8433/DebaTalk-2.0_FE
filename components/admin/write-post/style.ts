@@ -54,12 +54,14 @@ export const ContentTitle = styled.h4`
 export const ContentBox = styled.div`
   h4 {
     width: 100%;
+    font-size: 1.5rem;
   }
   textarea {
     width: 100%;
     resize: none;
     height: 8em;
     margin-bottom: 16px;
+    border: solid 0.1rem ${({ theme }) => theme.colors.whiteGray};
   }
 `
 
