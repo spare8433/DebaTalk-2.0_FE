@@ -25,7 +25,7 @@ export const CarouselTrack = styled.div<{ contetWidth: number; currentSlide: num
   left: ${({ contetWidth, currentSlide }) => `${(contetWidth * currentSlide * -1).toString()}px`};
   top: 0;
   display: flex;
-  transition: opacity 1s ease-in-out;
+  transition: left 1s ease-in-out;
 `
 
 export const CarouselButton = styled(LessStyleBtn)`
