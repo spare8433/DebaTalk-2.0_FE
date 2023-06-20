@@ -4,7 +4,7 @@ import { ReducerStates } from '@store/rootReducer'
 import { useAppSelector } from '@store/store'
 import Link from 'next/link'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
-import { CssRem, CssString } from 'types/customCssType'
+import { CssPercent, CssRem, CssString } from 'types/customCssType'
 import FitNextImage from './fitNextImage'
 
 interface ProfileTheme {
@@ -61,6 +61,7 @@ const Profile = ({ mode = 'white', link }: PropTypes) => {
                   width: new CssRem(3.2),
                   height: new CssRem(3.2),
                   boxShadow: new CssString('rgba(99, 99, 99, 0.3) 0px 2px 8px 0px'),
+                  borderRadius: new CssPercent(100),
                 }}
               >
                 <FitNextImage
