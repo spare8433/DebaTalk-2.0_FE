@@ -5,6 +5,7 @@ const GlobalStyles = createGlobalStyle`
     ${normalize}
     * {
       box-sizing: border-box;
+      color: #3b3b3b;
     }
     html, body, #__next{
       width: 100%;
@@ -22,16 +23,20 @@ const GlobalStyles = createGlobalStyle`
     }
     a {
       cursor: pointer;
-      color:black;
+      color:#3b3b3b;
       text-decoration: none;
       outline: none
     }
     a:hover, a:active {
-      color:black;
+      color:#3b3b3b;
       text-decoration: none;
     }
     div{
       box-sizing: border-box;
+    }
+    ul {
+      padding: 0;
+      margin: 0;
     }
     select,input,textarea{
       font-family: 'Noto Sans KR', sans-serif;   
