@@ -69,17 +69,9 @@ export const MainBox = styled.div`
 `
 
 // MainBox 헤더부분
-export const HeaderBox = styled.div`
-  display: flex;
-  align-items: center;
-  height: 5rem;
+export const BreadcrumbBox = styled.div`
+  width: 100%;
   background-color: white;
-  padding-left: 10px;
-  a {
-    font-size: 1.3rem;
-    margin: 0 0.5rem;
-    padding: 0.5rem;
-  }
 `
 
 // MainBox 에 가변되는 내용을 감싸는 박스
