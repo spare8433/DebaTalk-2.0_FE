@@ -24,17 +24,17 @@ export const HeaderBox = styled.div`
 `
 
 export const MainTopMenu = styled.ul`
-  padding: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-weight: 500;
   height: min-content;
   li {
+    padding: 1.5rem 0;
     display: flex;
     align-items: flex-end;
     margin: 0 2.5rem;
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     list-style: none;
     cursor: pointer;
 
