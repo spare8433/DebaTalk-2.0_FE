@@ -1,14 +1,13 @@
-import { ImgBox } from "@styles/commonStyle"
-import styled from "styled-components"
+import styled from 'styled-components'
 
 export const IndexContainor = styled.div`
-  width:100%;
+  width: 100%;
 `
 export const OpinionItem = styled.div`
-  border: 1px solid ${({theme}) => theme.colors.gray_2};
+  border: 1px solid ${({ theme }) => theme.colors.gray};
   margin-bottom: 24px;
   border-radius: 5px;
-` 
+`
 export const OpinionBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -16,14 +15,14 @@ export const OpinionBox = styled.div`
 `
 export const OpinionInfoLine = styled.div`
   display: flex;
-  h3{
+  h3 {
     font-weight: 500;
-    margin:0 16px;
+    margin: 0 16px;
   }
-  span{
+  span {
     font-size: 14px;
     font-weight: 400;
-    color: ${({theme})=> theme.colors.gray_2};
+    color: ${({ theme }) => theme.colors.gray};
     align-self: center;
   }
 `
@@ -34,10 +33,14 @@ export const UserOpinion = styled.div`
   margin-right: 20px;
 `
 
-export const Selection = styled.div<{ selection: 'A' | 'B' }>`
-  color: ${({selection,theme}) => 
-    selection === 'A' ? theme.colors.soft_blue : theme.colors.soft_pink 
-  };
+export const Selection = styled.span<{ selection: 'A' | 'B' | '찬성' | '반대' }>`
+  color: ${({ selection, theme }) =>
+    selection === 'A' || '찬성' ? theme.colors.softBlue : theme.colors.softPink};
+  margin: 0 6px;
+  font-weight: 600;
+`
+
+export const Score = styled.span`
   margin: 0 6px;
   font-weight: 600;
 `
@@ -57,7 +60,7 @@ export const PostContentLine = styled.p`
 export const InteractButtonLine = styled.div`
   display: flex;
   justify-content: space-between;
-  border-top: solid 1px ${({theme}) => theme.colors.gray_3};
+  border-top: solid 1px ${({ theme }) => theme.colors.whiteGray};
   padding-top: 12px;
 `
 
@@ -70,11 +73,8 @@ export const ShowRepliesButton = styled.div`
   display: flex;
   cursor: pointer;
   span {
-    color: ${({theme}) => theme.colors.gray_3}
-  }
-  ${ImgBox} {
-    margin-left: 8px;
-    img { align-self:center}
+    color: ${({ theme }) => theme.colors.whiteGray};
+    margin-right: 8px;
   }
 `
 
@@ -83,22 +83,17 @@ export const SubButtonLine = styled.div`
 `
 
 export const InteractButtonItem = styled.div`
-  margin:0px 30px 0px 10px;
+  margin: 0px 30px 0px 10px;
   cursor: pointer;
-  ${ImgBox} {
-
-  }
   span {
-    color: ${({theme})=> theme.colors.gray_2};
+    color: ${({ theme }) => theme.colors.gray};
   }
 `
-export const ReplyListBox = styled.div`
-  
-`
+export const ReplyListBox = styled.div``
 export const ReplyItem = styled.div`
   padding: 20px 20px 20px 50px;
-  background-color: ${({theme})=> theme.colors.background};
-  position:relative;
+  background-color: ${({ theme }) => theme.colors.background};
+  position: relative;
 `
 export const ReplyIcon = styled.div`
   position: absolute;

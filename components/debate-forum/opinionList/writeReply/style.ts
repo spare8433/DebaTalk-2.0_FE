@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const IndexContainor = styled.div`
   width: 100%;
-` 
+`
 
 export const ReplyTextAreaBox = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ export const ReplyTextAreaBox = styled.div`
   margin-bottom: 16px;
 `
 export const UserTag = styled.span`
-  color: ${({theme}) => theme.colors.soft_blue};
+  color: ${({ theme }) => theme.colors.softBlue};
   margin-right: 6px;
 `
 
@@ -21,10 +21,16 @@ export const ReplyTextArea = styled.textarea`
   flex: 1;
   height: auto;
   outline: none;
-  resize:none;
+  resize: none;
   border: none;
   outline: none;
   overflow: hidden;
   overflow-wrap: break-word;
   background-color: inherit;
+`
+
+export const ButtonLine = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 `
