@@ -1,6 +1,8 @@
+import { NextImageBox } from '@styles/commonStyle/imgBox'
 import React, { ReactNode, useState } from 'react'
 import styled from 'styled-components'
-import { ImgBox } from '@styles/commonStyle'
+import { CssRem } from 'types/customCssType'
+import FitNextImage from './fitNextImage'
 
 const SlideMenuBox = styled.div`
   width: 100%;
@@ -9,7 +11,7 @@ const SlideMenuBox = styled.div`
 const TitleBox = styled.div`
   display: flex;
   justify-content: space-between;
-  padding:14px 30px;
+  padding: 14px 30px;
 `
 
 const MenuListBox = styled.div`
@@ -20,30 +22,29 @@ const SlideButton = styled.div`
   cursor: pointer;
 `
 
-interface propTypes {
-	title:	ReactNode,
+interface PropTypes {
+  title: ReactNode
   children: ReactNode
 }
 
-const SlideMenu = ({title,children}:propTypes) => {
+const SlideMenu = ({ title, children }: PropTypes) => {
+  const [visible, setVisible] = useState(false)
 
-  const [visible,setVisible] = useState(false);
-
-  return(
+  return (
     <SlideMenuBox>
       <TitleBox onClick={() => setVisible(!visible)}>
         {title}
         <SlideButton>
-          <ImgBox width='24'>
-            <img alt='slide-icon' src={visible ? '/img/slideUp_white.png' : '/img/slideDown_white.png'}></img>
-          </ImgBox>
+          <NextImageBox styleOption={{ width: new CssRem(2.4), height: new CssRem(2.4) }}>
+            <FitNextImage
+              alt="slide-icon"
+              src={visible ? '/img/slideUp_white.png' : '/img/slideDown_white.png'}
+            />
+          </NextImageBox>
         </SlideButton>
       </TitleBox>
 
-      <MenuListBox>
-        {visible ? children : ''}
-      </MenuListBox>
-      
+      <MenuListBox>{visible ? children : ''}</MenuListBox>
     </SlideMenuBox>
   )
 }
