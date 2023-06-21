@@ -13,8 +13,8 @@ const CommentTextArea = styled.textarea`
   width: 100%;
   resize: none;
   outline: none;
-  padding: 4px 8px;
-  margin-bottom: 10px;
+  padding: 0.4rem 0.8rem;
+  margin-bottom: 1rem;
 `
 
 const ButtonLine = styled.div`
@@ -26,7 +26,7 @@ const ButtonLine = styled.div`
 type WrapperProps = {
   textState: string
   setState: React.Dispatch<React.SetStateAction<string>>
-  onChangeState: (e: React.ChangeEvent) => void
+  onChangeState: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   submitFn: (state: string) => void
 }
 
