@@ -29,12 +29,12 @@ const WriteDebatePost = () => {
   const [title, onChangeTitle] = useInput('')
   const [optionA, onChangeOptionA] = useInput('')
   const [optionB, onChangeOptionB] = useInput('')
-  const [description, onChangeDescription] = useInput('')
-  const [issue1, onChangeIssue1] = useInput('')
-  const [issue2, onChangeIssue2] = useInput('')
+  const [description, onChangeDescription] = useInput<HTMLTextAreaElement>('')
+  const [issue1, onChangeIssue1] = useInput<HTMLTextAreaElement>('')
+  const [issue2, onChangeIssue2] = useInput<HTMLTextAreaElement>('')
   const [article, setArticle] = useState<string[]>([])
-  const [category, onChangeCategory] = useInput('자유')
-  const [method, onChangeMethod] = useInput('이슈토론')
+  const [category, onChangeCategory] = useInput<HTMLSelectElement>('자유')
+  const [method, onChangeMethod] = useInput<HTMLSelectElement>('이슈토론')
 
   // 이미지 업로드 관련
   const [imageFile, setImageFile] = useState<FileList>()
