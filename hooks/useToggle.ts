@@ -1,16 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-const useToggle = (value = false) => {
-  const [toggle, setToggle] = useState(value)
+export default (): [boolean, () => void, () => void] => {
+  const [isOn, setCurrentState] = useState(false)
 
-  const turnOn = () => {
-    if (toggle === false) setToggle(true)
-  }
+  const turnOn = () => setCurrentState(true)
+  const turnOff = () => setCurrentState(false)
 
-  const turnOff = () => {
-    if (toggle === true) setToggle(false)
-  }
-  return [turnOn,turnOff]
+  return [isOn, turnOn, turnOff]
 }
-
-export default useToggle

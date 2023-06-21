@@ -1,19 +1,17 @@
 import { useState } from 'react'
 
-const useCounter = (value:number,max:number,min:number = 0) => {
-  const [count,setCount] = useState(value)
+const useCounter = (value: number, max: number, min = 0) => {
+  const [count, setCount] = useState(value)
 
   const increase = () => {
-    if (count === max) return
-    return setCount(count + 1)
+    if (count !== max) setCount((preCount) => preCount + 1)
   }
 
   const decrease = () => {
-    if (count === min) return
-    return setCount(count - 1)
+    if (count !== min) setCount((preCount) => preCount - 1)
   }
 
-  return [count,increase,decrease,setCount]
+  return [count, increase, decrease, setCount]
 }
 
 export default useCounter
