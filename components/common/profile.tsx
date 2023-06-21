@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { ReducerStates } from '@store/rootReducer'
 import { useAppSelector } from '@store/store'
@@ -15,7 +15,7 @@ const ProfileContainor = styled.div<ProfileTheme>`
   display: flex;
   align-items: center;
   /* justify-content: center; */
-  font-size: 18px;
+  font-size: 1.8rem;
   color: ${({ mode, theme }) => (mode === 'dark' ? 'white' : theme.colors.mainBlack)};
 
   a {
@@ -82,4 +82,4 @@ const Profile = ({ mode = 'white', link }: PropTypes) => {
   )
 }
 
-export default memo(Profile)
+export default React.memo(Profile)
