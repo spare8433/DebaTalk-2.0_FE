@@ -1,4 +1,4 @@
-import { CreateIssueOpinionParam, CreateIssueReplyParam } from 'params'
+import { CreateIssueOpinionParam, CreateIssueReplyParam } from 'types/params'
 import { axiosInstance } from '.'
 
 // IssueDebatePost 등록

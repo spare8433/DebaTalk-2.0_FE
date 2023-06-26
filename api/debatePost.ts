@@ -1,4 +1,4 @@
-import { CreateDebatePostParam } from 'params'
+import { CreateDebatePostParam } from 'types/params'
 import { axiosInstance } from '.'
 
 // debate-post 등록

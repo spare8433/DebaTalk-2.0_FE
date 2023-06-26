@@ -1,4 +1,4 @@
-import { GetDebatePostsParam } from 'params'
+import { GetDebatePostsParam } from 'types/params'
 import { axiosInstance } from '.'
 
 // prosConsDebatePosts 가져오기

@@ -1,4 +1,4 @@
-import { LoginParam, SignUpParam } from 'params'
+import { LoginParam, SignUpParam } from 'types/params'
 import { axiosInstance } from '.'
 
 // 로그인 api

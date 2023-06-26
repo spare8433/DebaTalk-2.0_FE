@@ -1,4 +1,4 @@
-import { CreateProsConsOpinionParam, CreateProsConsReplyParam } from 'params'
+import { CreateProsConsOpinionParam, CreateProsConsReplyParam } from 'types/params'
 import { axiosInstance } from '.'
 
 // prosconsDebatePost 등록

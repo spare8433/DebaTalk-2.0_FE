@@ -1,4 +1,4 @@
-import { CreateBalanceOpinionParam, CreateBalanceReplyParam } from 'params'
+import { CreateBalanceOpinionParam, CreateBalanceReplyParam } from 'types/params'
 import { axiosInstance } from '.'
 
 // balanceDebatePost 등록
