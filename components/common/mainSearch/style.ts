@@ -11,6 +11,9 @@ export const MainSearchBox = styled.div`
   height: 4.5rem;
   padding: 0 1.2rem;
 
+  form {
+    width: 100%;
+  }
   input {
     width: 100%;
     border: 0;
