@@ -11,44 +11,36 @@ export const BreadcrumbContainor = styled.ul`
   padding-left: 10px;
   li {
     list-style: none;
-    margin: 0 0.5rem;
   }
   a {
     font-size: 1.3rem;
     padding: 0.5rem;
+    margin: 0 0.5rem;
   }
 `
 
 const Breadcrumb = () => {
   const router = useRouter()
 
-  console.log(`Home${router.asPath}`.split('/'))
-  console.log(`Home${router.asPath}`)
-  console.log(router.asPath)
-  console.log(router.asPath.split('/'))
   return (
     <BreadcrumbContainor>
       {router.asPath === '/' ? (
-        <>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
+        <li>
+          <Link href="/">Home</Link>
           <span>{'>'}</span>
-        </>
+        </li>
       ) : (
-        `Home${router.asPath}`.split('/').map((res, index, arr) => {
+        `Home${router.asPath.split('?')[0]}`.split('/').map((res, index, arr) => {
           let href = '/'
           for (let count = 0; count <= index; count += 1) {
             if (count > 0) href += `${arr[count]}/`
           }
 
           return (
-            <>
-              <li>
-                <Link href={href}>{res}</Link>
-              </li>
+            <li key={`breadcrumb_${index}`}>
+              <Link href={href}>{res}</Link>
               <span>{'>'}</span>
-            </>
+            </li>
           )
         })
       )}
