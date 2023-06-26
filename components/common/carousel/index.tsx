@@ -103,15 +103,15 @@ const Carousel = ({ option, banner, children }: CarouselProps) => {
 
       <CarouselBox ref={carouselBoxRef} height={option.height}>
         <CarouselContent>
-          <CarouselTrack contetWidth={boxSize ?? 0} currentSlide={currentSlide}>
+          <CarouselTrack contetWidth={boxSize} currentSlide={currentSlide}>
             {Array.isArray(children) ? (
               children.map((res, index) => (
-                <SlidePage key={`slidepage_${index}`} contetWidth={boxSize ?? 0}>
+                <SlidePage key={`slidepage_${index}`} contetWidth={boxSize}>
                   {res}
                 </SlidePage>
               ))
             ) : (
-              <SlidePage contetWidth={boxSize ?? 0}>{children}</SlidePage>
+              <SlidePage contetWidth={boxSize}>{children}</SlidePage>
             )}
           </CarouselTrack>
           {banner ?? ''}
