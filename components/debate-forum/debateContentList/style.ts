@@ -9,9 +9,9 @@ export const ContentBox = styled.div`
 `
 
 export const PostBox = styled.div`
-  height: 18rem;
+  height: 20rem;
   display: flex;
-  padding: 1.6rem 0;
+  padding: 2rem 0;
   border-bottom: ${({ theme }) => theme.colors.whiteGray} 0.1rem solid;
 `
 

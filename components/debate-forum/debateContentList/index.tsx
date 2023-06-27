@@ -14,7 +14,7 @@ import {
   TextContentLine,
 } from './style'
 
-type Props = {
+interface Props {
   method: '밸런스토론' | '이슈토론' | '찬반토론'
 }
 
@@ -24,7 +24,7 @@ const detailLinkType = {
   찬반토론: 'prosCons-post',
 }
 
-const DebateContentBox = ({ method }: Props) => {
+const DebateContentList = ({ method }: Props) => {
   const balanceDebatePosts = useAppSelector((state) => state.balanceDebatePosts.postsData)
   const issueDebatePosts = useAppSelector((state) => state.issueDebatePosts.postsData)
   const prosConsDebatePosts = useAppSelector((state) => state.prosConsDebatePosts.postsData)
@@ -53,7 +53,7 @@ const DebateContentBox = ({ method }: Props) => {
                 boxShadow: new CssString('rgba(99, 99, 99, 0.3) 0px 2px 8px 0px'),
               }}
             >
-              <FitNextImage src={res.imgUrl ? res.imgUrl : '/img/default-thumbnail.png'} alt="" />
+              <FitNextImage src={res.imgUrl ?? '/img/default-thumbnail.png'} alt="" />
             </NextImageBox>
             <TextBox>
               <h3>{res.title}</h3>
@@ -83,4 +83,4 @@ const DebateContentBox = ({ method }: Props) => {
   )
 }
 
-export default DebateContentBox
+export default DebateContentList

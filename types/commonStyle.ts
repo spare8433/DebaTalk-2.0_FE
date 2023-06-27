@@ -1,4 +1,4 @@
-import CssValue from 'types/customCssType/cssValue'
+import { CssValue } from './customCssType'
 
 export interface BasicStyle {
   width?: CssValue

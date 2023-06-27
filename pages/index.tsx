@@ -18,8 +18,7 @@ const Home = () => (
   <>
     <ContentContainor className="topBanner">
       <ContentBox>
-
-        <MainSearch searchText="" />
+        <MainSearch />
         <MainCarousel />
       </ContentBox>
     </ContentContainor>
@@ -31,18 +30,19 @@ const Home = () => (
     </ContentContainor>
 
     <ContentContainor className="recentReaction">
-      <ContentBox>
-        {/* <RecentReaction></RecentReaction> */}
-      </ContentBox>
+      <ContentBox>{/* <RecentReaction></RecentReaction> */}</ContentBox>
     </ContentContainor>
   </>
 )
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  await store.dispatch(getDebateKeywords(querry));
+  await store.dispatch(getDebateKeywords(querry))
   await store.dispatch(getDebateHotTopics())
   const cookie = req ? req.headers.cookie : ''
-  if (req && cookie) { // 서버쪽 쿠키 공유 버그
+  console.log(req.headers.cookie)
+  console.log(cookie)
+  if (req && cookie) {
+    // 서버쪽 쿠키 공유 버그
     axios.defaults.headers.Cookie = cookie
   }
   await store.dispatch(loadMyInfo())

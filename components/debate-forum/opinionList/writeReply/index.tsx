@@ -3,7 +3,7 @@ import { createBalanceReply, getBalanceDebatePost } from '@store/slices/balanceD
 import { createIssueReply, getIssueDebatePost } from '@store/slices/issueDebatePost'
 import { useAppDispatch, useAppSelector } from '@store/store'
 import { useRouter } from 'next/router'
-import { CreateBalanceReplyParam } from 'params'
+import { CreateBalanceReplyParam } from 'types/params'
 import { PrimaryButton, SubButton } from '@styles/commonStyle/buttons'
 import { CssRem } from 'types/customCssType'
 import { createProsConsReply, getProsConsDebatePost } from '@store/slices/prosConsDebatePost'

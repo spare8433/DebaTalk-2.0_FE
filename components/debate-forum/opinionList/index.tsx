@@ -6,7 +6,7 @@ import Opinion from './opinion'
 import { OpinionItem } from './style'
 
 type WrapperProps = {
-  data:
+  data?:
     | BalanceDebateOpinonDataState[]
     | IssueDebateOpinionDataState[]
     | ProsConsDebateOpinonDataState[]
@@ -16,7 +16,7 @@ type WrapperProps = {
 const OpinionList = ({ data, mode }: WrapperProps) => (
   <div>
     {/* 의견 리스트 */}
-    {data.map((opinion, index) => (
+    {data?.map((opinion, index) => (
       <OpinionItem key={`opinionItem_${index}`}>
         <Opinion opinion={opinion} mode={mode} />
       </OpinionItem>
