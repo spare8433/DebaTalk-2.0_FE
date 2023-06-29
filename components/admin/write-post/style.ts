@@ -10,17 +10,17 @@ export const TopInputBox = styled.div`
   flex-direction: column;
   font-size: 1.5rem;
 
-  h3 {
+  h5 {
     color: ${({ theme }) => theme.colors.gray};
     margin-bottom: 1rem;
   }
   span {
     margin: 0 8px;
+    font-weight: 600;
   }
   ${BasicSelect} {
     height: 3rem;
-    margin: 0 !important;
-    margin-left: 1rem;
+    margin: 0;
     margin-right: 3rem;
     color: ${({ theme }) => theme.colors.deepGray};
     padding-right: 0.8rem;

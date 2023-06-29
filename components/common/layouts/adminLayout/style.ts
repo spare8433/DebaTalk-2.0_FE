@@ -30,23 +30,6 @@ export const MenuBox = styled.div`
   }
 `
 
-export const SlideMenuTitle = styled.div`
-  text-align: center;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-`
-
-export const SlideMenuList = styled.div`
-  background-color: ${({ theme }) => theme.colors.deepGray};
-  p {
-    color: white;
-    font-size: 16px;
-    padding: 12px 0;
-    margin: 0;
-  }
-`
-
 export const LogoBox = styled.div`
   text-align: center;
   padding-bottom: 10px;

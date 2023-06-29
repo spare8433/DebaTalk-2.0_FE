@@ -5,13 +5,10 @@ import styled from 'styled-components'
 import { CssRem, CssString } from 'types/customCssType'
 
 const ImgInputLine = styled.div`
-  margin: 20px 0;
+  margin: 2rem 0 0;
   display: flex;
   font-size: 16px;
   label {
-    span {
-      margin-bottom: 1rem;
-    }
     display: flex;
     flex-direction: column;
     color: ${({ theme }) => theme.colors.gray};
@@ -66,7 +63,7 @@ const ImageUploadInput = ({ previewImage, setPreviewImage, setImageFile }: Props
       <input type="file" id="fileElem" onChange={onLoadFile} accept="image/*" />
       <ImgInputLine>
         <label htmlFor="fileElem">
-          <span>이미지 업로드</span>
+          <h5>이미지 업로드</h5>
           <PreviewImgBox
             styleOption={{
               width: new CssRem(80),

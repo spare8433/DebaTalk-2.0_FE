@@ -5,8 +5,28 @@ import { adminListData } from '@data/staticData'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
 import { CssRem } from 'types/customCssType'
-import { SlideMenuList, SlideMenuTitle } from '../style'
+import styled from 'styled-components'
 
+const SlideMenuTitle = styled.div`
+  text-align: center;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+
+  span {
+    color: white;
+  }
+`
+
+const SlideMenuList = styled.div`
+  background-color: ${({ theme }) => theme.colors.deepGray};
+  p {
+    color: white;
+    font-size: 16px;
+    padding: 12px 0;
+    margin: 0;
+  }
+`
 const AdminNav = () => (
   <>
     {adminListData.map((menu, menuIndex) => (

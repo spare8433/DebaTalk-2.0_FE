@@ -120,7 +120,7 @@ const WriteDebatePost = () => {
     <Containor>
       <form onSubmit={onSubmitForm} encType="multipart/form-data">
         <TopInputBox>
-          <h3> * 게시물 종류를 선택 후 형식에 맞게 작성해 주세요 * </h3>
+          <h5> * 게시물 종류를 선택 후 형식에 맞게 작성해 주세요 * </h5>
           <TitleLine>
             {/* 게시물 타이틀 */}
             <span>게시물 제목</span>
