@@ -1,13 +1,14 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-const NavContainor = styled.div`
+const NavContainor = styled.ul`
   display: flex;
   padding: 0 10px;
   width: 100%;
   height: 100%;
 `
-const Itmes = styled.div<{ current: boolean }>`
+const Itmes = styled.li<{ current: boolean }>`
+  list-style: none;
   a {
     cursor: pointer;
     &:hover,

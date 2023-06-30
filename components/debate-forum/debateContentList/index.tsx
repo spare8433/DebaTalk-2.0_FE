@@ -15,13 +15,13 @@ import {
 } from './style'
 
 interface Props {
-  method: '밸런스토론' | '이슈토론' | '찬반토론'
+  method: 'issue' | 'balance' | 'proscons'
 }
 
 const detailLinkType = {
-  밸런스토론: 'balance-post',
-  이슈토론: 'issue-post',
-  찬반토론: 'prosCons-post',
+  balance: 'balance-post',
+  issue: 'issue-post',
+  proscons: 'proscons-post',
 }
 
 const DebateContentList = ({ method }: Props) => {
@@ -30,9 +30,9 @@ const DebateContentList = ({ method }: Props) => {
   const prosConsDebatePosts = useAppSelector((state) => state.prosConsDebatePosts.postsData)
 
   const postType = {
-    밸런스토론: balanceDebatePosts,
-    이슈토론: issueDebatePosts,
-    찬반토론: prosConsDebatePosts,
+    balance: balanceDebatePosts,
+    issue: issueDebatePosts,
+    proscons: prosConsDebatePosts,
   }
 
   return (
@@ -40,7 +40,7 @@ const DebateContentList = ({ method }: Props) => {
       {postType[method]?.map((res, index) => (
         <Link
           href={{
-            pathname: `/debate-forum/${detailLinkType[method]}/[pid]`,
+            pathname: `/${detailLinkType[method]}/[pid]`,
             query: { pid: res.id },
           }}
           key={`debatePostItmes${index}`}
@@ -59,19 +59,19 @@ const DebateContentList = ({ method }: Props) => {
               <h3>{res.title}</h3>
               <TextContentLine>{res.description}</TextContentLine>
               <OtherInfoLine>
-                {method === '밸런스토론' && (
+                {method === 'balance' && (
                   <>
                     <BlueText>A 선택 </BlueText>
                     <RedText>B 선택 </RedText>
                   </>
                 )}
-                {method === '찬반토론' && (
+                {method === 'proscons' && (
                   <>
                     <BlueText>찬성 </BlueText>
                     <RedText>반대 </RedText>
                   </>
                 )}
-                {method === '이슈토론' && <span>점수 평균 : </span>}
+                {method === 'issue' && <span>점수 평균 : </span>}
                 <span>의견 {res.hits}</span>
                 <span>조회수 {res.hits}</span>
               </OtherInfoLine>

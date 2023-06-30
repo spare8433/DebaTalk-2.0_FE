@@ -23,7 +23,11 @@ export const DebateCategoryMenus = [
   '기타',
 ]
 
-export const DebateModeMenus = ['이슈토론', '찬반토론', '밸런스토론']
+export const DebateModeMenus = [
+  { key: 'issue', value: '이슈토론' },
+  { key: 'proscons', value: '찬반토론' },
+  { key: 'balance', value: '밸런스토론' },
+]
 
 export const ReportCategory = [
   '광고 및 거래에 관한 내용',
