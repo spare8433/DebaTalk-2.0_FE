@@ -21,6 +21,12 @@ const GlobalStyles = createGlobalStyle`
     h1,h2,h3,h4,h5,h6,p {
       margin: 0;
     }
+    h1 {font-size: 2.4rem}
+    h2 {font-size: 2.2rem}
+    h3 {font-size: 2.0rem}
+    h4 {font-size: 1.8rem}
+    h5 {font-size: 1.6rem}
+    h6 {font-size: 1.4rem}
     a {
       cursor: pointer;
       color:#3b3b3b;
