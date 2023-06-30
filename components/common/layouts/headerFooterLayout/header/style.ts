@@ -17,10 +17,17 @@ export const HeaderContainor = styled.div`
 
 export const HeaderBox = styled.div`
   width: 1160px;
+  height: 6rem;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+`
+
+export const LeftMenu = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
 `
 
 export const MainTopMenu = styled.ul`
@@ -29,11 +36,12 @@ export const MainTopMenu = styled.ul`
   justify-content: space-between;
   font-weight: 500;
   height: min-content;
+  margin-left: 8rem;
   li {
-    padding: 1.5rem 0;
+    padding: 1.5rem 1rem;
     display: flex;
     align-items: flex-end;
-    margin: 0 2.5rem;
+    margin: 0 1.5rem;
     font-size: 1.8rem;
     list-style: none;
     cursor: pointer;
@@ -71,11 +79,19 @@ export const DropDown = styled.div`
     display: block;
 
     li {
+      width: 16rem;
+      height: 4rem;
+      padding: 0;
       &:hover {
         background-color: #f1f2f6;
       }
-      width: 16rem;
-      padding: 1.2rem 1.6rem;
+      a {
+        text-align: center;
+        padding: 1.2rem 0;
+        width: 100%;
+        height: 100%;
+      }
+
       font-size: 1.4rem;
       margin: 0;
       box-sizing: border-box;

@@ -21,6 +21,7 @@ import {
   NotiIconImgBox,
   ProfileBox,
   MainTopMenu,
+  LeftMenu,
 } from './style'
 
 const Header = () => {
@@ -60,50 +61,52 @@ const Header = () => {
     <IndexContainor>
       <HeaderContainor>
         <HeaderBox>
-          {/* 좌측 로고 */}
-          <Link href="/">
-            <NextImageBox styleOption={{ width: new CssRem(25), height: new CssRem(6) }}>
-              <FitNextImage alt="logo" src="/img/logo.png" />
-            </NextImageBox>
-          </Link>
-
-          {/* 중앙 메뉴바 */}
-          <MainTopMenu>
-            <li>홈</li>
-            <li
-              onMouseOver={() => handleDebateForumListMouseOver()}
-              onFocus={() => handleDebateForumListMouseOver()}
-              onMouseOut={() => setIsDebateForumListToggleOn(false)}
-              onBlur={() => setIsDebateForumListToggleOn(false)}
-              style={{ display: 'flex', position: 'relative' }}
-            >
-              토론장
-              <NextImageBox>
-                <FitNextImage src="/img/drop-down_black.png" alt="" />
+          <LeftMenu>
+            {/* 좌측 로고 */}
+            <Link href="/">
+              <NextImageBox styleOption={{ width: new CssRem(25), height: new CssRem(6) }}>
+                <FitNextImage alt="logo" src="/img/logo.png" />
               </NextImageBox>
-              {isDebateForumListToggleOn && (
-                <DebateForumDropDown>
-                  <ul>
-                    <li>
-                      <Link href={{ pathname: '/debate-forum', query: { method: 'issue' } }}>
-                        토론 게시판
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/debate-topic-board">주제 선정 게시판</Link>
-                    </li>
-                  </ul>
-                </DebateForumDropDown>
-              )}
-            </li>
+            </Link>
 
-            <li>
-              <Link href="/community">커뮤니티</Link>
-            </li>
-            <li>
-              <Link href="/">랭킹</Link>
-            </li>
-          </MainTopMenu>
+            {/* 중앙 메뉴바 */}
+            <MainTopMenu>
+              <li>홈</li>
+              <li
+                onMouseOver={() => handleDebateForumListMouseOver()}
+                onFocus={() => handleDebateForumListMouseOver()}
+                onMouseOut={() => setIsDebateForumListToggleOn(false)}
+                onBlur={() => setIsDebateForumListToggleOn(false)}
+                style={{ display: 'flex', position: 'relative' }}
+              >
+                토론장
+                <NextImageBox>
+                  <FitNextImage src="/img/drop-down_black.png" alt="" />
+                </NextImageBox>
+                {isDebateForumListToggleOn && (
+                  <DebateForumDropDown>
+                    <ul>
+                      <li>
+                        <Link href={{ pathname: '/debate-forum', query: { method: 'issue' } }}>
+                          토론 게시판
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/debate-topic-board">주제 선정 게시판</Link>
+                      </li>
+                    </ul>
+                  </DebateForumDropDown>
+                )}
+              </li>
+
+              <li>
+                <Link href="/community">커뮤니티</Link>
+              </li>
+              <li>
+                <Link href="/">랭킹</Link>
+              </li>
+            </MainTopMenu>
+          </LeftMenu>
 
           {/* 우측 프로필 정보 */}
           <ProfileBox>
