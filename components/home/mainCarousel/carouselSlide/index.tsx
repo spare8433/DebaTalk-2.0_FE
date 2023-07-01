@@ -30,13 +30,13 @@ const Keyword = styled.div`
 
 interface Props {
   data?: DebateKeywordData[]
-  path: 'issue-post' | 'balance-post' | 'prosCons-post'
+  path: 'issue-post' | 'balance-post' | 'proscons-post'
 }
 
 const pathKeyword = {
   'issue-post': '이슈토론',
   'balance-post': '찬반토론',
-  'prosCons-post': '밸런스토론',
+  'proscons-post': '밸런스토론',
 }
 
 const CarouselSlide = ({ data, path }: Props) => (

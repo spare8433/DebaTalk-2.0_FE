@@ -52,7 +52,7 @@ const MainDebateContent = () => {
           return (
             <ProsConsSubContentBox key={`prosConsPost_${index}`}>
               <Link
-                href={{ pathname: '/debate-forum/prosCons-post/[pid]', query: { pid: res.id } }}
+                href={{ pathname: '/debate-forum/proscons-post/[pid]', query: { pid: res.id } }}
               >
                 <h3>{res.title}</h3>
                 <VoteGauge>

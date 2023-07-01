@@ -44,7 +44,7 @@ const MainCarousel = () => {
       >
         <CarouselSlide data={debateKeywordsData?.issueKeyword} path="issue-post" />
         <CarouselSlide data={debateKeywordsData?.balanceKeyword} path="balance-post" />
-        <CarouselSlide data={debateKeywordsData?.prosConsKeyword} path="prosCons-post" />
+        <CarouselSlide data={debateKeywordsData?.prosConsKeyword} path="proscons-post" />
       </Carousel>
     </MainCarouselLayout>
   )
