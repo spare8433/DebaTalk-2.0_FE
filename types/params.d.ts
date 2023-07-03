@@ -21,12 +21,12 @@ export type GetDebatePostsParam = {
   readonly category?: string
   readonly searchText?: string
   readonly limit?: number
-  readonly page?: number
+  readonly page?: string
   readonly key?: 'createdAt' | 'hits' | string
   readonly order?: 'DESC' | 'ASC' | string
 }
 
-export type GetIntegrateDebatePosts = {
+export type GetIntegratedDebatePosts = {
   readonly searchText: string
 }
 
