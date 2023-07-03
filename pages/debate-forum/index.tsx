@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import HeaderFooterLayout from '@components/common/layouts/headerFooterLayout'
 import { wrapper } from '@store/store'
-import DebateContentBox from '@components/debate-forum/debateContentList'
+import DebateContentList from '@components/debate-forum/debateContentList'
 import { loadMyInfo } from '@store/slices/user'
 import axios from 'axios'
 import { getIssueDebatePosts } from '@store/slices/issueDebatePosts'
@@ -48,9 +48,10 @@ const PrColorLine = styled(Line)`
 
 interface Props {
   method: 'issue' | 'balance' | 'proscons'
+  page: string
 }
 
-const DebateForumPage = ({ method }: Props) => (
+const DebateForumPage = ({ method, page }: Props) => (
   <IndexContainor>
     <HeaderInfoBox>
       <p>
@@ -65,9 +66,9 @@ const DebateForumPage = ({ method }: Props) => (
       <PrColorLine styleOption={{ width: new CssRem(25), height: new CssRem(0.2) }} />
     </HeaderInfoBox>
     <ContentContainor>
-      <DetailedSerachOptions method={method} />
+      <DetailedSerachOptions method={method} page={page} />
 
-      <DebateContentBox method={method} />
+      <DebateContentList method={method} page={page} />
     </ContentContainor>
   </IndexContainor>
 )
@@ -77,8 +78,12 @@ DebateForumPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
-  const { method } = query
-  if (typeof method === 'string' && ['issue', 'balance', 'proscons'].includes(method)) {
+  const { method, page } = query
+  if (
+    typeof method === 'string' &&
+    typeof page === 'string' &&
+    ['issue', 'balance', 'proscons'].includes(method)
+  ) {
     const { cookie } = req.headers
 
     try {
@@ -87,12 +92,12 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         axios.defaults.headers.Cookie = cookie
         await store.dispatch(loadMyInfo()).unwrap()
       }
-      await store.dispatch(getIssueDebatePosts({ limit: 4 })).unwrap()
+      await store.dispatch(getIssueDebatePosts({ limit: 4, page })).unwrap()
     } catch (error) {
       console.log(error)
       return { notFound: true }
     }
-    return { props: { method } }
+    return { props: { method, page } }
   }
   return { notFound: true }
 })

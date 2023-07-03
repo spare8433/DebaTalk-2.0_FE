@@ -56,6 +56,12 @@ export const OtherInfoLine = styled.div`
   }
 `
 
+export const PaginationBox = styled.div`
+  width: 100%;
+  font-size: 1.6rem !important;
+  margin: 3rem 0 1rem;
+`
+
 export const BlueText = styled.span`
   color: ${({ theme }) => theme.colors.softBlue};
 `

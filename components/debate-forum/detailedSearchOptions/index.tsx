@@ -31,15 +31,15 @@ const ORDER_OPTION: {
 
 interface Props {
   method: 'issue' | 'balance' | 'proscons'
+  page: string
 }
 
-const DetailedSerachOptions = ({ method }: Props) => {
+const DetailedSerachOptions = ({ method, page }: Props) => {
   const dispatch = useAppDispatch()
   // const [debateMode, setDebateMode] = useState<'이슈토론' | '밸런스토론' | '찬반토론'>('이슈토론')
-  const [debateCategory, setDebateCategory] = useState('자유')
+  const [debateCategory, setDebateCategory] = useState('전체')
   const [searchText, onChangeSearchText] = useInput('')
   const [selectOption, onChangeselectOption] = useInput<HTMLSelectElement>('최신순')
-  const [page] = useState(1)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,7 +77,7 @@ const DetailedSerachOptions = ({ method }: Props) => {
         <DebateMethodList>
           {DebateModeMenus.map((res) => (
             <ModeItem key={`debateModeItems_${res.key}`} isCurrent={res.key === method}>
-              <Link href={{ pathname: '/debate-forum', query: { method: res.key } }}>
+              <Link href={{ pathname: '/debate-forum', query: { method: res.key, page: '1' } }}>
                 {res.value}
               </Link>
             </ModeItem>
@@ -105,7 +105,9 @@ const DetailedSerachOptions = ({ method }: Props) => {
               {res}
             </CategoryItem>
           ))}
-        />
+        >
+          <CategoryItem value="전체">전체</CategoryItem>
+        </NavLinkList>
       </CategoryBox>
       <DetailControllBox>
         <SearchBox>
