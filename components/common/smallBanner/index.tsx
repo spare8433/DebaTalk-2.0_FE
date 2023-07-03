@@ -37,7 +37,7 @@ const KeywordLine = styled.div`
     padding: 8px;
     margin-right: 16px;
   }
-  h3 {
+  h6 {
     max-width: 800px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -55,7 +55,7 @@ export const SmallBanner = () => (
     <SmallBannerBox>
       <KeywordLine>
         <span>과학 / IT</span>
-        <h3>인터넷은 사회의 발전을 저해하는 도구인가</h3>
+        <h6>인터넷은 사회의 발전을 저해하는 도구인가</h6>
         <p>- 주제토론</p>
         {/* {'category'}
           {'title'}

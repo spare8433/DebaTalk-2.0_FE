@@ -138,7 +138,7 @@ const WriteDebatePost = () => {
             <span>게시물 종류</span>
             <BasicSelect value={method} onChange={onChangeMethod}>
               {DebateModeMenus.map((res, index) => (
-                <option key={`debateMode_${index}`}>{res}</option>
+                <option key={`debateMode_${index}`}>{res.value}</option>
               ))}
             </BasicSelect>
 
