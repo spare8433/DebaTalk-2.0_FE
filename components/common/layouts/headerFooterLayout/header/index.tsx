@@ -87,7 +87,12 @@ const Header = () => {
                   <DebateForumDropDown>
                     <ul>
                       <li>
-                        <Link href={{ pathname: '/debate-forum', query: { method: 'issue' } }}>
+                        <Link
+                          href={{
+                            pathname: '/debate-forum',
+                            query: { method: 'issue', page: '1' },
+                          }}
+                        >
                           토론 게시판
                         </Link>
                       </li>
