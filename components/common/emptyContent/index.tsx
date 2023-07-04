@@ -24,7 +24,7 @@ const EmptyContentContainor = styled.div`
 
   ${LessStyleBtn} {
     color: ${({ theme }) => theme.colors.main};
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1.8rem;
   }
 `

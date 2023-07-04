@@ -39,7 +39,7 @@ const Button = styled.a<{ styleOption?: StyleOption; isCurrent: boolean }>`
   ${({ isCurrent }) =>
     isCurrent &&
     css`
-      font-weight: 600;
+      font-weight: 700;
       color: ${({ theme }) => theme.colors.main};
       text-decoration: underline;
     `}

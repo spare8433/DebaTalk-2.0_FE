@@ -37,12 +37,12 @@ export const Selection = styled.span<{ selection: 'A' | 'B' | '찬성' | '반대
   color: ${({ selection, theme }) =>
     selection === 'A' || '찬성' ? theme.colors.softBlue : theme.colors.softPink};
   margin: 0 6px;
-  font-weight: 600;
+  font-weight: 700;
 `
 
 export const Score = styled.span`
   margin: 0 6px;
-  font-weight: 600;
+  font-weight: 700;
 `
 
 export const OpinionInfo = styled.div`

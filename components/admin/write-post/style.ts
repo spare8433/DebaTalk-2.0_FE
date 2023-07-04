@@ -16,7 +16,7 @@ export const TopInputBox = styled.div`
   }
   span {
     margin: 0 8px;
-    font-weight: 600;
+    font-weight: 700;
   }
   ${BasicSelect} {
     height: 3rem;

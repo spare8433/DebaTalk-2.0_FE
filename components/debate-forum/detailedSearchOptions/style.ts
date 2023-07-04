@@ -33,7 +33,7 @@ export const ModeItem = styled.li<{ isCurrent: boolean }>`
       props.isCurrent &&
       css`
         color: ${({ theme }) => theme.colors.main}!important;
-        font-weight: 600;
+        font-weight: 700;
       `}
   }
 `

@@ -14,14 +14,14 @@ const Itmes = styled.li<{ current: boolean }>`
     &:hover,
     &:visited {
       color: ${({ theme }) => theme.colors.main};
-      font-weight: 600;
+      font-weight: 700;
     }
 
     ${(props) =>
       props.current &&
       css`
         color: ${({ theme }) => theme.colors.main};
-        font-weight: 600;
+        font-weight: 700;
       `}
   }
 `
