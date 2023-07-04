@@ -1,11 +1,10 @@
-import { StyledCategory } from '@styles/commonStyle'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import styled from 'styled-components'
 
 export const MainDebate = styled.div`
   width: 100%;
   display: grid;
-  padding: 5rem 0;
+  margin: 3rem 0;
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
 `
@@ -14,57 +13,11 @@ export const DebateContentBox = styled.div`
   display: flex;
   flex-direction: column;
 
-  h2 {
+  h1 {
     width: 100%;
+    margin-bottom: 1rem;
     text-align: center;
   }
-`
-
-export const MainContent = styled.div`
-  height: 20rem;
-  text-align: center;
-  position: relative;
-  ${NextImageBox} {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-  }
-`
-
-export const ContentLine = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 2;
-  color: white;
-
-  h2 {
-    width: 100%;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-  }
-
-  span {
-    font-size: 1.4rem;
-    text-align: right;
-    padding: 0.6rem;
-  }
-`
-
-export const Category = styled(StyledCategory)`
-  width: 8rem;
-  font-size: 1.4rem;
 `
 
 export const SubContentBox = styled.div`

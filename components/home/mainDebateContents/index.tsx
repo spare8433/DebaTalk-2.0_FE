@@ -21,12 +21,12 @@ const MainDebateContent = () => {
   return (
     <MainDebate>
       <DebateContentBox>
-        <h2>이슈토론</h2>
+        <h1>이슈토론</h1>
         {hotDebateTopics?.issue.map((res, index) => {
-          if (index === 0) return <FirstDebateContent data={res} keyName="issuePost" />
+          if (index === 0) return <FirstDebateContent data={res} method="issue" />
           return (
             <IssueSubContentBox key={`issuePost_${index}`}>
-              <Link href={{ pathname: '/debate-forum/issue-post/[pid]', query: { pid: res.id } }}>
+              <Link href={{ pathname: '/issue-post/[pid]', query: { pid: res.id } }}>
                 <NextImageBox>
                   <FitNextImage
                     src={res.imgUrl ? res.imgUrl : '/img/default-thumbnail.png'}
@@ -46,14 +46,12 @@ const MainDebateContent = () => {
       </DebateContentBox>
 
       <DebateContentBox>
-        <h2>찬반토론</h2>
+        <h1>찬반토론</h1>
         {hotDebateTopics?.prosCons.map((res, index) => {
-          if (index === 0) return <FirstDebateContent data={res} keyName="prosConsPost" />
+          if (index === 0) return <FirstDebateContent data={res} method="proscons" />
           return (
             <ProsConsSubContentBox key={`prosConsPost_${index}`}>
-              <Link
-                href={{ pathname: '/debate-forum/proscons-post/[pid]', query: { pid: res.id } }}
-              >
+              <Link href={{ pathname: '/proscons-post/[pid]', query: { pid: res.id } }}>
                 <h3>{res.title}</h3>
                 <VoteGauge>
                   <BlueGauage width="70" />
@@ -70,12 +68,12 @@ const MainDebateContent = () => {
       </DebateContentBox>
 
       <DebateContentBox>
-        <h2>밸런스토론</h2>
+        <h1>밸런스토론</h1>
         {hotDebateTopics?.balance.map((res, index) => {
-          if (index === 0) return <FirstDebateContent data={res} keyName="balancePost" />
+          if (index === 0) return <FirstDebateContent data={res} method="balance" />
           return (
             <ProsConsSubContentBox key={`balancePost_${index}`}>
-              <Link href={{ pathname: '/debate-forum/balance-post/[pid]', query: { pid: res.id } }}>
+              <Link href={{ pathname: '/balance-post/[pid]', query: { pid: res.id } }}>
                 <h3>{res.title}</h3>
                 <VoteGauge>
                   <BlueGauage width="70" />
