@@ -37,7 +37,7 @@ const HeaderInfoBox = styled.div`
       margin: 0 0.5rem;
       font-size: 2.2rem;
       color: ${({ theme }) => theme.colors.main};
-      font-weight: 600;
+      font-weight: 700;
     }
   }
 `

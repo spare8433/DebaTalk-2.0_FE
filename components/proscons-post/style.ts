@@ -21,7 +21,7 @@ export const ProsConsOption = styled.div`
   ${BlueText}, ${RedText} {
     font-size: 2.4rem;
     margin-bottom: 1.6rem;
-    font-weight: 600;
+    font-weight: 700;
   }
   p {
     font-size: 1.5rem;
