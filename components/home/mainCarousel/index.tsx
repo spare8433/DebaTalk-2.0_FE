@@ -42,9 +42,9 @@ const MainCarousel = () => {
           </BannerImageBox>
         }
       >
-        <CarouselSlide data={debateKeywordsData?.issueKeyword} path="issue-post" />
-        <CarouselSlide data={debateKeywordsData?.balanceKeyword} path="balance-post" />
-        <CarouselSlide data={debateKeywordsData?.prosConsKeyword} path="proscons-post" />
+        <CarouselSlide data={debateKeywordsData?.issueKeyword} method="issue" />
+        <CarouselSlide data={debateKeywordsData?.balanceKeyword} method="balance" />
+        <CarouselSlide data={debateKeywordsData?.prosConsKeyword} method="proscons" />
       </Carousel>
     </MainCarouselLayout>
   )

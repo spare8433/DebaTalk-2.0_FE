@@ -13,11 +13,11 @@ const Keyword = styled.div`
   margin: 20px 0;
   a {
     font-size: 28px;
-    font-weight: 600;
+    font-weight: 700;
     color: ${({ theme }) => theme.colors.deepGray};
     font-weight: 500;
     &:hover {
-      font-weight: 600;
+      font-weight: 700;
       color: #000;
     }
   }
@@ -30,23 +30,23 @@ const Keyword = styled.div`
 
 interface Props {
   data?: DebateKeywordData[]
-  path: 'issue-post' | 'balance-post' | 'proscons-post'
+  method: 'issue' | 'balance' | 'proscons'
 }
 
 const pathKeyword = {
-  'issue-post': '이슈토론',
-  'balance-post': '찬반토론',
-  'proscons-post': '밸런스토론',
+  issue: '이슈토론',
+  balance: '찬반토론',
+  proscons: '밸런스토론',
 }
 
-const CarouselSlide = ({ data, path }: Props) => (
+const CarouselSlide = ({ data, method }: Props) => (
   <Slide>
     {data && data.length > 0 ? (
       data.map((res, index) => (
         <Keyword key={res.id + index}>
           <Link
             href={{
-              pathname: `/debate-forum/${path}/[pid]`,
+              pathname: `/${method}-post/[pid]`,
               query: { pid: res.id },
             }}
           >
@@ -57,8 +57,8 @@ const CarouselSlide = ({ data, path }: Props) => (
       ))
     ) : (
       <Keyword>
-        <Link href="/debate-forum">
-          {pathKeyword[path]}의 최신 내용이 없네요 토론장 페이지로 이동해보세요 ^_^
+        <Link href={{ pathname: '/debate-forum', query: { method, page: '1' } }}>
+          {pathKeyword[method]}의 최신 내용이 없네요 토론장 페이지로 이동해보세요 ^_^
         </Link>
       </Keyword>
     )}
