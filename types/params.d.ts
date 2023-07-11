@@ -80,3 +80,15 @@ export type CreateIssueReplyParam = {
   readonly writerId: number
   readonly targetId: number
 }
+
+export type CreateDebateTopicOpinionParam = {
+  readonly postId: number
+  readonly content: string
+}
+
+export type CreateDebateTopicReplyParam = {
+  readonly opinionId: number
+  readonly content: string
+  readonly writerId: number
+  readonly targetId: number
+}
