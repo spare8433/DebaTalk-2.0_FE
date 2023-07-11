@@ -20,8 +20,6 @@ import {
   SearchBox,
 } from './style'
 
-const LIMIT = 4
-
 const ORDER_OPTION: {
   [index: string]: string
 } = {
@@ -32,9 +30,10 @@ const ORDER_OPTION: {
 interface Props {
   method: 'issue' | 'balance' | 'proscons'
   page: string
+  limit: number
 }
 
-const DetailedSerachOptions = ({ method, page }: Props) => {
+const DetailedSerachOptions = ({ method, page, limit }: Props) => {
   const dispatch = useAppDispatch()
   // const [debateMode, setDebateMode] = useState<'이슈토론' | '밸런스토론' | '찬반토론'>('이슈토론')
   const [debateCategory, setDebateCategory] = useState('전체')
@@ -47,7 +46,7 @@ const DetailedSerachOptions = ({ method, page }: Props) => {
         category: debateCategory,
         searchText,
         key: ORDER_OPTION[selectOption],
-        limit: LIMIT,
+        limit,
         page,
       }
 
@@ -66,11 +65,10 @@ const DetailedSerachOptions = ({ method, page }: Props) => {
       }
     }
     fetchData()
-  }, [method, debateCategory, searchText, selectOption, page, dispatch])
+  }, [method, debateCategory, searchText, selectOption, page, dispatch, limit])
 
   return (
     <div>
-      {' '}
       <CategoryBox>
         <h2>토론 분류</h2>
 
