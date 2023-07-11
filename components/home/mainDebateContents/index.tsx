@@ -3,6 +3,7 @@ import { useAppSelector } from '@store/store'
 import Link from 'next/link'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
+import getConfig from 'next/config'
 import FirstDebateContent from './firstDebateContent'
 import {
   BlueGauage,
@@ -16,6 +17,8 @@ import {
 } from './style'
 
 const MainDebateContent = () => {
+  const { publicRuntimeConfig } = getConfig()
+  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
   const hotDebateTopics = useAppSelector((state) => state.debatePosts.debatePostsData)
 
   return (
@@ -29,8 +32,8 @@ const MainDebateContent = () => {
               <Link href={{ pathname: '/issue-post/[pid]', query: { pid: res.id } }}>
                 <NextImageBox>
                   <FitNextImage
-                    src={res.imgUrl ? res.imgUrl : '/img/default-thumbnail.png'}
-                    alt=""
+                    src={res.imgUrl ? `${APISeverUrl}${res.imgUrl}` : '/img/default-thumbnail.png'}
+                    alt="issue-post-thumbnail"
                   />
                 </NextImageBox>
                 <ContentInfoBox>

@@ -10,6 +10,7 @@ import {
 } from '@store/slices/issueDebatePost/type'
 import { BalanceDebatePostDataState } from '@store/slices/balanceDebatePost/type'
 import { ProsConsDebatePostDataState } from '@store/slices/prosConsDebatePost/type'
+import getConfig from 'next/config'
 import {
   BlueText,
   ContentBox,
@@ -27,6 +28,8 @@ const detailLinkType: { [index: string]: string } = {
 }
 
 const SearchedDebatePost = () => {
+  const { publicRuntimeConfig } = getConfig()
+  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
   const searchedPostData = useAppSelector((state) => state.debatePosts.integratedDebatePostData)
 
   const avgScore = useCallback((arr: IssueDebateOpinionDataState[]) => {
@@ -58,7 +61,10 @@ const SearchedDebatePost = () => {
                   boxShadow: new CssString('rgba(99, 99, 99, 0.3) 0px 2px 8px 0px'),
                 }}
               >
-                <FitNextImage src={res.imgUrl ?? '/img/default-thumbnail.png'} alt="" />
+                <FitNextImage
+                  src={res.imgUrl ? `${APISeverUrl}${res.imgUrl}` : '/img/default-thumbnail.png'}
+                  alt=""
+                />
               </NextImageBox>
               <TextBox>
                 <h4>{res.title}</h4>

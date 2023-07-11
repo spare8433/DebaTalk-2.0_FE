@@ -29,6 +29,7 @@ import {
   PostHeaderBox,
   RelatedPostsBox,
 } from '@styles/detailPost.style'
+import getConfig from 'next/config'
 import { AvgScore, OtherInfoBox } from './style'
 
 interface Props {
@@ -40,11 +41,13 @@ const IssuePostDetailContent = ({ pid }: Props) => {
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const [score, onChangeScore] = useInput<HTMLSelectElement>('5')
   const postData = useAppSelector((state) => state.issueDebatePost.postData)
+  const { publicRuntimeConfig } = getConfig()
+  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
   // 평균 점수
   const avgScore = useMemo(() => {
-    if (postData === null) return 0
-    const scoreList = postData.IssueOpinions.map((res) => res.score)
+    const scoreList = postData?.IssueOpinions.map((res) => res.score)
+    if (!scoreList || scoreList.length <= 0) return 0
     return (
       scoreList.reduce((sum, currentValue) => sum + currentValue, 0) / scoreList.length
     ).toFixed(2)
@@ -113,7 +116,12 @@ const IssuePostDetailContent = ({ pid }: Props) => {
             objectFit: new CssString('cover'),
           }}
         >
-          <FitNextImage src={postData.imgUrl ?? '/img/default-thumbnail.png'} alt="thumbnail" />
+          <FitNextImage
+            src={
+              postData.imgUrl ? `${APISeverUrl}${postData.imgUrl}` : '/img/default-thumbnail.png'
+            }
+            alt="thumbnail"
+          />
         </NextImageBox>
 
         <ContentTitle>[ 설명 ]</ContentTitle>

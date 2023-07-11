@@ -5,6 +5,7 @@ import { useAppSelector } from '@store/store'
 import Link from 'next/link'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import { CssPercent, CssRem, CssString } from 'types/customCssType'
+import getConfig from 'next/config'
 import FitNextImage from './fitNextImage'
 
 interface ProfileTheme {
@@ -49,6 +50,8 @@ interface PropTypes {
 
 const Profile = ({ mode = 'white', link }: PropTypes) => {
   const user = useAppSelector((state: ReducerStates) => state.user)
+  const { publicRuntimeConfig } = getConfig()
+  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
   return (
     <ProfileContainor mode={mode}>
@@ -66,7 +69,11 @@ const Profile = ({ mode = 'white', link }: PropTypes) => {
               >
                 <FitNextImage
                   alt="userImg"
-                  src={user.myData.imgUrl ? user.myData.imgUrl : '/img/default_user.png'}
+                  src={
+                    user.myData.imgUrl
+                      ? `${APISeverUrl}${user.myData.imgUrl}`
+                      : '/img/default_user.png'
+                  }
                 />
               </NextImageBox>
               <span>{!!user && user.myData.nickname}</span>

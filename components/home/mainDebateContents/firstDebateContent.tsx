@@ -8,6 +8,7 @@ import { IssueDebatePostDataState } from '@store/slices/issueDebatePost/type'
 import { ProsConsDebatePostDataState } from '@store/slices/prosConsDebatePost/type'
 import styled from 'styled-components'
 import { StyledCategory } from '@styles/commonStyle'
+import getConfig from 'next/config'
 
 const MainContent = styled.div`
   height: 20rem;
@@ -63,20 +64,28 @@ interface Props {
   method: 'issue' | 'proscons' | 'balance'
 }
 
-const FirstDebateContent = ({ data, method }: Props) => (
-  <MainContent key={`${method}Post_primary`}>
-    <Link href={{ pathname: `/${method}-post/[pid]`, query: { pid: data.id } }}>
-      <ContentLine>
-        <Category>{data.category}</Category>
-        <h2>{data.title}</h2>
-        <span>조회수 {data.hits} </span>
-      </ContentLine>
+const FirstDebateContent = ({ data, method }: Props) => {
+  const { publicRuntimeConfig } = getConfig()
+  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
-      <NextImageBox>
-        <FitNextImage src={data.imgUrl ?? '/img/default-thumbnail.png'} alt="" />
-      </NextImageBox>
-    </Link>
-  </MainContent>
-)
+  return (
+    <MainContent key={`${method}Post_primary`}>
+      <Link href={{ pathname: `/${method}-post/[pid]`, query: { pid: data.id } }}>
+        <ContentLine>
+          <Category>{data.category}</Category>
+          <h2>{data.title}</h2>
+          <span>조회수 {data.hits} </span>
+        </ContentLine>
+
+        <NextImageBox>
+          <FitNextImage
+            src={data.imgUrl ? `${APISeverUrl}${data.imgUrl}` : '/img/default-thumbnail.png'}
+            alt=""
+          />
+        </NextImageBox>
+      </Link>
+    </MainContent>
+  )
+}
 
 export default FirstDebateContent

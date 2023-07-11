@@ -15,4 +15,21 @@ module.exports = {
       pure: true,
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: process.env.API_SERVER_PROTOCOL,
+        hostname: process.env.API_SERVER_HOST,
+        port: process.env.API_SERVER_PORT,
+        pathname: '/uploads/**',
+      },
+    ],
+  },
+  serverRuntimeConfig: {
+    // Will only be available on the server side
+  },
+  publicRuntimeConfig: {
+    // Will be available on both server and client
+    API_SERVER_URL: process.env.API_SERVER_URL,
+  },
 }

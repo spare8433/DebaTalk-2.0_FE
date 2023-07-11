@@ -12,6 +12,7 @@ import {
 } from '@store/slices/issueDebatePost/type'
 import Pagination from '@components/common/pagination'
 import { useRouter } from 'next/router'
+import getConfig from 'next/config'
 import {
   BlueText,
   ContentBox,
@@ -26,6 +27,7 @@ import {
 interface Props {
   method: 'issue' | 'balance' | 'proscons'
   page: string
+  limit: number
 }
 
 const detailLinkType = {
@@ -34,7 +36,9 @@ const detailLinkType = {
   proscons: 'proscons-post',
 }
 
-const DebateContentList = ({ method, page }: Props) => {
+const DebateContentList = ({ method, page, limit }: Props) => {
+  const { publicRuntimeConfig } = getConfig()
+  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
   const balanceDebatePosts = useAppSelector((state) => state.balanceDebatePosts.postsData)
   const issueDebatePosts = useAppSelector((state) => state.issueDebatePosts.postsData)
   const prosConsDebatePosts = useAppSelector((state) => state.prosConsDebatePosts.postsData)
@@ -54,16 +58,12 @@ const DebateContentList = ({ method, page }: Props) => {
     return 0
   }, [])
 
-  const test = useCallback(
+  const changePage = useCallback(
     (num: number) => {
       router.push({ pathname: '/debate-forum', query: { method, page: num } })
     },
     [method, router],
   )
-  // const test = (num: number) => {
-  //   console.log(num)
-  //   router.push({ pathname: '/debate-forum', query: { method, page: num } })
-  // }
 
   const postType = {
     balance: balanceDebatePosts,
@@ -89,7 +89,10 @@ const DebateContentList = ({ method, page }: Props) => {
                 boxShadow: new CssString('rgba(99, 99, 99, 0.3) 0px 2px 8px 0px'),
               }}
             >
-              <FitNextImage src={res.imgUrl ?? '/img/default-thumbnail.png'} alt="" />
+              <FitNextImage
+                src={res.imgUrl ? `${APISeverUrl}${res.imgUrl}` : '/img/default-thumbnail.png'}
+                alt=""
+              />
             </NextImageBox>
             <TextBox>
               <h3>{res.title}</h3>
@@ -135,8 +138,8 @@ const DebateContentList = ({ method, page }: Props) => {
         <Pagination
           value={Number(page) - 1}
           bar={5}
-          max={Math.ceil((postType[method]?.count ?? 0) / 4)}
-          onChange={test}
+          max={Math.ceil((postType[method]?.count ?? 0) / limit)}
+          onChange={changePage}
         />
       </PaginationBox>
     </ContentBox>

@@ -29,6 +29,7 @@ import {
   RedText,
   RelatedPostsBox,
 } from '@styles/detailPost.style'
+import getConfig from 'next/config'
 import { ProsConsOption, ProsConsPostCurrentSituationBox } from './style'
 
 interface Props {
@@ -40,6 +41,8 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const [selection, onChangeSelection] = useInput<HTMLSelectElement>('찬성')
   const postData = useAppSelector((state) => state.prosConsDebatePost.postData)
+  const { publicRuntimeConfig } = getConfig()
+  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
   const submitComment = async () => {
     try {
@@ -92,7 +95,12 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
             objectFit: new CssString('cover'),
           }}
         >
-          <FitNextImage src={postData.imgUrl ?? '/img/default-thumbnail.png'} alt="thumbnail-img" />
+          <FitNextImage
+            src={
+              postData.imgUrl ? `${APISeverUrl}${postData.imgUrl}` : '/img/default-thumbnail.png'
+            }
+            alt="thumbnail-img"
+          />
         </NextImageBox>
 
         <ContentTitle>[ 설명 ]</ContentTitle>
