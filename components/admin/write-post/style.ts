@@ -15,7 +15,7 @@ export const TopInputBox = styled.div`
     margin-bottom: 1rem;
   }
   span {
-    margin: 0 8px;
+    margin: 0 0.8rem;
     font-weight: 700;
   }
   ${BasicSelect} {
@@ -32,7 +32,7 @@ export const TitleLine = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 1.6rem;
   ${CommonInput} {
     margin: 0;
     input {
@@ -48,7 +48,7 @@ export const CategoryLine = styled.div`
 `
 
 export const ContentTitle = styled.h4`
-  margin-bottom: 16px;
+  margin-bottom: 1.6rem;
 `
 
 export const ContentBox = styled.div`
@@ -60,18 +60,18 @@ export const ContentBox = styled.div`
     width: 100%;
     resize: none;
     height: 8em;
-    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
     border: solid 0.1rem ${({ theme }) => theme.colors.whiteGray};
   }
 `
 
 export const EditBox = styled.div`
-  margin: 10px 0 30px;
+  margin: 1rem 0 3rem;
   .ql-editor {
     h3 {
-      border-bottom: 2px ${({ theme }) => theme.colors.gray} solid;
-      margin-bottom: 10px;
-      padding-bottom: 6px;
+      border-bottom: 0.2rem ${({ theme }) => theme.colors.gray} solid;
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
     }
     strong {
       font-weight: bold;

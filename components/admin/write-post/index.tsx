@@ -19,7 +19,7 @@ import { createIssueDebatePost } from '@store/slices/issueDebatePost'
 import { BasicSelect, CommonInput } from '@styles/commonStyle/inputs'
 import { CssRem } from 'types/customCssType'
 import { PrimaryButton } from '@styles/commonStyle/buttons'
-import ImageUploadInput from './imageUploadInput'
+import ImageUploadInput from '@components/common/imageUploadInput'
 
 const WriteDebatePost = () => {
   const router = useRouter()
