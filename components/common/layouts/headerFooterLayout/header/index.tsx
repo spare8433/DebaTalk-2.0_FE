@@ -97,7 +97,7 @@ const Header = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link href="/debate-topic-board">주제 선정 게시판</Link>
+                        <Link href="/debate-topic-board?page=1">주제 선정 게시판</Link>
                       </li>
                     </ul>
                   </DebateForumDropDown>

@@ -36,6 +36,11 @@ const Button = styled.a<{ styleOption?: StyleOption; isCurrent: boolean }>`
   width: ${({ styleOption }) => styleOption?.cellWidth?.getValue() ?? '3rem'};
   height: ${({ styleOption }) => styleOption?.cellHeight?.getValue() ?? '3rem'};
 
+  &:hover {
+    color: ${({ theme }) => theme.colors.main};
+    font-weight: 700;
+  }
+
   ${({ isCurrent }) =>
     isCurrent &&
     css`

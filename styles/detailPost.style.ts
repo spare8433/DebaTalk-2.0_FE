@@ -20,6 +20,7 @@ export const HeaderCategoryLine = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 1rem 0;
+  font-size: 1.4rem;
 `
 
 export const HeaderButtonBox = styled.div``
@@ -35,7 +36,7 @@ export const HeaderInfoBox = styled.div`
     font-weight: 300;
   }
   span {
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
   }
 `
@@ -43,7 +44,7 @@ export const HeaderInfoBox = styled.div`
 export const PostContentBox = styled.div``
 
 export const ContentTitle = styled.h5`
-  font-weight: 500;
+  font-weight: 700;
   width: 100%;
   padding: 0.6rem 0;
   margin-top: 1.6rem;
@@ -80,7 +81,7 @@ export const DebateRulesBox = styled.div`
   margin-bottom: 3rem;
   h3 {
     font-size: 2.2rem;
-    font-weight: 500;
+    font-weight: 700;
   }
   p {
     padding: 2rem;
