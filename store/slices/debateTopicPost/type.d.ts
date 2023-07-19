@@ -1,3 +1,5 @@
+import { SerializedError } from '@reduxjs/toolkit'
+
 export type DebateTopicReplyDataState = {
   readonly id: number
   DebateTopicOpinionId: number
@@ -43,18 +45,18 @@ export interface DebateTopicPostDataState {
 export interface DebateTopicPostState {
   getPostLoading: boolean
   getPostDone: boolean
-  getPostError: null | Error | unknown
+  getPostError: null | SerializedError
   createPostLoading: boolean
   createPostDone: boolean
-  createPostError: null | Error | unknown
+  createPostError: null | SerializedError
   createOpinionLoading: boolean
   createOpinionDone: boolean
-  createOpinionError: null | Error | unknown
+  createOpinionError: null | SerializedError
   createReplyLoading: boolean
   createReplyDone: boolean
-  createReplyError: null | Error | unknown
+  createReplyError: null | SerializedError
   deletePostLoading: boolean
   deletePostDone: boolean
-  deletePostError: null | Error | unknown
+  deletePostError: null | SerializedError
   postData: DebateTopicPostDataState | null
 }

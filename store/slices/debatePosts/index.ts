@@ -1,125 +1,56 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import {  GetDebateKeywords, GetDebatePostsParam } from 'params'
-import { getDebateHotTopicsAPI, getDebateKeywordsAPI, getDebatePostsAPI, getIntegrateDebatePostsAPI } from '@api/debatePosts'
-import { BalanceDebatePostDataState } from '../balanceDebatePost/type'
-import { IssueDebatePostDataState } from '../issueDebatePost/type'
-import { ProsConsDebatePostDataState } from '../prosConsDebatePost/type'
+import { GetDebateKeywords, GetIntegratedDebatePosts } from 'types/params'
+import {
+  getHotDebatePostsAPI,
+  getDebateKeywordsAPI,
+  getIntegratedDebatePostsAPI,
+} from '@api/debatePosts'
+import { DebatePostsState } from './type'
 
-export interface debateKeywordData {
-  readonly id: string,
-  category: string,
-  title: string,
-}
-
-export interface debatePostsState {
-  getDebatePostsLoading: boolean,
-  getDebatePostsDone: boolean,
-  getDebatePostsError: null | Error | unknown,
-	getDebateHotTopicsLoading: boolean,
-	getDebateHotTopicsDone: boolean,
-	getDebateHotTopicsError: null | Error | unknown,
-  getIntegrateDebatePostsLoading: boolean,
-	getIntegrateDebatePostsDone: boolean,
-	getIntegrateDebatePostsError: null | Error | unknown,
-
-  getKeywordsLoading: boolean,
-	getKeywordsDone: boolean,
-	getKeywordsError: null | Error | unknown,
-
-  debatePostsData: {
-    balance:BalanceDebatePostDataState[],
-    issue:IssueDebatePostDataState[],
-    prosCons:ProsConsDebatePostDataState[],
-  } | null,
-
-  debateKeywordsData:{
-    balanceKeyword:debateKeywordData[],
-    issueKeyword:debateKeywordData[],
-    prosConsKeyword:debateKeywordData[],
-  } | null,
-
-  // hotDebateTopics: {
-  //   subject:debatePostData[],
-  //   prosCons:debatePostData[],
-  //   balance:debatePostData[],
-  // } | null
-}
-
-const initialState: debatePostsState = {
-  getDebatePostsLoading: false,
-  getDebatePostsDone: false,
-  getDebatePostsError: null,
-	getKeywordsLoading: false,
-	getKeywordsDone: false,
-	getKeywordsError: null,
+const initialState: DebatePostsState = {
+  getKeywordsLoading: false,
+  getKeywordsDone: false,
+  getKeywordsError: null,
   getDebateHotTopicsLoading: false,
-	getDebateHotTopicsDone: false,
-	getDebateHotTopicsError: null,
-  getIntegrateDebatePostsLoading: false,
-	getIntegrateDebatePostsDone: false,
-	getIntegrateDebatePostsError: null,
-	debatePostsData: null,
-  debateKeywordsData: null,
-}
+  getDebateHotTopicsDone: false,
+  getDebateHotTopicsError: null,
+  getIntegratedDebatePostsLoading: false,
+  getIntegratedDebatePostsDone: false,
+  getIntegratedDebatePostsError: null,
 
-export const getDebatePosts = createAsyncThunk(
-'debatePost/create',
-  async (data: GetDebatePostsParam) => {
-    const response = await getDebatePostsAPI(data);
-    return response.data;
-  },
-);
+  hotDebatePosts: null,
+  debateKeywordsData: null,
+  integratedDebatePostData: null,
+}
 
 export const getDebateKeywords = createAsyncThunk(
   'debatePosts/getDebateKeywords',
   async (data: GetDebateKeywords) => {
-    const response = await getDebateKeywordsAPI(data);
-    return response.data;
+    const response = await getDebateKeywordsAPI(data)
+    return response.data
   },
-);
+)
 
-export const getDebateHotTopics = createAsyncThunk(
-  'debatePosts/getDebateHotTopics',
-  async () => {
-    const response = await getDebateHotTopicsAPI();
-    return response.data;
-  },
-);
+export const getDebateHotTopics = createAsyncThunk('debatePosts/getDebateHotTopics', async () => {
+  const response = await getHotDebatePostsAPI()
+  return response.data
+})
 
-export const getIntegrateDebatePosts = createAsyncThunk(
-  'debatePosts/getIntegrateDebatePosts',
-  async () => {
-    const response = await getIntegrateDebatePostsAPI();
-    return response.data;
+export const getIntegratedDebatePosts = createAsyncThunk(
+  'debatePosts/getIntegratedDebatePosts',
+  async (data: GetIntegratedDebatePosts) => {
+    const response = await getIntegratedDebatePostsAPI(data.searchText)
+    return response.data
   },
-);
+)
 
 export const debatePosts = createSlice({
   name: 'debatePosts',
   initialState,
-  reducers: {
-    increment: (state, action) => {
-      // state.value += 1
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getDebatePosts.pending, (state, action) => {
-      state.getDebatePostsLoading = true
-      state.getDebatePostsDone = false
-      state.getDebatePostsError = null
-    })
-    builder.addCase(getDebatePosts.fulfilled, (state, action) => {
-      state.getDebatePostsLoading = false
-      state.getDebatePostsDone = true
-      state.debatePostsData = action.payload
-    })
-    builder.addCase(getDebatePosts.rejected, (state, action) => {
-      state.getDebatePostsLoading = false
-      state.getDebatePostsError = action.error
-    })
-
-    builder.addCase(getDebateKeywords.pending, (state, action) => {
+    builder.addCase(getDebateKeywords.pending, (state) => {
       state.getKeywordsLoading = true
       state.getKeywordsDone = false
       state.getKeywordsError = null
@@ -134,7 +65,7 @@ export const debatePosts = createSlice({
       state.getKeywordsError = action.error
     })
 
-    builder.addCase(getDebateHotTopics.pending, (state, action) => {
+    builder.addCase(getDebateHotTopics.pending, (state) => {
       state.getDebateHotTopicsLoading = true
       state.getDebateHotTopicsDone = false
       state.getDebateHotTopicsError = null
@@ -142,29 +73,28 @@ export const debatePosts = createSlice({
     builder.addCase(getDebateHotTopics.fulfilled, (state, action) => {
       state.getDebateHotTopicsLoading = false
       state.getDebateHotTopicsDone = true
-      state.debatePostsData = action.payload
+      state.hotDebatePosts = action.payload
     })
     builder.addCase(getDebateHotTopics.rejected, (state, action) => {
       state.getDebateHotTopicsLoading = false
       state.getDebateHotTopicsError = action.error
     })
 
-    builder.addCase(getIntegrateDebatePosts.pending, (state, action) => {
-      state.getIntegrateDebatePostsLoading = true
-      state.getIntegrateDebatePostsDone = false
-      state.getIntegrateDebatePostsError = null
+    builder.addCase(getIntegratedDebatePosts.pending, (state) => {
+      state.getIntegratedDebatePostsLoading = true
+      state.getIntegratedDebatePostsDone = false
+      state.getIntegratedDebatePostsError = null
     })
-    builder.addCase(getIntegrateDebatePosts.fulfilled, (state, action) => {
-      state.getIntegrateDebatePostsLoading = false
-      state.getIntegrateDebatePostsDone = true
-      state.debatePostsData = action.payload
+    builder.addCase(getIntegratedDebatePosts.fulfilled, (state, action) => {
+      state.getIntegratedDebatePostsLoading = false
+      state.getIntegratedDebatePostsDone = true
+      state.integratedDebatePostData = action.payload
     })
-    builder.addCase(getIntegrateDebatePosts.rejected, (state, action) => {
-      state.getIntegrateDebatePostsLoading = false
-      state.getIntegrateDebatePostsError = action.error
+    builder.addCase(getIntegratedDebatePosts.rejected, (state, action) => {
+      state.getIntegratedDebatePostsLoading = false
+      state.getIntegratedDebatePostsError = action.error
     })
   },
 })
 
-export const { increment } = debatePosts.actions
 export default debatePosts.reducer

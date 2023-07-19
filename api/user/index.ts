@@ -1,16 +1,15 @@
-import { LoginParam, SignUpParam } from 'types/params'
-import { axiosInstance } from '.'
+import { AxiosAPI } from 'types/axiosAPI'
+import { axiosInstance } from '@api/index'
+import { LoginAPI, SignUpAPI } from './type'
 
 // 로그인 api
-export const loginAPI: AxiosAPIwithParam<LoginParam> = (data) =>
-  axiosInstance('user').post('login', data)
+export const loginAPI: LoginAPI = (data) => axiosInstance('user').post('login', data)
 
 // 로그아웃 api
 export const logoutAPI: AxiosAPI = () => axiosInstance('user').post('logout')
 
 // 회원가입 api
-export const sginUpAPI: AxiosAPIwithParam<SignUpParam> = (data) =>
-  axiosInstance('user').post('', data)
+export const signUpAPI: SignUpAPI = (data) => axiosInstance('user').post('', data)
 
 // 유저 정보 가져오기
 export const getUserAPI: AxiosAPI = () => axiosInstance('user').get('')

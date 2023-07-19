@@ -1,29 +1,29 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import { getProsConsDebatePostsAPI } from '@api/prosConsDebatePosts'
-import { GetDebatePostsParam } from 'params'
+import { GetDebatePostsParam } from 'types/params'
 import { ProsConsDebatePostsState } from './type'
 
 const initialState: ProsConsDebatePostsState = {
   getPostsLoading: false,
   getPostsDone: false,
   getPostsError: null,
-	createPostsLoading: false,
-	createPostsDone: false,
-	createPostsError: null,
-	deletePostsLoading: false,
-	deletePostsDone: false,
-	deletePostsError: null,
-	postsData: null
+  createPostsLoading: false,
+  createPostsDone: false,
+  createPostsError: null,
+  deletePostsLoading: false,
+  deletePostsDone: false,
+  deletePostsError: null,
+  postsData: null,
 }
 
 export const getProsConsDebatePosts = createAsyncThunk(
-  "prosConsDebatePosts/get",
-    async (data:GetDebatePostsParam) => {
-      const response = await getProsConsDebatePostsAPI(data);
-      return response.data;
-    },
-  );
+  'prosConsDebatePosts/get',
+  async (data: GetDebatePostsParam) => {
+    const response = await getProsConsDebatePostsAPI(data)
+    return response.data
+  },
+)
 
 export const prosConsDebatePosts = createSlice({
   name: 'prosConsDebatePosts',

@@ -7,7 +7,6 @@ import {
   getDebateTopicPostAPI,
 } from '@api/debateTopicPost'
 import { CreateDebateTopicOpinionParam, CreateDebateTopicReplyParam } from 'types/params'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import { DebateTopicPostState } from './type'
 
 const initialState: DebateTopicPostState = {

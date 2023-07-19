@@ -1,54 +1,62 @@
-export type IssueDebateReplyDataState = {
-  readonly id:number
-  IssueOpinionId:number
-  content:string
-  Target:{ readonly id: number, nickname: string, imgUrl: string | null }
-  hits:number
+import { SerializedError } from '@reduxjs/toolkit'
+
+export interface IssueDebateReplyDataState {
+  readonly id: number
+  content: string
+
+  IssueOpinionId: number
+  User: { readonly id: number; userId: string; nickname: string; imgUrl: string | null }
+  Target: { readonly id: number; userId: string; nickname: string; imgUrl: string | null }
   createdAt: string
   updatedAt: string
-  User:{ readonly id: number, nickname: string, imgUrl: string | null }
 }
 
-export type IssueDebateOpinionDataState = {
-  id:number
-  content:string
-  score:number
+export interface IssueDebateOpinionDataState {
+  id: number
+  content: string
+  score: number
+
+  IssueDebatePostId: number
+  User: { readonly id: number; userId: string; nickname: string; imgUrl: string | null }
+  Replys: IssueDebateReplyDataState[]
   createdAt: string
   updatedAt: string
-  User:{ readonly id: number, nickname: string, imgUrl: string | null }
-  Replys: IssueDebateReplyDataState[] | any[]
 }
 
-export interface IssueDebatePostDataState{
+export interface IssueDebatePostDataState {
   readonly id: string
-  method?: string
-  category?: string
-  title?: string
-  description?: string
-  issue1?: string
+  category: string
+  title: string
+  description: string
+  issue1: string
   article?: string
-  imgUrl?: string | null
-  hits?: number
-  createdAt?: string
-  updatedAt?: string
-  IssueOpinions:IssueDebateOpinionDataState[]
+  imgUrl?: string
+  hits: number
+
+  method: string
+  opinionCount: number
+  opinionAvgScore: number | null
+
+  IssueOpinions: IssueDebateOpinionDataState[]
+  createdAt: string
+  updatedAt: string
 }
 
 export interface IssueDebatePostState {
   getPostLoading: boolean
   getPostDone: boolean
-  getPostError: null | Error | unknown
-	createPostLoading: boolean
-	createPostDone: boolean
-	createPostError: null | Error | unknown
+  getPostError: null | SerializedError
+  createPostLoading: boolean
+  createPostDone: boolean
+  createPostError: null | SerializedError
   createOpinionLoading: boolean
-	createOpinionDone: boolean
-	createOpinionError: null | Error | unknown
+  createOpinionDone: boolean
+  createOpinionError: null | SerializedError
   createReplyLoading: boolean
-	createReplyDone: boolean
-	createReplyError: null | Error | unknown
-	deletePostLoading: boolean
-	deletePostDone: boolean
-	deletePostError: null | Error | unknown
+  createReplyDone: boolean
+  createReplyError: null | SerializedError
+  deletePostLoading: boolean
+  deletePostDone: boolean
+  deletePostError: null | SerializedError
   postData: IssueDebatePostDataState | null
 }

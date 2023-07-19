@@ -1,60 +1,61 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { createIssueDebatePostAPI, createIssueOpinionAPI, createIssueReplyAPI, getIssueDebatePostAPI } from '@api/issueDebatePost'
-import { IssueDebatePostState } from './type';
-import { CreateIssueOpinionParam, CreateIssueReplyParam } from 'params';
+import {
+  createIssueDebatePostAPI,
+  createIssueOpinionAPI,
+  createIssueReplyAPI,
+  getIssueDebatePostAPI,
+} from '@api/issueDebatePost'
+import { CreateIssueOpinionParam, CreateIssueReplyParam } from 'types/params'
+import { IssueDebatePostState } from './type'
 
 const initialState: IssueDebatePostState = {
   getPostLoading: false,
   getPostDone: false,
   getPostError: null,
-	createPostLoading: false,
-	createPostDone: false,
-	createPostError: null,
+  createPostLoading: false,
+  createPostDone: false,
+  createPostError: null,
   createOpinionLoading: false,
-	createOpinionDone: false,
-	createOpinionError: null,
+  createOpinionDone: false,
+  createOpinionError: null,
   createReplyLoading: false,
-	createReplyDone: false,
-	createReplyError: null,
-	deletePostLoading: false,
-	deletePostDone: false,
-	deletePostError: null,
-	postData: null
+  createReplyDone: false,
+  createReplyError: null,
+  deletePostLoading: false,
+  deletePostDone: false,
+  deletePostError: null,
+  postData: null,
 }
 
 export const createIssueDebatePost = createAsyncThunk(
-  "issueDebatePost/create",
-    async (data:FormData) => {
-      const response = await createIssueDebatePostAPI(data);
-      return response.data;
-    },
-  );
+  'issueDebatePost/create',
+  async (data: FormData) => {
+    const response = await createIssueDebatePostAPI(data)
+    return response.data
+  },
+)
 
-export const getIssueDebatePost = createAsyncThunk(
-  "issueDebatePost/get",
-    async (id:string) => {
-      const response = await getIssueDebatePostAPI(id);
-      return response.data;
-    },
-  );
-  
+export const getIssueDebatePost = createAsyncThunk('issueDebatePost/get', async (id: string) => {
+  const response = await getIssueDebatePostAPI(id)
+  return response.data
+})
+
 export const createIssueOpinion = createAsyncThunk(
-  "issueDebatePost/opinion/create",
-    async (data:CreateIssueOpinionParam) => {
-      const response = await createIssueOpinionAPI(data);
-      return response.data;
-    },
-  );
+  'issueDebatePost/opinion/create',
+  async (data: CreateIssueOpinionParam) => {
+    const response = await createIssueOpinionAPI(data)
+    return response.data
+  },
+)
 
 export const createIssueReply = createAsyncThunk(
-  "issueDebatePost/reply/create",
-    async (data:CreateIssueReplyParam) => {
-      const response = await createIssueReplyAPI(data);
-      return response.data;
-    },
-  ); 
-  
+  'issueDebatePost/reply/create',
+  async (data: CreateIssueReplyParam) => {
+    const response = await createIssueReplyAPI(data)
+    return response.data
+  },
+)
 
 export const issueDebatePost = createSlice({
   name: 'issueDebatePost',

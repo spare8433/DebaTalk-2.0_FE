@@ -1,29 +1,29 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import { getBalanceDebatePostsAPI } from '@api/balanceDebatePosts'
-import { GetDebatePostsParam } from 'params'
+import { GetDebatePostsParam } from 'types/params'
 import { BalanceDebatePostsState } from './type'
 
 const initialState: BalanceDebatePostsState = {
   getPostsLoading: false,
   getPostsDone: false,
   getPostsError: null,
-	createPostsLoading: false,
-	createPostsDone: false,
-	createPostsError: null,
-	deletePostsLoading: false,
-	deletePostsDone: false,
-	deletePostsError: null,
-	postsData: null
+  createPostsLoading: false,
+  createPostsDone: false,
+  createPostsError: null,
+  deletePostsLoading: false,
+  deletePostsDone: false,
+  deletePostsError: null,
+  postsData: null,
 }
 
 export const getBalanceDebatePosts = createAsyncThunk(
-  "balanceDebatePosts/get",
-    async (data:GetDebatePostsParam) => {
-      const response = await getBalanceDebatePostsAPI(data);
-      return response.data;
-    },
-  );
+  'balanceDebatePosts/get',
+  async (data: GetDebatePostsParam) => {
+    const response = await getBalanceDebatePostsAPI(data)
+    return response.data
+  },
+)
 
 export const balanceDebatePosts = createSlice({
   name: 'balanceDebatePosts',

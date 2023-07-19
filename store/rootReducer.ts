@@ -1,8 +1,8 @@
 import { AnyAction, CombinedState, combineReducers } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
-import user, { UserState } from './slices/user'
-import debatePosts, { DebatePostsState } from './slices/debatePosts'
+import user from './slices/user'
+import debatePosts from './slices/debatePosts'
 import balanceDebatePosts from './slices/balanceDebatePosts'
 import balanceDebatePost from './slices/balanceDebatePost'
 import issueDebatePosts from './slices/issueDebatePosts'
@@ -12,15 +12,14 @@ import prosConsDebatePost from './slices/prosConsDebatePost'
 import debateTopicPosts from './slices/debateTopicPosts'
 import debateTopicPost from './slices/debateTopicPost'
 
+import { UserState } from './slices/user/type'
+import { DebatePostsState } from './slices/debatePosts/type'
 import { BalanceDebatePostsState } from './slices/balanceDebatePosts/type'
 import { BalanceDebatePostState } from './slices/balanceDebatePost/type'
-
 import { IssueDebatePostState } from './slices/issueDebatePost/type'
 import { IssueDebatePostsState } from './slices/issueDebatePosts/type'
-
 import { ProsConsDebatePostsState } from './slices/prosConsDebatePosts/type'
 import { ProsConsDebatePostState } from './slices/prosConsDebatePost/type'
-
 import { DebateTopicPostState } from './slices/debateTopicPost/type'
 import { DebateTopicPostsState } from './slices/debateTopicPosts/type'
 

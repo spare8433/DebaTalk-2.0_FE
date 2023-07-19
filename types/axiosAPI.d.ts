@@ -1,7 +1,16 @@
-declare type AxiosAPIwithParam<T = any> = {
-  (data: T, ...etc): Promise<AxiosResponse>
+import { AxiosResponse } from 'axios'
+
+/**
+ * RQT : request param data type
+ * RST : response data type
+ */
+export type AxiosAPIwithParam<RQT = any, RST = any> = {
+  (data: RQT, ...etc): Promise<AxiosResponse<RST>>
 }
 
-declare type AxiosAPI = {
-  (): Promise<AxiosResponse>
+/**
+ * RST : response data type
+ */
+export type AxiosAPI<RST = any> = {
+  (): Promise<AxiosResponse<RST>>
 }

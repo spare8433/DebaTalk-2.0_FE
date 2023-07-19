@@ -2,7 +2,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { GetDebatePostsParam } from 'types/params'
 import { getDebateTopicPostsAPI } from '@api/debateTopicPosts'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import { DebateTopicPostsState } from './type'
 
 const initialState: DebateTopicPostsState = {

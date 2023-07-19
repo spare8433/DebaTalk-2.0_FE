@@ -1,59 +1,64 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { createBalanceDebatePostAPI, createBalanceOpinionAPI, createBalanceReplyAPI, getBalanceDebatePostAPI } from '@api/balanceDebatePost'
-import { CreateBalanceOpinionParam, CreateBalanceReplyParam } from 'params'
+import {
+  createBalanceDebatePostAPI,
+  createBalanceOpinionAPI,
+  createBalanceReplyAPI,
+  getBalanceDebatePostAPI,
+} from '@api/balanceDebatePost'
+import { CreateBalanceOpinionParam, CreateBalanceReplyParam } from 'types/params'
 import { BalanceDebatePostState } from './type'
 
 const initialState: BalanceDebatePostState = {
   getPostLoading: false,
   getPostDone: false,
   getPostError: null,
-	createPostLoading: false,
-	createPostDone: false,
-	createPostError: null,
+  createPostLoading: false,
+  createPostDone: false,
+  createPostError: null,
   createOpinionLoading: false,
-	createOpinionDone: false,
-	createOpinionError: null,
+  createOpinionDone: false,
+  createOpinionError: null,
   createReplyLoading: false,
-	createReplyDone: false,
-	createReplyError: null,
-	deletePostLoading: false,
-	deletePostDone: false,
-	deletePostError: null,
-	postData: null
+  createReplyDone: false,
+  createReplyError: null,
+  deletePostLoading: false,
+  deletePostDone: false,
+  deletePostError: null,
+  postData: null,
 }
 
 export const createBalanceDebatePost = createAsyncThunk(
-  "balanceDebatePost/create",
-    async (data:FormData) => {
-      const response = await createBalanceDebatePostAPI(data);
-      return response.data;
-    },
-  );
+  'balanceDebatePost/create',
+  async (data: FormData) => {
+    const response = await createBalanceDebatePostAPI(data)
+    return response.data
+  },
+)
 
 export const getBalanceDebatePost = createAsyncThunk(
-  "balanceDebatePost/get",
-    async (id:string) => {
-      const response = await getBalanceDebatePostAPI(id);
-      return response.data;
-    },
-  );
+  'balanceDebatePost/get',
+  async (id: string) => {
+    const response = await getBalanceDebatePostAPI(id)
+    return response.data
+  },
+)
 
 export const createBalanceOpinion = createAsyncThunk(
-  "balanceDebatePost/opinion/create",
-    async (data:CreateBalanceOpinionParam) => {
-      const response = await createBalanceOpinionAPI(data);
-      return response.data;
-    },
-  );
+  'balanceDebatePost/opinion/create',
+  async (data: CreateBalanceOpinionParam) => {
+    const response = await createBalanceOpinionAPI(data)
+    return response.data
+  },
+)
 
 export const createBalanceReply = createAsyncThunk(
-  "balanceDebatePost/reply/create",
-    async (data:CreateBalanceReplyParam) => {
-      const response = await createBalanceReplyAPI(data);
-      return response.data;
-    },
-  ); 
+  'balanceDebatePost/reply/create',
+  async (data: CreateBalanceReplyParam) => {
+    const response = await createBalanceReplyAPI(data)
+    return response.data
+  },
+)
 
 export const balanceDebatePost = createSlice({
   name: 'balanceDebatePost',
@@ -121,5 +126,3 @@ export const balanceDebatePost = createSlice({
 
 // export const {} = balanceDebatePost.actions
 export default balanceDebatePost.reducer
-
-

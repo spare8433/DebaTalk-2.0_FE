@@ -1,59 +1,64 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { createProsConsDebatePostAPI, createProsConsOpinionAPI, createProsConsReplyAPI, getProsConsDebatePostAPI } from '@api/prosConsDebatePost'
-import { CreateProsConsOpinionParam, CreateProsConsReplyParam } from 'params'
+import {
+  createProsConsDebatePostAPI,
+  createProsConsOpinionAPI,
+  createProsConsReplyAPI,
+  getProsConsDebatePostAPI,
+} from '@api/prosConsDebatePost'
+import { CreateProsConsOpinionParam, CreateProsConsReplyParam } from 'types/params'
 import { ProsConsDebatePostState } from './type'
 
 const initialState: ProsConsDebatePostState = {
   getPostLoading: false,
   getPostDone: false,
   getPostError: null,
-	createPostLoading: false,
-	createPostDone: false,
-	createPostError: null,
+  createPostLoading: false,
+  createPostDone: false,
+  createPostError: null,
   createOpinionLoading: false,
-	createOpinionDone: false,
-	createOpinionError: null,
+  createOpinionDone: false,
+  createOpinionError: null,
   createReplyLoading: false,
-	createReplyDone: false,
-	createReplyError: null,
-	deletePostLoading: false,
-	deletePostDone: false,
-	deletePostError: null,
-	postData: null
+  createReplyDone: false,
+  createReplyError: null,
+  deletePostLoading: false,
+  deletePostDone: false,
+  deletePostError: null,
+  postData: null,
 }
 
 export const createProsConsDebatePost = createAsyncThunk(
-  "prosConsDebatePost/create",
-    async (data:FormData) => {
-      const response = await createProsConsDebatePostAPI(data);
-      return response.data;
-    },
-  );
+  'prosConsDebatePost/create',
+  async (data: FormData) => {
+    const response = await createProsConsDebatePostAPI(data)
+    return response.data
+  },
+)
 
 export const getProsConsDebatePost = createAsyncThunk(
-  "prosConsDebatePost/get",
-    async (id:string) => {
-      const response = await getProsConsDebatePostAPI(id);
-      return response.data;
-    },
-  );
+  'prosConsDebatePost/get',
+  async (id: string) => {
+    const response = await getProsConsDebatePostAPI(id)
+    return response.data
+  },
+)
 
 export const createProsConsOpinion = createAsyncThunk(
-  "prosConsDebatePost/opinion/create",
-    async (data:CreateProsConsOpinionParam) => {
-      const response = await createProsConsOpinionAPI(data);
-      return response.data;
-    },
-  );
+  'prosConsDebatePost/opinion/create',
+  async (data: CreateProsConsOpinionParam) => {
+    const response = await createProsConsOpinionAPI(data)
+    return response.data
+  },
+)
 
 export const createProsConsReply = createAsyncThunk(
-  "prosConsDebatePost/reply/create",
-    async (data:CreateProsConsReplyParam) => {
-      const response = await createProsConsReplyAPI(data);
-      return response.data;
-    },
-  ); 
+  'prosConsDebatePost/reply/create',
+  async (data: CreateProsConsReplyParam) => {
+    const response = await createProsConsReplyAPI(data)
+    return response.data
+  },
+)
 
 export const prosConsDebatePost = createSlice({
   name: 'prosConsDebatePost',
@@ -121,5 +126,3 @@ export const prosConsDebatePost = createSlice({
 
 // export const {} = balanceDebatePost.actions
 export default prosConsDebatePost.reducer
-
-

@@ -1,60 +1,68 @@
+import { SerializedError } from '@reduxjs/toolkit'
+
 export type BalanceDebateReplyDataState = {
-  readonly id:number
-  BalanceOpinionId:number
-  content:string
-  Target:{ readonly id: number, nickname: string, imgUrl: string | null }
-  hits:number
+  readonly id: number
+  content: string
+
+  BalanceOpinionId: number
+  User: { readonly id: number; userId: string; nickname: string; imgUrl: string | null }
+  Target: { readonly id: number; userId: string; nickname: string; imgUrl: string | null }
   createdAt: string
   updatedAt: string
-  User:{ readonly id: number, nickname: string, imgUrl: string | null }
 }
 
-export type BalanceDebateOpinonDataState = {
-  id:number
-  content:string
+export type BalanceDebateOpinionDataState = {
+  id: number
+  content: string
   selection: 'A' | 'B'
+
+  BalanceDebatePostId: number
+  User: { readonly id: number; userId: string; nickname: string; imgUrl: string | null }
+  Replys: BalanceDebateReplyDataState[]
   createdAt: string
   updatedAt: string
-  User:{ readonly id: number, nickname: string, imgUrl: string | null }
-  Replys: BalanceDebateReplyDataState[] | any[]
 }
 
 export type BalanceDebatePostDataState = {
   readonly id: string
-  method?: string
-  category?: string
-  title?: string
-  optionA?: string
-  optionB?: string
-  description?: string
-  issue1?: string
-  issue2?: string
+  category: string
+  title: string
+  optionA: string
+  optionB: string
+  description: string
+  issue1: string
+  issue2: string
   article?: string
-  imgUrl?: string | null
-  hits?: number
-  createdAt?: string
-  updatedAt?: string
-  OptionAList: { UserId: number }[]
-  OptionBList: { UserId: number }[]
-  BalanceOpinions:BalanceDebateOpinonDataState[]
+  imgUrl?: string
+  hits: number
+
+  method?: string
+
+  opinionCount: number
+  optionAListCount: number
+  optionBListCount: number
+  // OptionAList: { UserId: number }[]
+  // OptionBList: { UserId: number }[]
+  BalanceOpinions: BalanceDebateOpinionDataState[]
+  createdAt: string
+  updatedAt: string
 }
 
 export type BalanceDebatePostState = {
   getPostLoading: boolean
   getPostDone: boolean
-  getPostError: null | Error | unknown
-	createPostLoading: boolean
-	createPostDone: boolean
-	createPostError: null | Error | unknown
+  getPostError: null | SerializedError
+  createPostLoading: boolean
+  createPostDone: boolean
+  createPostError: null | SerializedError
   createOpinionLoading: boolean
-	createOpinionDone: boolean
-	createOpinionError: null | Error | unknown
+  createOpinionDone: boolean
+  createOpinionError: null | SerializedError
   createReplyLoading: boolean
-	createReplyDone: boolean
-	createReplyError: null | Error | unknown
-	deletePostLoading: boolean
-	deletePostDone: boolean
-	deletePostError: null | Error | unknown
+  createReplyDone: boolean
+  createReplyError: null | SerializedError
+  deletePostLoading: boolean
+  deletePostDone: boolean
+  deletePostError: null | SerializedError
   postData: BalanceDebatePostDataState | null
 }
-
