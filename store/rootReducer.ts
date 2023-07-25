@@ -2,6 +2,7 @@ import { AnyAction, CombinedState, combineReducers } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
 import user from './slices/user'
+import users from './slices/users'
 import debatePosts from './slices/debatePosts'
 import balanceDebatePosts from './slices/balanceDebatePosts'
 import balanceDebatePost from './slices/balanceDebatePost'
@@ -22,9 +23,11 @@ import { ProsConsDebatePostsState } from './slices/prosConsDebatePosts/type'
 import { ProsConsDebatePostState } from './slices/prosConsDebatePost/type'
 import { DebateTopicPostState } from './slices/debateTopicPost/type'
 import { DebateTopicPostsState } from './slices/debateTopicPosts/type'
+import { UsersState } from './slices/users/type'
 
 export interface ReducerStates {
   user: UserState
+  users: UsersState
   debatePosts: DebatePostsState
   balanceDebatePosts: BalanceDebatePostsState
   balanceDebatePost: BalanceDebatePostState
@@ -49,6 +52,7 @@ const rootReducer: RootReducerType = (state, action) => {
     default: {
       const combinedReducer = combineReducers({
         user,
+        users,
         debatePosts,
         balanceDebatePosts,
         balanceDebatePost,
