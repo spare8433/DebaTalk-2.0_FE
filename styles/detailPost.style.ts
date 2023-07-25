@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { CssValue } from 'types/customCssType'
 
-export const DetailDevateContainor = styled.div`
+export const DetailDebateContainor = styled.div`
   width: 1160px;
   margin: 5rem auto;
 `
@@ -21,6 +21,7 @@ export const HeaderCategoryLine = styled.div`
   justify-content: space-between;
   margin: 1rem 0;
   font-size: 1.4rem;
+  align-items: end;
 `
 
 export const HeaderButtonBox = styled.div``
@@ -73,6 +74,9 @@ export const PostCurrentSituationBox = styled.div`
   width: 100%;
   padding: 1rem;
   margin: 1rem 0;
+  p {
+    font-size: 1.4rem;
+  }
 `
 
 export const DebateRulesBox = styled.div`

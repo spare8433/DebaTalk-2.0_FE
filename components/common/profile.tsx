@@ -76,7 +76,7 @@ const Profile = ({ mode = 'white', link }: PropTypes) => {
                   }
                 />
               </NextImageBox>
-              <span>{!!user && user.myData.nickname}</span>
+              <span>{user.myData.nickname}</span>
             </>
           </Link>
         </ProfileLine>
@@ -89,4 +89,4 @@ const Profile = ({ mode = 'white', link }: PropTypes) => {
   )
 }
 
-export default React.memo(Profile)
+export default Profile

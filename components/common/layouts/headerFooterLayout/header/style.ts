@@ -19,7 +19,8 @@ export const HeaderBox = styled.div`
   width: 1160px;
   height: 6rem;
   margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   justify-content: space-between;
 `
@@ -31,12 +32,12 @@ export const LeftMenu = styled.div`
 `
 
 export const MainTopMenu = styled.ul`
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-weight: 500;
   height: min-content;
-  margin-left: 8rem;
   li {
     padding: 1.5rem 1rem;
     display: flex;
@@ -45,6 +46,11 @@ export const MainTopMenu = styled.ul`
     font-size: 1.8rem;
     list-style: none;
     cursor: pointer;
+    font-weight: 500;
+
+    a {
+      font-weight: 500;
+    }
 
     ${NextImageBox} {
       width: 2.2rem;
@@ -60,6 +66,7 @@ export const BreadcrumbBox = styled.div`
 `
 
 export const ProfileBox = styled.div`
+  justify-content: flex-end;
   position: relative;
   display: flex;
   align-items: center;
@@ -137,6 +144,7 @@ export const DebateForumDropDown = styled(DropDown)`
       text-overflow: ellipsis;
       white-space: nowrap;
       width: 20rem;
+      font-weight: 400;
     }
   }
 `

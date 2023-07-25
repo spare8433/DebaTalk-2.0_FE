@@ -73,6 +73,7 @@ const Pagination = (props: Props): JSX.Element => {
     <Container styleOption={styleOption}>
       {pagination.map((num) => (
         <Button
+          key={`pagination_${num}`}
           styleOption={styleOption}
           onClick={() => onChange(num)}
           isCurrent={num === value + 1}

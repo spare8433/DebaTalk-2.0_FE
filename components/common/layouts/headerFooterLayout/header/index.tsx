@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useRouter } from 'next/router'
 import Profile from '@components/common/profile'
 import { logOut } from '@store/slices/user'
@@ -34,28 +34,28 @@ const Header = () => {
 
   const user = useAppSelector((state: ReducerStates) => state.user)
 
-  const handleDropListClick = () => {
+  const handleDropListClick = useCallback(() => {
     setIsDropListToggleOn(!isDropListToggleOn)
     setIsNotiListToggleOn(false)
-  }
+  }, [isDropListToggleOn])
 
-  const handleNotiListClick = () => {
+  const handleNotiListClick = useCallback(() => {
     setIsNotiListToggleOn(!isNotiListToggleOn)
     setIsDropListToggleOn(false)
-  }
+  }, [isNotiListToggleOn])
 
-  const handleDebateForumListMouseOver = () => {
+  const handleDebateForumListMouseOver = useCallback(() => {
     setIsDebateForumListToggleOn(true)
     setIsNotiListToggleOn(false)
     setIsDropListToggleOn(false)
-  }
+  }, [])
 
-  const logout = () => {
+  const logout = useCallback(() => {
     dispatch(logOut()).then(() => {
       router.push('/')
     })
     setIsDropListToggleOn(!isDropListToggleOn)
-  }
+  }, [dispatch, isDropListToggleOn, router])
 
   return (
     <IndexContainor>
@@ -68,55 +68,46 @@ const Header = () => {
                 <FitNextImage alt="logo" src="/img/logo.png" />
               </NextImageBox>
             </Link>
-
-            {/* 중앙 메뉴바 */}
-            <MainTopMenu>
-              <li>홈</li>
-              <li
-                onMouseOver={() => handleDebateForumListMouseOver()}
-                onFocus={() => handleDebateForumListMouseOver()}
-                onMouseOut={() => setIsDebateForumListToggleOn(false)}
-                onBlur={() => setIsDebateForumListToggleOn(false)}
-                style={{ display: 'flex', position: 'relative' }}
-              >
-                토론장
-                <NextImageBox>
-                  <FitNextImage src="/img/drop-down_black.png" alt="" />
-                </NextImageBox>
-                {isDebateForumListToggleOn && (
-                  <DebateForumDropDown>
-                    <ul>
-                      <li>
-                        <Link
-                          href={{
-                            pathname: '/debate-forum',
-                            query: { method: 'issue', page: '1' },
-                          }}
-                        >
-                          토론 게시판
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/debate-topic-board?page=1">주제 선정 게시판</Link>
-                      </li>
-                    </ul>
-                  </DebateForumDropDown>
-                )}
-              </li>
-
-              <li>
-                <Link href="/community">커뮤니티</Link>
-              </li>
-              <li>
-                <Link href="/">랭킹</Link>
-              </li>
-            </MainTopMenu>
           </LeftMenu>
+          {/* 중앙 메뉴바 */}
+          <MainTopMenu>
+            <li
+              onMouseOver={() => handleDebateForumListMouseOver()}
+              onFocus={() => handleDebateForumListMouseOver()}
+              onMouseOut={() => setIsDebateForumListToggleOn(false)}
+              onBlur={() => setIsDebateForumListToggleOn(false)}
+              style={{ display: 'flex', position: 'relative' }}
+            >
+              토론장
+              <NextImageBox>
+                <FitNextImage src="/img/drop-down_black.png" alt="" />
+              </NextImageBox>
+              {isDebateForumListToggleOn && (
+                <DebateForumDropDown>
+                  <ul>
+                    <li>
+                      <Link href="/debate-forum">토론 게시판</Link>
+                    </li>
+                    <li>
+                      <Link href="/debate-topic-board">주제 추천 게시판</Link>
+                    </li>
+                  </ul>
+                </DebateForumDropDown>
+              )}
+            </li>
+
+            <li>
+              <Link href="/community">커뮤니티</Link>
+            </li>
+            <li>
+              <Link href="/rank">랭킹</Link>
+            </li>
+          </MainTopMenu>
 
           {/* 우측 프로필 정보 */}
           <ProfileBox>
             {/* 로그인시 표시되는 알림 아이콘 */}
-            {user.myData && (
+            {/* {user.myData && (
               <NotiIconImgBox onClick={() => handleNotiListClick()} isNotification>
                 <NextImageBox styleOption={{ width: new CssRem(2.6), height: new CssRem(2.6) }}>
                   <FitNextImage src="/img/bell_main-color.png" alt="menu" />
@@ -131,7 +122,7 @@ const Header = () => {
                   </NotiDropDown>
                 )}
               </NotiIconImgBox>
-            )}
+            )} */}
 
             {/* 알림 드랍 다운 리스트 */}
 

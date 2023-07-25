@@ -24,7 +24,6 @@ export default (
 ): [string, (e: React.ChangeEvent<HTMLInputElement>) => void, string, boolean] => {
   const [value, setValue] = useState(inputValue)
   const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
-  console.log(1)
 
   let msg = ''
 
@@ -37,18 +36,15 @@ export default (
   // repassword duplicate check
   if (type === 'repassword') {
     if (value !== chk_password) {
-      console.log(chk_password)
       msg = `비밀번호가 동일하지 않습니다`
       return [value, onChangeValue, msg, false]
     }
-    console.log(value)
     return [value, onChangeValue, msg, true]
   }
 
   // regex check
   if (!REGEX_RULE[type].test(value)) {
     msg = `형식에 맞게 "${type}" 항목을 작성해주세요.`
-    console.log(value)
     return [value, onChangeValue, msg, false]
   }
 

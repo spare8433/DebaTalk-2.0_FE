@@ -60,7 +60,7 @@ const WriteDebateTopicForm = () => {
   return (
     <Containor>
       <form onSubmit={onSubmitForm} encType="multipart/form-data">
-        <h1>주제 선정 게시물 작성</h1>
+        <h1>주제 추천 게시물 작성</h1>
         <TopInputBox>
           <TitleLine>
             {/* 게시물 타이틀 */}
