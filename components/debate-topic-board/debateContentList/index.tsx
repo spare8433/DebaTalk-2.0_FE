@@ -20,8 +20,8 @@ import {
 } from './style'
 
 interface Props {
-  page: string
-  limit: number
+  page?: number | null
+  limit?: number | null
 }
 
 const DebateContentList = ({ page, limit }: Props) => {
@@ -29,20 +29,22 @@ const DebateContentList = ({ page, limit }: Props) => {
   const postData = useAppSelector((state) => state.debateTopicPosts.postsData)
   const { publicRuntimeConfig } = getConfig()
   const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
+  const currentPage = page ?? 1
+  const currentLimit = limit ?? 8
 
   const changePage = useCallback(
     (num: number) => {
-      router.push({ pathname: '/debate-topic-board', query: { page: num } })
+      router.push({ pathname: '/debate-topic-board', query: { page: num, limit: currentLimit } })
     },
-    [router],
+    [currentLimit, router],
   )
 
   return (
     <InexContainor>
-      {postData?.rows.map((res) => (
+      {postData?.data.map((res) => (
         <Link
           href={{
-            pathname: `/debate-topic-board/[pid]`,
+            pathname: `/debate-topic-board/debate-topic-post/[pid]`,
             query: { pid: res.id },
           }}
           key={`debateTopicPosts_${res.id}`}
@@ -77,9 +79,9 @@ const DebateContentList = ({ page, limit }: Props) => {
       ))}
       <PaginationBox>
         <Pagination
-          value={Number(page) - 1}
+          value={currentPage - 1}
           bar={5}
-          max={Math.ceil((postData?.count ?? 0) / limit)}
+          max={Math.ceil((postData?.count ?? 0) / currentLimit)}
           onChange={changePage}
         />
       </PaginationBox>

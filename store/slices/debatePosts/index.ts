@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { GetDebateKeywords, GetIntegratedDebatePosts } from 'types/params'
+import { GetDebateKeywords, GetIntegratedDebatePostsParam } from 'types/params'
 import {
   getHotDebatePostsAPI,
   getDebateKeywordsAPI,
@@ -39,8 +39,8 @@ export const getDebateHotTopics = createAsyncThunk('debatePosts/getDebateHotTopi
 
 export const getIntegratedDebatePosts = createAsyncThunk(
   'debatePosts/getIntegratedDebatePosts',
-  async (data: GetIntegratedDebatePosts) => {
-    const response = await getIntegratedDebatePostsAPI(data.searchText)
+  async (data: GetIntegratedDebatePostsParam) => {
+    const response = await getIntegratedDebatePostsAPI(data)
     return response.data
   },
 )

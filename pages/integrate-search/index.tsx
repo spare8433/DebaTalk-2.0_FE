@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import MainSearch from '@components/common/mainSearch'
-import { SmallBanner } from '@components/common/smallBanner'
+// import { SmallBanner } from '@components/common/smallBanner'
 import SearchedDebatePost from '@components/integrate-search/searchedDebatePost'
 import { wrapper } from '@store/store'
 import { getIntegratedDebatePosts } from '@store/slices/debatePosts'
@@ -26,6 +26,7 @@ const ContentContainor = styled.div`
 // `
 const SearchedTextLine = styled.div`
   margin: 24px 10px 16px;
+  font-size: 1.4rem;
 `
 // const CategoryItem = styled.a<{ value: string }>`
 //   font-size: 1.6rem;
@@ -34,21 +35,26 @@ const SearchedTextLine = styled.div`
 // `
 
 interface Props {
-  searchText: string
+  searchText?: string | null
+  page?: number | null
+  limit?: number | null
+  redirectMsg?: string
 }
 
-const TotalSearchPage = ({ searchText }: Props) => {
+const TotalSearchPage = ({ searchText, page, limit, redirectMsg }: Props) => {
   // const [searchCategory, setSearchCategory] = useState<
   //   '밸런스토론' | '이슈토론' | '찬반토론' | '전체'
   // >('전체')
+  useEffect(() => {
+    if (redirectMsg) alert(redirectMsg)
+  }, [redirectMsg])
 
   return (
     <IndexContainor>
-      <SmallBanner />
       <ContentContainor>
-        <MainSearch />
+        <MainSearch page={page} limit={limit} searchText={searchText} />
 
-        <SearchedTextLine>{`${searchText ?? ''} 으로 검색한 결과입니다.`}</SearchedTextLine>
+        <SearchedTextLine>{`"${searchText ?? ''}" 으로 검색한 결과입니다.`}</SearchedTextLine>
 
         {/* <ContentHeader>
           <NavLinkList
@@ -65,7 +71,7 @@ const TotalSearchPage = ({ searchText }: Props) => {
           </NavLinkList>
         </ContentHeader> */}
 
-        <SearchedDebatePost />
+        <SearchedDebatePost page={page} limit={limit} />
       </ContentContainor>
     </IndexContainor>
   )
@@ -76,25 +82,36 @@ TotalSearchPage.getLayout = function getLayout(page: React.ReactElement) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
-  const { searchText } = query
+  const { searchText, page, redirectMsg } = query
+  const limit = 8
+  const { cookie } = req.headers
 
-  if (typeof searchText === 'string') {
-    const { cookie } = req.headers
-
-    try {
-      if (cookie) {
-        // 서버쪽 쿠키 공유 버그
-        axios.defaults.headers.Cookie = cookie
-        await store.dispatch(loadMyInfo()).unwrap
-      }
-      await store.dispatch(getIntegratedDebatePosts({ searchText })).unwrap()
-    } catch (error) {
-      console.log(error)
-      return { notFound: true }
-    }
-    return { props: { searchText } }
+  if (cookie) {
+    // 서버쪽 쿠키 공유 버그
+    axios.defaults.headers.Cookie = cookie
+    await store.dispatch(loadMyInfo())
   }
-  return { notFound: true }
+
+  // redirected 인 경우
+  if (typeof redirectMsg === 'string') return { props: { redirectMsg } }
+
+  // 잘못된 쿼리 타입
+  if (Array.isArray(searchText) || Array.isArray(page)) return { notFound: true }
+
+  try {
+    await store
+      .dispatch(getIntegratedDebatePosts({ searchText, page: Number(page), limit }))
+      .unwrap()
+  } catch (error) {
+    const msg = encodeURIComponent('데이터를 불러오지 못했습니다.')
+    return {
+      redirect: {
+        destination: `/integrate-search?redirectMsg=${msg}`,
+        permanent: true,
+      },
+    }
+  }
+  return { props: { searchText: searchText ?? null, page: page ?? null, limit: limit ?? null } }
 })
 
 export default TotalSearchPage

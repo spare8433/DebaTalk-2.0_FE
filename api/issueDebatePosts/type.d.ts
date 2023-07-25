@@ -1,5 +1,5 @@
 import { GetDebatePostsParam } from 'types/params'
 import { AxiosAPIwithParam } from 'types/axiosAPI'
-import { IssueDebatePostDataState } from '@store/slices/issueDebatePost/type'
+import { IssueDebatePostsData } from '@store/slices/issueDebatePosts/type'
 
-type GetIssueDebatePostsAPI = AxiosAPIwithParam<GetDebatePostsParam, IssueDebatePostDataState[]>
+type GetIssueDebatePostsAPI = AxiosAPIwithParam<GetDebatePostsParam, IssueDebatePostsData>

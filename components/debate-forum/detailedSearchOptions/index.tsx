@@ -28,26 +28,28 @@ const ORDER_OPTION: {
 }
 
 interface Props {
-  method: 'issue' | 'balance' | 'proscons'
-  page: string
-  limit: number
+  method: 'issue' | 'balance' | 'proscons' | null
+  searchText?: string | null
+  page?: number | null
+  limit?: number | null
 }
 
-const DetailedSerachOptions = ({ method, page, limit }: Props) => {
+const DetailedSerachOptions = ({ method, searchText, page, limit }: Props) => {
   const dispatch = useAppDispatch()
-  // const [debateMode, setDebateMode] = useState<'이슈토론' | '밸런스토론' | '찬반토론'>('이슈토론')
   const [debateCategory, setDebateCategory] = useState('전체')
-  const [searchText, onChangeSearchText] = useInput('')
+  const [currentSearchText, onChangeSearchText] = useInput(searchText ?? '')
   const [selectOption, onChangeselectOption] = useInput<HTMLSelectElement>('최신순')
+  const currentPage = page ?? 1
+  const currentLimit = limit ?? 6
 
   useEffect(() => {
     const fetchData = async () => {
       const searchContent = {
         category: debateCategory,
-        searchText,
+        searchText: currentSearchText,
         key: ORDER_OPTION[selectOption],
-        limit,
-        page,
+        limit: currentLimit,
+        page: currentPage,
       }
 
       switch (method) {
@@ -65,7 +67,7 @@ const DetailedSerachOptions = ({ method, page, limit }: Props) => {
       }
     }
     fetchData()
-  }, [method, debateCategory, searchText, selectOption, page, dispatch, limit])
+  }, [method, debateCategory, currentSearchText, selectOption, dispatch, currentLimit, currentPage])
 
   return (
     <div>
@@ -112,7 +114,7 @@ const DetailedSerachOptions = ({ method, page, limit }: Props) => {
           <NextImageBox styleOption={{ width: new CssRem(1.9), height: new CssRem(1.9) }}>
             <FitNextImage alt="돋보기" src="/img/search.png" />
           </NextImageBox>
-          <input placeholder="검색" value={searchText} onChange={onChangeSearchText} />
+          <input placeholder="검색" value={currentSearchText} onChange={onChangeSearchText} />
         </SearchBox>
 
         <BasicSelect

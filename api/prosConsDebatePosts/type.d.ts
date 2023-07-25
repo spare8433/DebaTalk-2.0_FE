@@ -1,8 +1,5 @@
 import { GetDebatePostsParam } from 'types/params'
 import { AxiosAPIwithParam } from 'types/axiosAPI'
-import { ProsConsDebatePostDataState } from '@store/slices/prosConsDebatePost/type'
+import { ProsConsDebatePostsData } from '@store/slices/prosConsDebatePosts/type'
 
-type GetProsConsDebatePostsAPI = AxiosAPIwithParam<
-  GetDebatePostsParam,
-  ProsConsDebatePostDataState[]
->
+type GetProsConsDebatePostsAPI = AxiosAPIwithParam<GetDebatePostsParam, ProsConsDebatePostsData>

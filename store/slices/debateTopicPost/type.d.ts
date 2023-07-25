@@ -4,11 +4,11 @@ export type DebateTopicReplyDataState = {
   readonly id: number
   DebateTopicOpinionId: number
   content: string
-  Target: { readonly id: number; nickname: string; imgUrl: string | null }
+  Target: { readonly id: number; userId: string; nickname: string; imgUrl: string | null }
   hits: number
   createdAt: string
   updatedAt: string
-  User: { readonly id: number; nickname: string; imgUrl: string | null }
+  User: { readonly id: number; userId: string; nickname: string; imgUrl: string | null }
 }
 
 export type DebateTopicOpinionDataState = {
@@ -17,16 +17,15 @@ export type DebateTopicOpinionDataState = {
   score: number
   createdAt: string
   updatedAt: string
-  User: { readonly id: number; nickname: string; imgUrl: string | null }
-  Replys: DebateTopicReplyDataState[] | any[]
+  User: { readonly id: number; userId: string; nickname: string; imgUrl: string | null }
+  Replys: DebateTopicReplyDataState[]
 }
 
 export interface DebateTopicPostDataState {
   readonly id: string
-  method?: string
-  category?: string
-  title?: string
-  description?: string
+  category: string
+  title: string
+  description: string
   imgUrl?: string | null
   hits?: number
   createdAt: string

@@ -66,28 +66,31 @@ const ORDER_OPTION: {
 }
 
 interface Props {
-  page: string
-  limit: number
+  searchText?: string | null
+  page?: number | null
+  limit?: number | null
 }
-const DetailedSerachOptions = ({ page, limit }: Props) => {
+const DetailedSerachOptions = ({ page, limit, searchText }: Props) => {
   const dispatch = useAppDispatch()
   const [debateCategory, setdebateCategory] = useState('전체')
-  const [searchText, onChangeSearchText] = useInput('')
+  const [currentSearchText, onChangeSearchText] = useInput(searchText ?? '')
   const [selectOption, onChangeselectOption] = useInput<HTMLSelectElement>('최신순')
+  const currentPage = page ?? 1
+  const currentLimit = limit ?? 6
 
   useEffect(() => {
     const fetchData = async () => {
       const searchContent = {
         category: debateCategory,
-        searchText,
+        serachtText: currentSearchText,
         key: ORDER_OPTION[selectOption],
-        limit,
-        page,
+        limit: currentLimit,
+        page: currentPage,
       }
       await dispatch(getDebateTopicPosts(searchContent))
     }
     fetchData()
-  }, [debateCategory, searchText, selectOption, page, dispatch, limit])
+  }, [debateCategory, currentSearchText, selectOption, dispatch, currentLimit, currentPage])
 
   return (
     <div>
@@ -114,7 +117,7 @@ const DetailedSerachOptions = ({ page, limit }: Props) => {
           <NextImageBox styleOption={{ width: new CssRem(1.9), height: new CssRem(1.9) }}>
             <FitNextImage alt="돋보기" src="/img/search.png" />
           </NextImageBox>
-          <input placeholder="검색" value={searchText} onChange={onChangeSearchText} />
+          <input placeholder="검색" value={currentSearchText} onChange={onChangeSearchText} />
         </SearchBox>
 
         <BasicSelect

@@ -1,4 +1,4 @@
-import { DebateKeywordData } from '@store/slices/debatePosts'
+import { KeywordData } from '@store/slices/debatePosts/type'
 import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
@@ -29,7 +29,7 @@ const Keyword = styled.div`
 `
 
 interface Props {
-  data?: DebateKeywordData[]
+  data?: KeywordData[]
   method: 'issue' | 'balance' | 'proscons'
 }
 
@@ -42,8 +42,8 @@ const pathKeyword = {
 const CarouselSlide = ({ data, method }: Props) => (
   <Slide>
     {data && data.length > 0 ? (
-      data.map((res, index) => (
-        <Keyword key={res.id + index}>
+      data.map((res) => (
+        <Keyword key={method + res.id}>
           <Link
             href={{
               pathname: `/${method}-post/[pid]`,

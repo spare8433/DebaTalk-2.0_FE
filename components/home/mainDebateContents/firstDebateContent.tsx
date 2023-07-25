@@ -2,13 +2,14 @@ import React from 'react'
 import Link from 'next/link'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
-
-import { BalanceDebatePostDataState } from '@store/slices/balanceDebatePost/type'
-import { IssueDebatePostDataState } from '@store/slices/issueDebatePost/type'
-import { ProsConsDebatePostDataState } from '@store/slices/prosConsDebatePost/type'
 import styled from 'styled-components'
 import { StyledCategory } from '@styles/commonStyle'
 import getConfig from 'next/config'
+import {
+  HotBalanceDebatePost,
+  HotIssueDebatePost,
+  HotProsConsDebatePost,
+} from '@store/slices/debatePosts/type'
 
 const MainContent = styled.div`
   height: 20rem;
@@ -60,7 +61,7 @@ const Category = styled(StyledCategory)`
 `
 
 interface Props {
-  data: BalanceDebatePostDataState | IssueDebatePostDataState | ProsConsDebatePostDataState
+  data: HotIssueDebatePost | HotBalanceDebatePost | HotProsConsDebatePost
   method: 'issue' | 'proscons' | 'balance'
 }
 
@@ -69,12 +70,14 @@ const FirstDebateContent = ({ data, method }: Props) => {
   const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
   return (
-    <MainContent key={`${method}Post_primary`}>
+    <MainContent>
       <Link href={{ pathname: `/${method}-post/[pid]`, query: { pid: data.id } }}>
         <ContentLine>
           <Category>{data.category}</Category>
           <h2>{data.title}</h2>
-          <span>조회수 {data.hits} </span>
+          <span>
+            의견수 {data.opinionCount} &nbsp; 조회수 {data.hits}
+          </span>
         </ContentLine>
 
         <NextImageBox>

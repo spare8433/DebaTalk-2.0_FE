@@ -10,5 +10,5 @@ export const getHotDebatePostsAPI: GetHotDebatePostsAPI = () =>
   axiosInstance('debate-posts').get('hot-debate-posts')
 
 // 토론 게시물 통합 검색
-export const getIntegratedDebatePostsAPI: GetIntegratedDebatePostsAPI = (searchText) =>
-  axiosInstance('debate-posts').get(`integrate-search?searchText=${searchText}`)
+export const getIntegratedDebatePostsAPI: GetIntegratedDebatePostsAPI = (data) =>
+  axiosInstance('debate-posts').post(`integrate-search`, data)

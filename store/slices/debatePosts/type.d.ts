@@ -42,8 +42,8 @@ interface HotProsConsDebatePost {
   imgUrl?: string | null
   hits: number
   opinionCount: number
-  OptionAgreeList: number
-  OptionOpposeList: number
+  agreeListCount: number
+  opposeListCount: number
 }
 
 export interface HotDebatePosts {
@@ -58,11 +58,10 @@ export interface DebateKeywordsData {
   prosConsKeyword: KeywordData[]
 }
 
-export type IntegratedDebatePostData = (
-  | IssueDebatePostDataState
-  | BalanceDebatePostDataState
-  | ProsConsDebatePostDataState
-)[]
+export type IntegratedDebatePostData = {
+  data: (IssueDebatePostDataState | BalanceDebatePostDataState | ProsConsDebatePostDataState)[]
+  count: number
+}
 
 export interface DebatePostsState {
   getDebateHotTopicsLoading: boolean

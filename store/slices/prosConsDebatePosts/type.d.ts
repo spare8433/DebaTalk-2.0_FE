@@ -1,6 +1,11 @@
 import { SerializedError } from '@reduxjs/toolkit'
 import { ProsConsDebatePostDataState } from '../prosConsDebatePost/type'
 
+export interface ProsConsDebatePostsData {
+  data: ProsConsDebatePostDataState[]
+  count: number
+}
+
 export interface ProsConsDebatePostsState {
   getPostsLoading: boolean
   getPostsDone: boolean
@@ -11,5 +16,5 @@ export interface ProsConsDebatePostsState {
   deletePostsLoading: boolean
   deletePostsDone: boolean
   deletePostsError: null | SerializedError
-  postsData: ProsConsDebatePostDataState[] | null
+  postsData: ProsConsDebatePostsData | null
 }

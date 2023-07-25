@@ -1,51 +1,99 @@
 import MainSearch from '@components/common/mainSearch'
 import HeaderFooterLayout from '@components/common/layouts/headerFooterLayout'
 import { getDebateHotTopics, getDebateKeywords } from '@store/slices/debatePosts'
-import { wrapper } from '@store/store'
-import React, { ReactElement } from 'react'
-import { ContentBox, ContentContainor } from '@styles/pages/home.style'
+import { useAppSelector, wrapper } from '@store/store'
+import React, { ReactElement, useEffect } from 'react'
 import { loadMyInfo } from '@store/slices/user'
 import axios from 'axios'
-import MainDebateContent from '../components/home/mainDebateContents'
-import MainCarousel from '../components/home/mainCarousel'
+import { useRouter } from 'next/router'
+import MainDebateContent from '@components/home/mainDebateContents'
+import MainCarousel from '@components/home/mainCarousel'
+import styled from 'styled-components'
+import { getDebateTopicPosts } from '@store/slices/debateTopicPosts'
+import DebateTopicContents from '@components/home/debateTopicContents'
+import UserRankContents from '@components/home/userRankContents'
+import { getUsersInfo } from '@store/slices/users'
 
-const querry = {
-  limit: 12,
-  skip: 12,
+export const ContentContainor = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 0;
+  background-color: #fff;
+  &.topBanner,
+  &.subContent {
+    background-color: #fff;
+  }
+  &.majorContent {
+    background-color: ${({ theme }) => theme.colors.background};
+  }
+  &.recentReaction {
+    background-color: ${({ theme }) => theme.colors.main};
+  }
+`
+
+const ContentBox = styled.div`
+  width: 1160px;
+  margin: 0 auto;
+`
+
+const SubContentBox = styled(ContentBox)`
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - 1rem));
+  column-gap: 2rem;
+`
+
+const Home = () => {
+  const user = useAppSelector((state) => state.user)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user.loadMyInfoError) {
+      alert('사용자 정보를 정상적으로 불러오지 못했습니다. 다시 로그인 부탁드립니다.')
+      router.push('/login')
+    }
+  }, [router, user.loadMyInfoError])
+
+  return (
+    <>
+      <ContentContainor className="topBanner">
+        <ContentBox>
+          <MainSearch />
+          <MainCarousel />
+        </ContentBox>
+      </ContentContainor>
+
+      <ContentContainor className="majorContent">
+        <ContentBox>
+          <MainDebateContent />
+        </ContentBox>
+      </ContentContainor>
+
+      <ContentContainor className="subContent">
+        <SubContentBox>
+          <DebateTopicContents />
+          <UserRankContents />
+        </SubContentBox>
+      </ContentContainor>
+
+      <ContentContainor className="recentReaction">
+        <ContentBox>{/* <RecentReaction></RecentReaction> */}</ContentBox>
+      </ContentContainor>
+    </>
+  )
 }
 
-const Home = () => (
-  <>
-    <ContentContainor className="topBanner">
-      <ContentBox>
-        <MainSearch />
-        <MainCarousel />
-      </ContentBox>
-    </ContentContainor>
-
-    <ContentContainor className="majorContent">
-      <ContentBox>
-        <MainDebateContent />
-      </ContentBox>
-    </ContentContainor>
-
-    <ContentContainor className="recentReaction">
-      <ContentBox>{/* <RecentReaction></RecentReaction> */}</ContentBox>
-    </ContentContainor>
-  </>
-)
-
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  await store.dispatch(getDebateKeywords(querry))
-  await store.dispatch(getDebateHotTopics())
-  const cookie = req ? req.headers.cookie : ''
-  console.log(req.headers.cookie)
-  console.log(cookie)
-  if (req && cookie) {
+  const { cookie } = req.headers
+  if (cookie) {
     // 서버쪽 쿠키 공유 버그
     axios.defaults.headers.Cookie = cookie
+    await store.dispatch(loadMyInfo())
   }
-  await store.dispatch(loadMyInfo())
+  await store.dispatch(getDebateKeywords({ limit: 12 }))
+  await store.dispatch(getDebateHotTopics())
+  await store.dispatch(getDebateTopicPosts({ limit: 5 }))
+  await store.dispatch(getUsersInfo({ limit: 10, key: 'level' })).unwrap()
+
   return { props: {} }
 })
 

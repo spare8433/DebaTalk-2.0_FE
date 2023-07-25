@@ -50,12 +50,13 @@ const PrColorLine = styled(Line)`
 
 interface Props {
   method: 'issue' | 'balance' | 'proscons'
-  page: string
-  limit: number
+  searchText?: string | null
+  page?: number | null
+  limit?: number | null
   redirectMsg?: string
 }
 
-const DebateForumPage = ({ method, page, limit, redirectMsg }: Props) => {
+const DebateForumPage = ({ method, searchText, page, limit, redirectMsg }: Props) => {
   useEffect(() => {
     if (redirectMsg) alert(redirectMsg)
   }, [redirectMsg])
@@ -76,7 +77,7 @@ const DebateForumPage = ({ method, page, limit, redirectMsg }: Props) => {
       </HeaderInfoBox>
       <ContentContainor>
         {/* 검색 옵션 박스 */}
-        <DetailedSerachOptions method={method} page={page} limit={limit} />
+        <DetailedSerachOptions method={method} page={page} limit={limit} searchText={searchText} />
 
         {/* 콘텐츠 리스트 */}
         <DebateContentList method={method} page={page} limit={limit} />
@@ -90,55 +91,61 @@ DebateForumPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
-  const { method, page, redirectMsg } = query
-  if (
-    typeof method === 'string' &&
-    typeof page === 'string' &&
-    ['issue', 'balance', 'proscons'].includes(method)
-  ) {
-    const { cookie } = req.headers
-    const limit = 4
-    try {
-      if (cookie) {
-        // 서버쪽 쿠키 공유 버그
-        axios.defaults.headers.Cookie = cookie
-        await store.dispatch(loadMyInfo()).unwrap()
-      }
-      switch (method) {
-        case 'issue':
-          await store.dispatch(getIssueDebatePosts({ limit, page }))
-          break
-        case 'balance':
-          await store.dispatch(getBalanceDebatePosts({ limit, page }))
-          break
-        case 'proscons':
-          await store.dispatch(getProsConsDebatePosts({ limit, page }))
-          break
-        default:
-          break
-      }
-      await store.dispatch(getIssueDebatePosts({ limit, page })).unwrap()
-    } catch (error) {
-      console.log(error)
-      return {
-        redirect: {
-          destination: `/debate-forum?method=issue&page=1&redirectMsg=${encodeURIComponent(
-            '데이터를 불러오지 못했습니다.',
-          )}`,
-          permanent: true,
-        },
-      }
-    }
-    // redirected 인 경우
-    if (redirectMsg && typeof redirectMsg === 'string')
-      return { props: { method, page, limit, redirectMsg } }
+  const { method, page, redirectMsg, searchText } = query
+  const { cookie } = req.headers
+  const limit = 6
 
-    return { props: { method, page, limit } }
+  if (cookie) {
+    // 서버쪽 쿠키 공유 버그
+    axios.defaults.headers.Cookie = cookie
+    await store.dispatch(loadMyInfo())
   }
+
+  // redirected 인 경우
+  if (redirectMsg && typeof redirectMsg === 'string') return { props: { redirectMsg } }
+
+  // 잘못된 쿼리 타입
+  if (
+    Array.isArray(searchText) ||
+    Array.isArray(page) ||
+    Array.isArray(method) ||
+    (method && !['issue', 'balance', 'proscons'].includes(method))
+  )
+    return { notFound: true }
+
+  try {
+    const getDebatePostsParam = { searchText, limit, page: Number(page) }
+
+    switch (method) {
+      case 'issue':
+        await store.dispatch(getIssueDebatePosts(getDebatePostsParam)).unwrap()
+        break
+      case 'balance':
+        await store.dispatch(getBalanceDebatePosts(getDebatePostsParam)).unwrap()
+        break
+      case 'proscons':
+        await store.dispatch(getProsConsDebatePosts(getDebatePostsParam)).unwrap()
+        break
+      default:
+        await store.dispatch(getIssueDebatePosts(getDebatePostsParam)).unwrap()
+        break
+    }
+  } catch (error) {
+    const msg = encodeURIComponent('데이터를 불러오지 못했습니다.')
+    return {
+      redirect: {
+        destination: `/debate-forum?redirectMsg=${msg}`,
+        permanent: true,
+      },
+    }
+  }
+
   return {
-    redirect: {
-      destination: `/debate-forum?method=issue&page=1`,
-      permanent: true,
+    props: {
+      method: method ?? 'issue',
+      searchText: searchText ?? null,
+      page: page ?? null,
+      limit: limit ?? null,
     },
   }
 })

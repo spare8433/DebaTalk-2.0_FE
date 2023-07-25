@@ -33,4 +33,18 @@ module.exports = {
     API_SERVER_URL: process.env.API_SERVER_URL,
     WEB_SERVER_URL: process.env.WEB_SERVER_URL,
   },
+  async headers() {
+    return [
+      {
+        // 모든 페이지에 대해 동일한 헤더를 설정
+        source: '/(.*)', // 모든 경로
+        headers: [
+          {
+            key: 'X-XSS-Protection', // XSS 방지
+            value: '1; mode=block',
+          },
+        ],
+      },
+    ]
+  },
 }

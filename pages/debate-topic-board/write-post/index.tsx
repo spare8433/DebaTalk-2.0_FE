@@ -1,10 +1,11 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import styled from 'styled-components'
-import { wrapper } from '@store/store'
+import { useAppSelector, wrapper } from '@store/store'
 import axios from 'axios'
 import { loadMyInfo } from '@store/slices/user'
 import WriteDebateTopicForm from '@components/debate-topic-board/write-post'
 import HeaderFooterLayout from '@components/common/layouts/headerFooterLayout'
+import { useRouter } from 'next/router'
 
 const IndexContainor = styled.div`
   width: 100%;
@@ -17,13 +18,25 @@ const WirePostContainor = styled.div`
   margin: 0 auto;
 `
 
-const WriteDebateTopicPostPage = () => (
-  <IndexContainor>
-    <WirePostContainor>
-      <WriteDebateTopicForm />
-    </WirePostContainor>
-  </IndexContainor>
-)
+const WriteDebateTopicPostPage = () => {
+  const user = useAppSelector((state) => state.user)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user.loadMyInfoError) {
+      alert('사용자 정보를 정상적으로 불러오지 못했습니다. 다시 로그인 부탁드립니다.')
+      router.push('/login')
+    }
+  }, [router, user.loadMyInfoError])
+
+  return (
+    <IndexContainor>
+      <WirePostContainor>
+        <WriteDebateTopicForm />
+      </WirePostContainor>
+    </IndexContainor>
+  )
+}
 
 WriteDebateTopicPostPage.getLayout = function getLayout(page: ReactElement) {
   return <HeaderFooterLayout>{page}</HeaderFooterLayout>
@@ -32,17 +45,20 @@ WriteDebateTopicPostPage.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const { cookie } = req.headers
 
-  try {
-    if (cookie) {
-      // 서버쪽 쿠키 공유 버그
-      axios.defaults.headers.Cookie = cookie
-      await store.dispatch(loadMyInfo()).unwrap
-    }
-  } catch (error) {
-    console.log(error)
-    return { notFound: true }
+  if (cookie) {
+    // 서버쪽 쿠키 공유 버그
+    axios.defaults.headers.Cookie = cookie
+    await store.dispatch(loadMyInfo())
+
+    return { props: {} }
   }
-  return { props: {} }
+
+  return {
+    redirect: {
+      destination: `/login`,
+      permanent: true,
+    },
+  }
 })
 
 export default WriteDebateTopicPostPage

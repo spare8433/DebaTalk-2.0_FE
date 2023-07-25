@@ -21,6 +21,7 @@ export const TextBox = styled.div`
   padding: 0.8rem 0 0.8rem 3rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex: 1;
   h3,
   span {
@@ -35,10 +36,10 @@ export const TextBox = styled.div`
 `
 
 export const TextContentLine = styled.div`
-  margin: 1rem 0;
-  flex: 1;
-  height: 7rem;
-  line-height: 1.4;
+  font-size: 1.4rem;
+  padding-left: 0.5rem;
+  height: 8rem;
+  line-height: 2rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
@@ -50,10 +51,18 @@ export const TextContentLine = styled.div`
 `
 
 export const OtherInfoLine = styled.div`
+  display: flex;
+  justify-content: space-between;
   span {
     font-size: 1.4rem;
     margin-right: 0.8rem;
   }
+`
+export const LeftPart = styled.div``
+
+export const RightPart = styled.div`
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.colors.gray};
 `
 
 export const PaginationBox = styled.div`

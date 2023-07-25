@@ -21,13 +21,15 @@ export type GetDebatePostsParam = {
   readonly category?: string
   readonly searchText?: string
   readonly limit?: number
-  readonly page?: string
+  readonly page?: number
   readonly key?: 'createdAt' | 'hits' | string
   readonly order?: 'DESC' | 'ASC' | string
 }
 
-export type GetIntegratedDebatePosts = {
-  readonly searchText: string
+export type GetIntegratedDebatePostsParam = {
+  readonly searchText?: string
+  readonly limit?: number
+  readonly page?: number
 }
 
 export type CreateBalanceOpinionParam = {
@@ -91,4 +93,11 @@ export type CreateDebateTopicReplyParam = {
   readonly content: string
   readonly writerId: number
   readonly targetId: number
+}
+
+export type GetUsersParam = {
+  readonly limit?: number
+  // readonly page?: string
+  readonly key?: 'level' | 'point' | string
+  readonly order?: 'DESC' | 'ASC' | string
 }

@@ -3,11 +3,14 @@ import {
   HotDebatePosts,
   IntegratedDebatePostData,
 } from '@store/slices/debatePosts/type'
-import { GetDebateKeywords } from 'types/params'
+import { GetDebateKeywords, GetIntegratedDebatePostsParam } from 'types/params'
 import { AxiosAPI, AxiosAPIwithParam } from 'types/axiosAPI'
 
 type GetDebateKeywordsAPI = AxiosAPIwithParam<GetDebateKeywords, DebateKeywordsData>
 
 type GetHotDebatePostsAPI = AxiosAPI<HotDebatePosts>
 
-type GetIntegratedDebatePostsAPI = AxiosAPIwithParam<string, IntegratedDebatePostData>
+type GetIntegratedDebatePostsAPI = AxiosAPIwithParam<
+  GetIntegratedDebatePostsParam,
+  IntegratedDebatePostData
+>

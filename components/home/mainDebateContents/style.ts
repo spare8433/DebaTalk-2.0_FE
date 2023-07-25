@@ -1,4 +1,5 @@
 import { NextImageBox } from '@styles/commonStyle/imgBox'
+import { LimitOneLineText } from '@styles/commonStyle/texts'
 import styled from 'styled-components'
 
 export const MainDebate = styled.div`
@@ -16,7 +17,9 @@ export const DebateContentBox = styled.div`
   h1 {
     width: 100%;
     margin-bottom: 1rem;
+    padding: 1rem 0;
     text-align: center;
+    /* color: ${({ theme }) => theme.colors.main}; */
   }
 `
 
@@ -62,17 +65,7 @@ export const ContentInfoBox = styled.div`
 export const ProsConsSubContentBox = styled(SubContentBox)`
   flex-direction: column;
   justify-content: space-between;
-  p {
-    text-align: right;
-    font-size: 1.4rem;
-    color: ${({ theme }) => theme.colors.deepGray};
-  }
-  p:nth-child(1) {
-    color: #7291e6;
-  }
-  p:nth-child(3) {
-    color: #e67292;
-  }
+
   a {
     height: 100%;
     display: flex;
@@ -88,7 +81,7 @@ export const VoteGauge = styled.div`
   background-color: #e67292;
   border-radius: 0.2rem;
 `
-export const BlueGauage = styled.div<{ width: string }>`
+export const BlueGauage = styled.div<{ width: number }>`
   width: ${({ width }) => `${width}%`};
   border-radius: 0.2rem;
   position: absolute;
@@ -100,4 +93,26 @@ export const BlueGauage = styled.div<{ width: string }>`
 export const VoteInfoLine = styled.div`
   display: flex;
   justify-content: space-between;
+  font-size: 1.4rem;
+
+  ${LimitOneLineText} {
+    width: 38%;
+    color: ${({ theme }) => theme.colors.deepGray};
+
+    &.blue {
+      color: ${({ theme }) => theme.colors.softBlue};
+    }
+    &.red {
+      color: ${({ theme }) => theme.colors.softPink};
+      text-align: right;
+    }
+  }
+
+  span {
+    width: 24%;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `

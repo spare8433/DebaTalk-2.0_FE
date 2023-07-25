@@ -41,7 +41,7 @@ export const getDebateTopicPost = createAsyncThunk('debateTopicPost/get', async 
   return response.data
 })
 
-export const createtDebateTopicOpinion = createAsyncThunk(
+export const createDebateTopicOpinion = createAsyncThunk(
   'debateTopicPost/opinion/create',
   async (data: CreateDebateTopicOpinionParam) => {
     const response = await createDebateTopicOpinionAPI(data)
@@ -49,7 +49,7 @@ export const createtDebateTopicOpinion = createAsyncThunk(
   },
 )
 
-export const createtDebateTopicReply = createAsyncThunk(
+export const createDebateTopicReply = createAsyncThunk(
   'debateTopicPost/reply/create',
   async (data: CreateDebateTopicReplyParam) => {
     const response = await createDebateTopicReplyAPI(data)
@@ -91,30 +91,30 @@ export const debateTopicPost = createSlice({
       state.getPostError = action.error
     })
 
-    builder.addCase(createtDebateTopicOpinion.pending, (state) => {
+    builder.addCase(createDebateTopicOpinion.pending, (state) => {
       state.createOpinionLoading = true
       state.createOpinionDone = false
       state.createOpinionError = null
     })
-    builder.addCase(createtDebateTopicOpinion.fulfilled, (state) => {
+    builder.addCase(createDebateTopicOpinion.fulfilled, (state) => {
       state.createOpinionLoading = false
       state.createOpinionDone = true
     })
-    builder.addCase(createtDebateTopicOpinion.rejected, (state, action) => {
+    builder.addCase(createDebateTopicOpinion.rejected, (state, action) => {
       state.createOpinionLoading = false
       state.createOpinionError = action.error
     })
 
-    builder.addCase(createtDebateTopicReply.pending, (state) => {
+    builder.addCase(createDebateTopicReply.pending, (state) => {
       state.createReplyLoading = true
       state.createReplyDone = false
       state.createReplyError = null
     })
-    builder.addCase(createtDebateTopicReply.fulfilled, (state) => {
+    builder.addCase(createDebateTopicReply.fulfilled, (state) => {
       state.createReplyLoading = false
       state.createReplyDone = true
     })
-    builder.addCase(createtDebateTopicReply.rejected, (state, action) => {
+    builder.addCase(createDebateTopicReply.rejected, (state, action) => {
       state.createReplyLoading = false
       state.createReplyError = action.error
     })

@@ -7,17 +7,27 @@ import { useRouter } from 'next/router'
 import { MainSearchBox } from './style'
 import FitNextImage from '../fitNextImage'
 
-const MainSearch = () => {
+interface Props {
+  page?: number | null
+  limit?: number | null
+  searchText?: string | null
+}
+
+const MainSearch = ({ page, limit, searchText }: Props) => {
   const router = useRouter()
-  const { searchText } = router.query
-  const [text, changeText] = useInput(typeof searchText === 'string' ? searchText : '')
+  const [text, changeText] = useInput(searchText ?? '')
+  const currentPage = page ?? 1
+  const currentLimit = limit ?? 8
 
   const intergrateSearch = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      router.push({ pathname: '/integrate-search', query: { searchText: text } })
+      router.push({
+        pathname: '/integrate-search',
+        query: { searchText: text, page: currentPage, limit: currentLimit },
+      })
     },
-    [router, text],
+    [currentLimit, currentPage, router, text],
   )
 
   return (

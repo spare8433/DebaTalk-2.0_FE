@@ -1,5 +1,5 @@
-import { GetDebatePostsParam } from 'types/params'
+import { GetIntegratedDebatePostsParam } from 'types/params'
 import { AxiosAPIwithParam } from 'types/axiosAPI'
-import { DebateTopicPostDataState } from '@store/slices/debateTopicPost/type'
+import { DebateTopicPostsData } from '@store/slices/debateTopicPosts/type'
 
-type GetDebateTopicPostsAPI = AxiosAPIwithParam<GetDebatePostsParam, DebateTopicPostDataState[]>
+type GetDebateTopicPostsAPI = AxiosAPIwithParam<GetIntegratedDebatePostsParam, DebateTopicPostsData>
