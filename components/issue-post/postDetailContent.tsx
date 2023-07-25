@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import { CssPercent, CssRem, CssString } from 'types/customCssType'
@@ -17,7 +17,7 @@ import {
   ContentBox,
   ContentTitle,
   DebateRulesBox,
-  DetailDevateContainor,
+  DetailDebateContainor,
   HeaderButtonBox,
   HeaderCategoryLine,
   HeaderInfoBox,
@@ -30,28 +30,22 @@ import {
   RelatedPostsBox,
 } from '@styles/detailPost.style'
 import getConfig from 'next/config'
+import SharePostButtons from '@components/common/sharePostButtons'
+import { useRouter } from 'next/router'
 import { AvgScore, OtherInfoBox } from './style'
 
 interface Props {
-  pid: string | string[] | undefined
+  pid: string
 }
 
 const IssuePostDetailContent = ({ pid }: Props) => {
   const dispatch = useAppDispatch()
+  const router = useRouter()
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const [score, onChangeScore] = useInput<HTMLSelectElement>('5')
   const postData = useAppSelector((state) => state.issueDebatePost.postData)
   const { publicRuntimeConfig } = getConfig()
-  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
-
-  // 평균 점수
-  const avgScore = useMemo(() => {
-    const scoreList = postData?.IssueOpinions.map((res) => res.score)
-    if (!scoreList || scoreList.length <= 0) return 0
-    return (
-      scoreList.reduce((sum, currentValue) => sum + currentValue, 0) / scoreList.length
-    ).toFixed(2)
-  }, [postData])
+  const APIServerUrl = publicRuntimeConfig.API_SERVER_URL
 
   // 실 참여 인원
   const realUserCount = useMemo(() => {
@@ -65,9 +59,8 @@ const IssuePostDetailContent = ({ pid }: Props) => {
     return realUserList.length
   }, [postData])
 
-  const submitComment = async () => {
+  const submitComment = useCallback(async () => {
     try {
-      if (typeof pid !== 'string') return
       await dispatch(
         createIssueOpinion({
           postId: parseInt(pid, 10),
@@ -77,14 +70,15 @@ const IssuePostDetailContent = ({ pid }: Props) => {
       ).unwrap()
       await dispatch(getIssueDebatePost(pid)).unwrap()
     } catch (error) {
-      console.log(error)
+      alert('게시물을 불러오지 못 했습니다.')
+      router.push({ pathname: '/debate-forum', query: { method: 'issue', page: 1, limit: 6 } })
     }
-  }
+  }, [comment, dispatch, pid, router, score])
 
   if (postData === null) return <EmptyContent />
 
   return (
-    <DetailDevateContainor>
+    <DetailDebateContainor>
       {/* 타이틀 부분 박스 */}
       <PostHeaderBox>
         <h1>{postData.title}</h1>
@@ -95,7 +89,9 @@ const IssuePostDetailContent = ({ pid }: Props) => {
               postData.category
             }]`}
           </span>
-          <HeaderButtonBox>버튼 들어갈 자리</HeaderButtonBox>
+          <HeaderButtonBox>
+            <SharePostButtons title={postData.title} />
+          </HeaderButtonBox>
         </HeaderCategoryLine>
 
         <HeaderInfoBox>
@@ -118,7 +114,7 @@ const IssuePostDetailContent = ({ pid }: Props) => {
         >
           <FitNextImage
             src={
-              postData.imgUrl ? `${APISeverUrl}${postData.imgUrl}` : '/img/default-thumbnail.png'
+              postData.imgUrl ? `${APIServerUrl}${postData.imgUrl}` : '/img/default-thumbnail.png'
             }
             alt="thumbnail"
           />
@@ -151,11 +147,13 @@ const IssuePostDetailContent = ({ pid }: Props) => {
       {/* 토론 현황 박스 */}
       <ContentTitle>[ 현황 ]</ContentTitle>
       <PostCurrentSituationBox>
-        <AvgScore>평균 점수 : {avgScore}</AvgScore>
+        <AvgScore>평균 점수 : {postData.opinionAvgScore ?? '집계중'}</AvgScore>
         <OtherInfoBox>
-          총 의견 {postData.IssueOpinions.length} 참여인원 {realUserCount}
+          <p>* 평균 점수가 5 점에 가까울수록 다수의 참여자들이 중요하게 생각한 주제입니다.</p>
+          <span>
+            총 의견 {postData.IssueOpinions.length} &nbsp;&nbsp; 참여인원 {realUserCount}
+          </span>
         </OtherInfoBox>
-        <p>* 평균 점수가 5 점에 가까울수록 다수의 참여자들이 중요하게 생각한 주제입니다.</p>
       </PostCurrentSituationBox>
 
       {/* 토론규칙 */}
@@ -200,7 +198,7 @@ const IssuePostDetailContent = ({ pid }: Props) => {
       <OpinionListBox>
         <OpinionList data={postData.IssueOpinions} mode="issue" />
       </OpinionListBox>
-    </DetailDevateContainor>
+    </DetailDebateContainor>
   )
 }
 

@@ -19,10 +19,12 @@ export const AvgScore = styled.div`
   font-size: 3.2rem;
   font-weight: 500;
   text-align: center;
-  margin-bottom: 1.6rem;
+  margin-bottom: 3rem;
 `
 
 export const OtherInfoBox = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-size: 1.6rem;
   font-weight: 500;
   text-align: center;

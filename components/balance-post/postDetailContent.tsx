@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import { CssPercent, CssRem, CssString } from 'types/customCssType'
 import FitNextImage from '@components/common/fitNextImage'
@@ -17,7 +17,7 @@ import {
   ContentBox,
   ContentTitle,
   DebateRulesBox,
-  DetailDevateContainor,
+  DetailDebateContainor,
   HeaderButtonBox,
   HeaderCategoryLine,
   HeaderInfoBox,
@@ -30,23 +30,25 @@ import {
   RelatedPostsBox,
 } from '@styles/detailPost.style'
 import getConfig from 'next/config'
+import { useRouter } from 'next/router'
+import SharePostButtons from '@components/common/sharePostButtons'
 import { BalanceOption, BalancePostCurrentSituationBox } from './style'
 
 interface Props {
-  pid: string | string[] | undefined
+  pid: string
 }
 
 const BalancePostDetailContent = ({ pid }: Props) => {
   const dispatch = useAppDispatch()
+  const router = useRouter()
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const [selection, onChangeSelection] = useInput<HTMLSelectElement>('A')
   const postData = useAppSelector((state) => state.balanceDebatePost.postData)
   const { publicRuntimeConfig } = getConfig()
   const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
-  const submitComment = async () => {
+  const submitComment = useCallback(async () => {
     try {
-      if (typeof pid !== 'string') return
       await dispatch(
         createBalanceOpinion({
           postId: parseInt(pid, 10),
@@ -56,14 +58,15 @@ const BalancePostDetailContent = ({ pid }: Props) => {
       ).unwrap()
       await dispatch(getBalanceDebatePost(pid)).unwrap()
     } catch (error) {
-      console.log(error)
+      alert('게시물을 불러오지 못 했습니다.')
+      router.push({ pathname: '/debate-forum', query: { method: 'balance', page: 1, limit: 6 } })
     }
-  }
+  }, [comment, dispatch, pid, router, selection])
 
   if (postData === null) return <EmptyContent />
 
   return (
-    <DetailDevateContainor>
+    <DetailDebateContainor>
       {/* 타이틀 부분 박스 */}
       <PostHeaderBox>
         <h1>{postData.title}</h1>
@@ -74,7 +77,9 @@ const BalancePostDetailContent = ({ pid }: Props) => {
               postData.category
             }]`}
           </span>
-          <HeaderButtonBox>버튼 들어올 자리</HeaderButtonBox>
+          <HeaderButtonBox>
+            <SharePostButtons title={postData.title} />
+          </HeaderButtonBox>
         </HeaderCategoryLine>
 
         <HeaderInfoBox>
@@ -136,25 +141,25 @@ const BalancePostDetailContent = ({ pid }: Props) => {
       <ContentTitle>[ 현황 ]</ContentTitle>
       <BalancePostCurrentSituationBox>
         <BalanceOption>
-          {postData.OptionAList.length > postData.OptionBList.length && (
+          {postData.optionAListCount > postData.optionBListCount && (
             <NextImageBox styleOption={{ width: new CssRem(2.4), height: new CssRem(2.4) }}>
               <FitNextImage src="/img/crown.png" alt="crown" />
             </NextImageBox>
           )}
           <BlueText>A. {postData.optionA}</BlueText>
-          <p>{postData.OptionAList.length} 명</p>
+          <p>{postData.optionAListCount} 명</p>
         </BalanceOption>
 
         <span>VS</span>
 
         <BalanceOption>
-          {postData.OptionAList.length < postData.OptionBList.length && (
+          {postData.optionAListCount < postData.optionBListCount && (
             <NextImageBox styleOption={{ width: new CssRem(2.4), height: new CssRem(2.4) }}>
               <FitNextImage src="/img/crown.png" alt="crown" />
             </NextImageBox>
           )}
           <RedText>B. {postData.optionB}</RedText>
-          <p>{postData.OptionBList.length} 명</p>
+          <p>{postData.optionBListCount} 명</p>
         </BalanceOption>
       </BalancePostCurrentSituationBox>
 
@@ -196,7 +201,7 @@ const BalancePostDetailContent = ({ pid }: Props) => {
       <OpinionListBox>
         <OpinionList data={postData.BalanceOpinions} mode="balance" />
       </OpinionListBox>
-    </DetailDevateContainor>
+    </DetailDebateContainor>
   )
 }
 

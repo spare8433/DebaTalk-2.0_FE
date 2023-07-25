@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import useInput from '@hooks/useInput'
 import { useAppDispatch, useAppSelector } from '@store/store'
 import { createProsConsOpinion, getProsConsDebatePost } from '@store/slices/prosConsDebatePost'
@@ -17,7 +17,7 @@ import {
   ContentBox,
   ContentTitle,
   DebateRulesBox,
-  DetailDevateContainor,
+  DetailDebateContainor,
   HeaderButtonBox,
   HeaderCategoryLine,
   HeaderInfoBox,
@@ -30,23 +30,25 @@ import {
   RelatedPostsBox,
 } from '@styles/detailPost.style'
 import getConfig from 'next/config'
+import { useRouter } from 'next/router'
+import SharePostButtons from '@components/common/sharePostButtons'
 import { ProsConsOption, ProsConsPostCurrentSituationBox } from './style'
 
 interface Props {
-  pid: string | string[] | undefined
+  pid: string
 }
 
 const ProsConsPostDetailContent = ({ pid }: Props) => {
   const dispatch = useAppDispatch()
+  const router = useRouter()
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const [selection, onChangeSelection] = useInput<HTMLSelectElement>('찬성')
   const postData = useAppSelector((state) => state.prosConsDebatePost.postData)
   const { publicRuntimeConfig } = getConfig()
   const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
-  const submitComment = async () => {
+  const submitComment = useCallback(async () => {
     try {
-      if (typeof pid !== 'string') return
       await dispatch(
         createProsConsOpinion({
           postId: parseInt(pid, 10),
@@ -56,14 +58,15 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
       ).unwrap()
       await dispatch(getProsConsDebatePost(pid)).unwrap()
     } catch (error) {
-      console.log(error)
+      alert('게시물을 불러오지 못 했습니다.')
+      router.push({ pathname: '/debate-forum', query: { method: 'proscons', page: 1, limit: 6 } })
     }
-  }
+  }, [comment, dispatch, pid, router, selection])
 
   if (postData === null) return <EmptyContent />
 
   return (
-    <DetailDevateContainor>
+    <DetailDebateContainor>
       {/* 타이틀 부분 박스 */}
       <PostHeaderBox>
         <h1>{postData.title}</h1>
@@ -74,7 +77,9 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
               postData.category
             }]`}
           </span>
-          <HeaderButtonBox>버튼 들어갈 자리</HeaderButtonBox>
+          <HeaderButtonBox>
+            <SharePostButtons title={postData.title} />
+          </HeaderButtonBox>
         </HeaderCategoryLine>
 
         <HeaderInfoBox>
@@ -131,7 +136,7 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
       <ContentTitle>[ 현황 ]</ContentTitle>
       <ProsConsPostCurrentSituationBox>
         <ProsConsOption>
-          {postData.OptionAgreeList.length > postData.OptionOpposeList.length && (
+          {postData.agreeListCount > postData.opposeListCount && (
             <NextImageBox styleOption={{ width: new CssRem(2.4), height: new CssRem(2.4) }}>
               <FitNextImage src="/img/crown.png" alt="crown" />
             </NextImageBox>
@@ -139,13 +144,13 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
 
           <BlueText>찬성</BlueText>
 
-          <p>{postData.OptionAgreeList.length} 명</p>
+          <p>{postData.agreeListCount} 명</p>
         </ProsConsOption>
 
         <span>OR</span>
 
         <ProsConsOption>
-          {postData.OptionAgreeList.length < postData.OptionOpposeList.length && (
+          {postData.agreeListCount < postData.opposeListCount && (
             <NextImageBox styleOption={{ width: new CssRem(2.4), height: new CssRem(2.4) }}>
               <FitNextImage src="/img/crown.png" alt="crown" />
             </NextImageBox>
@@ -153,7 +158,7 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
 
           <RedText>반대</RedText>
 
-          <p>{postData.OptionOpposeList.length} 명</p>
+          <p>{postData.opposeListCount} 명</p>
         </ProsConsOption>
       </ProsConsPostCurrentSituationBox>
 
@@ -177,7 +182,7 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
           <option value="찬성">찬성</option>
           <option value="반대">반대</option>
         </OpinionSelect>
-        <p>* 토론 주제가 이슈화되기에 적절한지 여부를 0 ~ 5 까지의 점수로 의견을 나타내주세요.</p>
+        <p>* 토론 주제 찬성 / 반대 여부를 의견과 함께 남겨주세요.</p>
       </OpinionSelectBox>
 
       {/* 의견 및 댓글 (따로 컴포넌트) */}
@@ -195,7 +200,7 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
       <OpinionListBox>
         <OpinionList data={postData.ProsConsOpinions} mode="prosCons" />
       </OpinionListBox>
-    </DetailDevateContainor>
+    </DetailDebateContainor>
   )
 }
 
