@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { ButtonStlye } from 'types/commonStyle'
+import { ButtonStlye, NextImageButtonStyle } from 'types/commonStyle'
 
 // basic button style
 export const BasicButton = styled.button<{ styleOption?: ButtonStlye }>`
@@ -15,6 +15,22 @@ export const BasicButton = styled.button<{ styleOption?: ButtonStlye }>`
   padding: 0;
   border: 0;
   cursor: pointer;
+`
+
+export const NextImageBtn = styled(BasicButton)<{ styleOption?: NextImageButtonStyle }>`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    ${({ styleOption }) => css`
+      object-fit: ${styleOption?.objectFit?.getValue() ?? 'initial'};
+      object-position: ${styleOption?.objectPosition?.getValue() ?? 'initial'};
+    `}
+  }
 `
 
 // less style btn

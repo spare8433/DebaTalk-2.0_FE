@@ -5,12 +5,12 @@ import { BasicStyle } from 'types/commonStyle'
 export const StyledCategory = styled.div`
   background-color: ${({ theme }) => theme.colors.main};
   color: white;
-  padding: 0.8rem;
-  margin-right: 1.6rem;
+  padding: 0.6rem 1.2rem;
+  margin-right: 1.4rem;
 `
 
 // border Line style
-export const Line = styled.div<{ styleOption: BasicStyle }>`
+export const Line = styled.div<{ styleOption?: BasicStyle }>`
   ${({ styleOption, theme }) => css`
     background-color: ${theme.colors.whiteGray};
     width: ${styleOption?.width?.getValue() ?? '100%'};

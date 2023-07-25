@@ -25,6 +25,11 @@ export interface ButtonStlye extends BasicStyle {
   shadow?: CssValue
 }
 
+export interface NextImageButtonStyle extends ButtonStlye {
+  objectFit?: CssValue
+  objectPosition?: CssValue
+}
+
 export interface ImgBoxStyle extends BasicStyle {
   borderRadius?: CssValue
   objectFit?: CssValue
