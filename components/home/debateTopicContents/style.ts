@@ -27,11 +27,11 @@ export const BoradTitle = styled.div`
 
 export const DebateTopicItem = styled.div`
   width: 100%;
-  height: 6.4rem;
+  height: 7.04rem;
   display: flex;
   flex-direction: column;
   border-bottom: solid 0.1rem ${({ theme }) => theme.colors.gray};
-  padding: 0.8rem 0.4rem;
+  padding: 1rem 0.4rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -7,6 +7,7 @@ import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
 import { CssRem } from 'types/customCssType'
 import getConfig from 'next/config'
+import { DebateTopicReplyDataState } from '@store/slices/debateTopicPost/type'
 import { UserTag } from './writeReply/style'
 import WriteReply from './writeReply'
 import {
@@ -20,9 +21,13 @@ import {
 } from './style'
 
 type WrapperProps = {
-  reply: BalanceDebateReplyDataState | IssueDebateReplyDataState | ProsConsDebateReplyDataState
-  mode: 'balance' | 'issue' | 'prosCons'
-  WriterId: number
+  reply:
+    | BalanceDebateReplyDataState
+    | IssueDebateReplyDataState
+    | ProsConsDebateReplyDataState
+    | DebateTopicReplyDataState
+  mode: 'balance' | 'issue' | 'prosCons' | 'debate-topic'
+  WriterId: string
 }
 
 const DebateReply = ({ reply, mode, WriterId }: WrapperProps) => {
@@ -46,31 +51,28 @@ const DebateReply = ({ reply, mode, WriterId }: WrapperProps) => {
               alt=""
             />
           </NextImageBox>
-          <h3>{reply.User.nickname}</h3>
+          <h4>{reply.User.nickname}</h4>
         </OpinionInfo>
 
-        <span>{dayjs(reply.updatedAt).format('YY-MM-DD')}</span>
+        <span>{dayjs(reply.updatedAt).format('YYYY-MM-DD')}</span>
 
         <ReplyIcon />
       </OpinionInfoLine>
 
       <PostContentLine>
-        {WriterId !== reply.Target.id && <UserTag>@{reply.Target.nickname}</UserTag>}
+        <UserTag>@{reply.Target.nickname}</UserTag>
         {reply.content}
       </PostContentLine>
 
       <ReplyInteractButtonLine>
-        <InteractButtonItem>
-          <span>추천</span>
-        </InteractButtonItem>
+        {/* <InteractButtonItem>신고</InteractButtonItem> */}
 
-        <InteractButtonItem onClick={() => setIsOnWriteReply(true)}>
-          <span>답글</span>
-        </InteractButtonItem>
-
-        <InteractButtonItem>
-          <span>신고</span>
-        </InteractButtonItem>
+        {WriterId !== reply.Target.userId && (
+          <>
+            <InteractButtonItem>추천</InteractButtonItem>
+            <InteractButtonItem onClick={() => setIsOnWriteReply(true)}>답글</InteractButtonItem>
+          </>
+        )}
       </ReplyInteractButtonLine>
 
       {/* 답글 작성 부분 */}

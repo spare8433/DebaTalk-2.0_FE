@@ -20,23 +20,28 @@ import {
 } from './style'
 
 interface Props {
+  searchText?: string | null
   page?: number | null
   limit?: number | null
 }
 
-const DebateContentList = ({ page, limit }: Props) => {
+const DebateContentList = ({ page, limit, searchText }: Props) => {
   const router = useRouter()
   const postData = useAppSelector((state) => state.debateTopicPosts.postsData)
   const { publicRuntimeConfig } = getConfig()
   const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
   const currentPage = page ?? 1
   const currentLimit = limit ?? 8
+  const currentSearchText = searchText ?? ''
 
   const changePage = useCallback(
     (num: number) => {
-      router.push({ pathname: '/debate-topic-board', query: { page: num, limit: currentLimit } })
+      router.push({
+        pathname: '/debate-topic-board',
+        query: { page: num, limit: currentLimit, searchText: currentSearchText },
+      })
     },
-    [currentLimit, router],
+    [currentLimit, currentSearchText, router],
   )
 
   return (

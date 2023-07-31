@@ -19,7 +19,7 @@ const DebateTopicContents = () => {
   const postData = useAppSelector((state) => state.debateTopicPosts.postsData)
 
   const handleMoveDebateTopicBoard = useCallback(() => {
-    router.push('/debate-topic-board?page=1&limit=8')
+    router.push('/debate-topic-board')
   }, [router])
 
   return (

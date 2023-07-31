@@ -1,3 +1,4 @@
+import { LessStyleBtn } from '@styles/commonStyle/buttons'
 import styled from 'styled-components'
 
 export const IndexContainor = styled.div`
@@ -15,12 +16,13 @@ export const OpinionBox = styled.div`
 `
 export const OpinionInfoLine = styled.div`
   display: flex;
-  h3 {
+  justify-content: space-between;
+  h4 {
     font-weight: 500;
     margin: 0 16px;
   }
   span {
-    font-size: 14px;
+    font-size: 1.3rem;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.gray};
     align-self: center;
@@ -31,6 +33,7 @@ export const UserOpinion = styled.div`
   display: flex;
   align-items: center;
   margin-right: 20px;
+  font-size: 1.4rem;
 `
 
 export const Selection = styled.span<{ selection: 'A' | 'B' | '찬성' | '반대' }>`
@@ -51,7 +54,8 @@ export const OpinionInfo = styled.div`
 
 export const PostContentLine = styled.p`
   font-weight: 400;
-  margin: 14px 0;
+  font-size: 1.4rem;
+  margin: 1.4rem 0;
   overflow: hidden;
   overflow-wrap: break-word;
   background-color: inherit;
@@ -68,10 +72,11 @@ export const ReplyInteractButtonLine = styled(InteractButtonLine)`
   justify-content: flex-start;
 `
 
-export const ShowRepliesButton = styled.div`
+export const ShowRepliesButton = styled(LessStyleBtn)`
   margin-left: 10px;
+  font-size: 1.3rem;
   display: flex;
-  cursor: pointer;
+  align-items: center;
   span {
     color: ${({ theme }) => theme.colors.whiteGray};
     margin-right: 8px;
@@ -82,12 +87,12 @@ export const SubButtonLine = styled.div`
   display: flex;
 `
 
-export const InteractButtonItem = styled.div`
-  margin: 0px 30px 0px 10px;
-  cursor: pointer;
-  span {
-    color: ${({ theme }) => theme.colors.gray};
-  }
+export const InteractButtonItem = styled(LessStyleBtn)`
+  width: 6rem;
+  box-sizing: border-box;
+  color: ${({ theme }) => theme.colors.gray};
+  padding: 0.2rem 1rem;
+  font-size: 1.4rem;
 `
 export const ReplyListBox = styled.div``
 export const ReplyItem = styled.div`

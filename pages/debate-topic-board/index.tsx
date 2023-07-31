@@ -76,7 +76,7 @@ const DebateTopicBoardPage = ({ page, limit, redirectMsg, searchText }: Props) =
         <DetailedSerachOptions page={page} limit={limit} searchText={searchText} />
 
         {/* 콘텐츠 리스트 */}
-        <DebateContentList page={page} limit={limit} />
+        <DebateContentList page={page} limit={limit} searchText={searchText} />
       </DebateTopicBoardContainor>
 
       <WritePostStickyButton />

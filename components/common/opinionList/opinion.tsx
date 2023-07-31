@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
-import { BalanceDebateOpinonDataState } from '@store/slices/balanceDebatePost/type'
+import React, { useCallback, useState } from 'react'
+import { BalanceDebateOpinionDataState } from '@store/slices/balanceDebatePost/type'
 import dayjs from 'dayjs'
 import { IssueDebateOpinionDataState } from '@store/slices/issueDebatePost/type'
-import { ProsConsDebateOpinonDataState } from '@store/slices/prosConsDebatePost/type'
+import { ProsConsDebateOpinionDataState } from '@store/slices/prosConsDebatePost/type'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
 import { CssRem } from 'types/customCssType'
 import getConfig from 'next/config'
+import { useAppSelector } from '@store/store'
+import { DebateTopicOpinionDataState } from '@store/slices/debateTopicPost/type'
 import DebateReply from './debateReply'
 import WriteReply from './writeReply'
 import {
@@ -29,10 +31,11 @@ import {
 
 interface Props {
   opinion:
-    | BalanceDebateOpinonDataState
+    | BalanceDebateOpinionDataState
     | IssueDebateOpinionDataState
-    | ProsConsDebateOpinonDataState
-  mode: 'balance' | 'issue' | 'prosCons'
+    | ProsConsDebateOpinionDataState
+    | DebateTopicOpinionDataState
+  mode: 'balance' | 'issue' | 'prosCons' | 'debate-topic'
 }
 
 const Opinion = ({ opinion, mode }: Props) => {
@@ -40,9 +43,12 @@ const Opinion = ({ opinion, mode }: Props) => {
   const [isShowReplyListBox, setIsShowReplyListBox] = useState(false)
   const { publicRuntimeConfig } = getConfig()
   const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
+  const user = useAppSelector((state) => state.user.myData)
 
-  const isIssuePost = (_mode: string, target: unknown): target is IssueDebateOpinionDataState =>
-    _mode === 'issue'
+  const checkIsLogin = useCallback(() => {
+    if (user) return setIsOnWriteReply(true)
+    return alert('로그인 이후 이용 가능하십니다.')
+  }, [user])
 
   return (
     <IndexContainor>
@@ -59,15 +65,27 @@ const Opinion = ({ opinion, mode }: Props) => {
                 alt=""
               />
             </NextImageBox>
-            <h3>{opinion.User.nickname}</h3>
-            {isIssuePost(mode, opinion) ? (
+            <h4>{opinion.User.nickname}</h4>
+            {mode === 'issue' && (
               <UserOpinion>
-                님의 <Score>{opinion.score}</Score> 점수 의견
+                님의 점수: <Score>{(opinion as IssueDebateOpinionDataState).score}</Score>
               </UserOpinion>
-            ) : (
+            )}
+            {(mode === 'balance' || mode === 'prosCons') && (
               <UserOpinion>
-                님의 <Selection selection={opinion.selection}>{opinion.selection}</Selection> 선택
-                의견
+                님의
+                <Selection
+                  selection={
+                    (opinion as ProsConsDebateOpinionDataState | BalanceDebateOpinionDataState)
+                      .selection
+                  }
+                >
+                  {
+                    (opinion as ProsConsDebateOpinionDataState | BalanceDebateOpinionDataState)
+                      .selection
+                  }
+                </Selection>
+                선택
               </UserOpinion>
             )}
           </OpinionInfo>
@@ -82,7 +100,7 @@ const Opinion = ({ opinion, mode }: Props) => {
             {opinion.Replys.length > 0 && (
               <>
                 <span>답글 {opinion.Replys.length} 개</span>
-                <NextImageBox styleOption={{ width: new CssRem(2.4), height: new CssRem(2.4) }}>
+                <NextImageBox styleOption={{ width: new CssRem(1.8), height: new CssRem(1.8) }}>
                   <FitNextImage
                     src={isShowReplyListBox ? '/img/slideUp_gray.png' : '/img/slideDown_gray.png'}
                     alt="slideDown"
@@ -92,17 +110,14 @@ const Opinion = ({ opinion, mode }: Props) => {
             )}
           </ShowRepliesButton>
           <SubButtonLine>
-            <InteractButtonItem>
-              <span>추천</span>
-            </InteractButtonItem>
+            {/* <InteractButtonItem>신고</InteractButtonItem> */}
 
-            <InteractButtonItem>
-              <span>신고</span>
-            </InteractButtonItem>
-
-            <InteractButtonItem onClick={() => setIsOnWriteReply(true)}>
-              <span>답글</span>
-            </InteractButtonItem>
+            {(!user || user.userId !== opinion.User.userId) && (
+              <>
+                <InteractButtonItem>추천</InteractButtonItem>
+                <InteractButtonItem onClick={checkIsLogin}>답글</InteractButtonItem>
+              </>
+            )}
           </SubButtonLine>
         </InteractButtonLine>
       </OpinionBox>
@@ -124,7 +139,7 @@ const Opinion = ({ opinion, mode }: Props) => {
         <ReplyListBox>
           {opinion.Replys.map((reply, index) => (
             <ReplyItem key={`replyItem_${index}`}>
-              <DebateReply reply={reply} mode={mode} WriterId={opinion.User.id} />
+              <DebateReply reply={reply} mode={mode} WriterId={opinion.User.userId} />
             </ReplyItem>
           ))}
         </ReplyListBox>

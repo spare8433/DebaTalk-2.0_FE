@@ -82,7 +82,7 @@ const DetailedSerachOptions = ({ page, limit, searchText }: Props) => {
     const fetchData = async () => {
       const searchContent = {
         category: debateCategory,
-        serachtText: currentSearchText,
+        searchText: currentSearchText,
         key: ORDER_OPTION[selectOption],
         limit: currentLimit,
         page: currentPage,
@@ -126,8 +126,8 @@ const DetailedSerachOptions = ({ page, limit, searchText }: Props) => {
           styleOption={{ width: new CssRem(10), height: new CssRem(3) }}
         >
           <option value="최신순">최신순</option>
-          <option value="추천순">추천순</option>
           <option value="조회순">조회순</option>
+          {/* <option value="추천순">추천순</option> */}
         </BasicSelect>
       </DetailControllBox>
     </div>

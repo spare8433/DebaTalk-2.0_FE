@@ -7,12 +7,13 @@ import { CreateBalanceReplyParam } from 'types/params'
 import { PrimaryButton, SubButton } from '@styles/commonStyle/buttons'
 import { CssRem } from 'types/customCssType'
 import { createProsConsReply, getProsConsDebatePost } from '@store/slices/prosConsDebatePost'
+import { createDebateTopicReply, getDebateTopicPost } from '@store/slices/debateTopicPost'
 import { ReplyTextArea, IndexContainor, ReplyTextAreaBox, UserTag, ButtonLine } from './style'
 
 type WrapperProps = {
-  mode: 'balance' | 'issue' | 'prosCons'
+  mode: 'balance' | 'issue' | 'prosCons' | 'debate-topic'
   opinionId: number
-  targetUser: { id: number; nickname: string; imgUrl: string | null }
+  targetUser: { id: number; userId: string; nickname: string; imgUrl: string | null }
   isNestedReply?: boolean
   changeState: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -32,13 +33,22 @@ const WriteReply = ({
   const turnOff = useCallback(() => changeState(false), [changeState])
 
   const [content, setContent] = useState('')
-  const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+
+  const onChangeContent = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value)
     if (e.target) {
       e.target!.style.height = 'auto'
       e.target!.style.height = `${e.target.scrollHeight}px`
     }
-  }
+  }, [])
+
+  // const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   setContent(e.target.value)
+  //   if (e.target) {
+  //     e.target!.style.height = 'auto'
+  //     e.target!.style.height = `${e.target.scrollHeight}px`
+  //   }
+  // }
 
   const submitReply = useCallback(async () => {
     if (!user.myData) return alert('로그인 이후 사용가능한 서비스입니다.')
@@ -62,6 +72,10 @@ const WriteReply = ({
         case 'prosCons':
           await dispatch(createProsConsReply(data)).unwrap()
           await dispatch(getProsConsDebatePost(pid as string)).unwrap()
+          break
+        case 'debate-topic':
+          await dispatch(createDebateTopicReply(data)).unwrap()
+          await dispatch(getDebateTopicPost(pid as string)).unwrap()
           break
         default:
           break

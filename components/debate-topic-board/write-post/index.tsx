@@ -46,12 +46,12 @@ const WriteDebateTopicForm = () => {
             description,
           }),
         )
-        dispatch(createDebateTopicPost(formData)).unwrap()
+        await dispatch(createDebateTopicPost(formData)).unwrap()
 
         alert('게시물이 성공적으로 게시되었습니다')
-        return await router.push({ pathname: '/debate-topic-board', query: { page: 1 } })
+        router.push({ pathname: '/debate-topic-board', query: { page: 1 } })
       } catch (error) {
-        return alert(`게시물 생성 실패 : ${(error as Error).message}`)
+        alert(`게시물 생성 실패 : ${(error as Error).message}`)
       }
     },
     [imageFile, router, category, title, description, dispatch],

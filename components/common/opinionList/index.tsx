@@ -1,16 +1,18 @@
 import React from 'react'
-import { BalanceDebateOpinonDataState } from '@store/slices/balanceDebatePost/type'
+import { BalanceDebateOpinionDataState } from '@store/slices/balanceDebatePost/type'
 import { IssueDebateOpinionDataState } from '@store/slices/issueDebatePost/type'
-import { ProsConsDebateOpinonDataState } from '@store/slices/prosConsDebatePost/type'
+import { ProsConsDebateOpinionDataState } from '@store/slices/prosConsDebatePost/type'
+import { DebateTopicOpinionDataState } from '@store/slices/debateTopicPost/type'
 import Opinion from './opinion'
 import { OpinionItem } from './style'
 
 type WrapperProps = {
   data?:
-    | BalanceDebateOpinonDataState[]
+    | BalanceDebateOpinionDataState[]
     | IssueDebateOpinionDataState[]
-    | ProsConsDebateOpinonDataState[]
-  mode: 'balance' | 'issue' | 'prosCons'
+    | ProsConsDebateOpinionDataState[]
+    | DebateTopicOpinionDataState[]
+  mode: 'balance' | 'issue' | 'prosCons' | 'debate-topic'
 }
 
 const OpinionList = ({ data, mode }: WrapperProps) => (
