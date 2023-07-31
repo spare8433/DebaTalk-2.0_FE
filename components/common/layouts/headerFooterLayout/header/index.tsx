@@ -50,8 +50,8 @@ const Header = () => {
     setIsDropListToggleOn(false)
   }, [])
 
-  const logout = useCallback(() => {
-    dispatch(logOut()).then(() => {
+  const logout = useCallback(async () => {
+    await dispatch(logOut()).then(() => {
       router.push('/')
     })
     setIsDropListToggleOn(!isDropListToggleOn)

@@ -18,6 +18,12 @@ export const BasicButton = styled.button<{ styleOption?: ButtonStlye }>`
 `
 
 export const NextImageBtn = styled(BasicButton)<{ styleOption?: NextImageButtonStyle }>`
+  ${({ styleOption }) => css`
+    box-shadow: ${styleOption?.shadow?.getValue() ?? 'initial'};
+    border-radius: ${styleOption?.borderRadius?.getValue() ?? 'initial'};
+  `};
+
+  background-color: white;
   position: relative;
   display: flex;
   justify-content: center;

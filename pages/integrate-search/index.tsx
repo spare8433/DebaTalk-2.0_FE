@@ -71,7 +71,7 @@ const TotalSearchPage = ({ searchText, page, limit, redirectMsg }: Props) => {
           </NavLinkList>
         </ContentHeader> */}
 
-        <SearchedDebatePost page={page} limit={limit} />
+        <SearchedDebatePost page={page} limit={limit} searchText={searchText} />
       </ContentContainor>
     </IndexContainor>
   )

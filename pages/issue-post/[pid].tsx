@@ -24,7 +24,7 @@ const IssuePostPage = ({ pid }: Props) => {
   const router = useRouter()
 
   useEffect(() => {
-    if (user.loadMyInfoError) {
+    if (user.loadMyInfoError !== null) {
       alert('사용자 정보를 정상적으로 불러오지 못했습니다. 다시 로그인 부탁드립니다.')
       router.push('/login')
     }

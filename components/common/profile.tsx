@@ -17,12 +17,11 @@ const ProfileContainor = styled.div<ProfileTheme>`
   align-items: center;
   /* justify-content: center; */
   font-size: 1.8rem;
-  color: ${({ mode, theme }) => (mode === 'dark' ? 'white' : theme.colors.mainBlack)};
 
   a {
     display: flex;
     align-items: center;
-    color: inherit;
+    color: ${({ mode, theme }) => (mode === 'dark' ? 'white' : theme.colors.mainBlack)};
   }
 `
 

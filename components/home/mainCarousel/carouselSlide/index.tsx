@@ -10,9 +10,10 @@ const Slide = styled.div`
 
 const Keyword = styled.div`
   width: 100%;
-  margin: 20px 0;
+  margin: 2rem 0;
+
   a {
-    font-size: 28px;
+    display: flex;
     font-weight: 700;
     color: ${({ theme }) => theme.colors.deepGray};
     font-weight: 500;
@@ -21,9 +22,19 @@ const Keyword = styled.div`
       color: #000;
     }
   }
+  h1 {
+    color: inherit;
+    font-weight: 600;
+    font-size: 28px;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   span {
     color: ${({ theme }) => theme.colors.whiteGray};
-    font-size: 16px;
+    font-size: 1.6rem;
+    margin-left: 1rem;
     align-self: center;
   }
 `
@@ -50,7 +61,7 @@ const CarouselSlide = ({ data, method }: Props) => (
               query: { pid: res.id },
             }}
           >
-            {res.title}
+            <h1>{res.title}</h1>
             <span> &nbsp;-&nbsp; {res.category}</span>
           </Link>
         </Keyword>

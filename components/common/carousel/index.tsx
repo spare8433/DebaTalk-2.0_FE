@@ -17,6 +17,8 @@ interface SlideProps {
 interface CarouselProps {
   option: {
     height: string
+    /** ms */
+    slideTime: number
   }
   banner?: React.ReactElement
   children: React.ReactElement[] | React.ReactElement
@@ -66,8 +68,8 @@ const Carousel = ({ option, banner, children }: CarouselProps) => {
   // 자동 넘기기 기능
   useEffect(() => {
     clearTimeout(timer.current)
-    if (isAutoPlay) timer.current = setTimeout(next, 2000)
-  }, [next, isAutoPlay])
+    if (isAutoPlay) timer.current = setTimeout(next, option.slideTime)
+  }, [next, isAutoPlay, option.slideTime])
 
   // 가변적인 화면사이즈 대응
   useLayoutEffect(() => {

@@ -95,9 +95,9 @@ const WriteDebatePost = () => {
         }
 
         alert('게시물이 성공적으로 게시되었습니다')
-        return await router.push('/admin')
+        router.push('/admin')
       } catch (error) {
-        return alert(`게시물 생성 실패 : ${(error as Error).message}`)
+        alert(`게시물 생성 실패 : ${(error as Error).message}`)
       }
     },
     [

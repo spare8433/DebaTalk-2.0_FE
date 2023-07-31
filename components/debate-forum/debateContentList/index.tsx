@@ -26,6 +26,7 @@ import {
 
 interface Props {
   method: 'issue' | 'balance' | 'proscons'
+  searchText?: string | null
   page?: number | null
   limit?: number | null
 }
@@ -36,7 +37,7 @@ const detailLinkType = {
   proscons: 'proscons-post',
 }
 
-const DebateContentList = ({ method, page, limit }: Props) => {
+const DebateContentList = ({ method, page, limit, searchText }: Props) => {
   const router = useRouter()
   const { publicRuntimeConfig } = getConfig()
   const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
@@ -46,12 +47,16 @@ const DebateContentList = ({ method, page, limit }: Props) => {
 
   const currentPage = page ?? 1
   const currentLimit = limit ?? 6
+  const currentSearchText = searchText ?? ''
 
   const changePage = useCallback(
     (num: number) => {
-      router.push({ pathname: '/debate-forum', query: { method, limit: currentLimit, page: num } })
+      router.push({
+        pathname: '/debate-forum',
+        query: { method, limit: currentLimit, page: num, searchText: currentSearchText },
+      })
     },
-    [currentLimit, method, router],
+    [currentLimit, currentSearchText, method, router],
   )
 
   const postType = {

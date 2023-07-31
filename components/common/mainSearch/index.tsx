@@ -19,7 +19,7 @@ const MainSearch = ({ page, limit, searchText }: Props) => {
   const currentPage = page ?? 1
   const currentLimit = limit ?? 8
 
-  const intergrateSearch = useCallback(
+  const integrateSearch = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       router.push({
@@ -35,7 +35,7 @@ const MainSearch = ({ page, limit, searchText }: Props) => {
       <NextImageBox styleOption={{ width: new CssRem(1.9), height: new CssRem(1.9) }}>
         <FitNextImage alt="돋보기" src="/img/search.png" />
       </NextImageBox>
-      <form onSubmit={intergrateSearch}>
+      <form onSubmit={integrateSearch}>
         <input
           type="text"
           onChange={changeText}

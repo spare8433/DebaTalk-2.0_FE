@@ -11,6 +11,7 @@ const IndexContainor = styled.div`
 const CommentTextArea = styled.textarea`
   box-sizing: border-box;
   width: 100%;
+  font-size: 1.3rem;
   resize: none;
   outline: none;
   padding: 0.4rem 0.8rem;

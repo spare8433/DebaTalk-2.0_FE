@@ -11,8 +11,8 @@ import {
   TwitterIcon,
 } from 'react-share'
 import styled from 'styled-components'
-import FitNextImage from '../fitNextImage'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
+import FitNextImage from '../fitNextImage'
 
 interface Props {
   title: string

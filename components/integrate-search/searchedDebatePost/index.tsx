@@ -41,21 +41,26 @@ const postType: { [index: string]: string } = {
 interface Props {
   page?: number | null
   limit?: number | null
+  searchText?: string | null
 }
 
-const SearchedDebatePost = ({ page, limit }: Props) => {
+const SearchedDebatePost = ({ page, limit, searchText }: Props) => {
   const router = useRouter()
   const { publicRuntimeConfig } = getConfig()
   const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
   const searchedPostData = useAppSelector((state) => state.debatePosts.integratedDebatePostData)
   const currentPage = page ?? 1
   const currentLimit = limit ?? 8
+  const currentSearchText = searchText ?? ''
 
   const changePage = useCallback(
     (num: number) => {
-      router.push({ pathname: '/intergrate-search', query: { limit: currentLimit, page: num } })
+      router.push({
+        pathname: '/integrate-search',
+        query: { limit: currentLimit, page: num, searchText: currentSearchText },
+      })
     },
-    [currentLimit, router],
+    [currentLimit, currentSearchText, router],
   )
 
   return (

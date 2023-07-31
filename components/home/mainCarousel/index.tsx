@@ -30,6 +30,7 @@ const MainCarousel = () => {
 
   const option = {
     height: '360',
+    slideTime: 3000,
   }
 
   return (

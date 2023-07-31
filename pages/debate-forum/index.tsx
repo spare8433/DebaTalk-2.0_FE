@@ -80,7 +80,7 @@ const DebateForumPage = ({ method, searchText, page, limit, redirectMsg }: Props
         <DetailedSerachOptions method={method} page={page} limit={limit} searchText={searchText} />
 
         {/* 콘텐츠 리스트 */}
-        <DebateContentList method={method} page={page} limit={limit} />
+        <DebateContentList method={method} page={page} limit={limit} searchText={searchText} />
       </ContentContainor>
     </IndexContainor>
   )
