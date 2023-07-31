@@ -1,7 +1,27 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { LoginParam, SignUpParam } from 'types/params'
-import { getUserAPI, loginAPI, logoutAPI, signUpAPI } from '@api/user'
+import {
+  CheckAuthCode,
+  CheckDuplicateEmailParam,
+  CheckDuplicateIdParam,
+  FindUserId,
+  GetAuthCode,
+  LoginParam,
+  SignUpParam,
+  UpdatePasswordParam,
+} from 'types/params'
+import {
+  checkAuthCodeAPI,
+  checkDuplicateEmailAPI,
+  checkDuplicateIdAPI,
+  getAuthCodeAPI,
+  getFindUserIdAPI,
+  getUserAPI,
+  loginAPI,
+  logoutAPI,
+  signUpAPI,
+  updatePasswordAPI,
+} from '@api/user'
 import { UserState } from './type'
 
 const initialState: UserState = {
@@ -17,7 +37,27 @@ const initialState: UserState = {
   logOutLoading: false,
   logOutDone: false,
   logOutError: null,
+  findUserIdLoading: false,
+  findUserIdDone: false,
+  findUserIdError: null,
+  getAuthCodeLoading: false,
+  getAuthCodeDone: false,
+  getAuthCodeError: null,
+  checkAuthCodeLoading: false,
+  checkAuthCodeDone: false,
+  checkAuthCodeError: null,
+  updatePasswordLoading: false,
+  updatePasswordDone: false,
+  updatePasswordError: null,
+  checkDuplicateIdLoading: false,
+  checkDuplicateIdDone: false,
+  checkDuplicateIdError: null,
+  checkDuplicateEmailLoading: false,
+  checkDuplicateEmailDone: false,
+  checkDuplicateEmailError: null,
+
   myData: null,
+  findUserData: null,
 }
 
 export const logIn = createAsyncThunk('user/login', async (loginData: LoginParam) => {
@@ -25,7 +65,9 @@ export const logIn = createAsyncThunk('user/login', async (loginData: LoginParam
   return response.data
 })
 
-export const logOut = createAsyncThunk('user/logout', async () => logoutAPI())
+export const logOut = createAsyncThunk('user/logout', async () => {
+  await logoutAPI()
+})
 
 export const signUp = createAsyncThunk('user/signup', async (signUpData: SignUpParam) => {
   const response = await signUpAPI(signUpData)
@@ -36,6 +78,54 @@ export const loadMyInfo = createAsyncThunk('user/loadMyInfo', async () => {
   const response = await getUserAPI()
   return response.data
 })
+
+export const findUserId = createAsyncThunk(
+  'user/findUserId',
+  async (findUserIdParam: FindUserId) => {
+    const response = await getFindUserIdAPI(findUserIdParam)
+    return response.data
+  },
+)
+
+export const getAuthCode = createAsyncThunk(
+  'user/getAuthCode',
+  async (getAuthCodeParam: GetAuthCode) => {
+    const response = await getAuthCodeAPI(getAuthCodeParam)
+    return response.data
+  },
+)
+
+export const checkAuthCode = createAsyncThunk(
+  'user/checkAuthCode',
+  async (checkAuthCodeParam: CheckAuthCode) => {
+    const response = await checkAuthCodeAPI(checkAuthCodeParam)
+    return response.data
+  },
+)
+
+export const updatePassword = createAsyncThunk(
+  'user/updatePassword',
+  async (updatePasswordParam: UpdatePasswordParam) => {
+    const response = await updatePasswordAPI(updatePasswordParam)
+    return response.data
+  },
+)
+
+export const checkDuplicateId = createAsyncThunk(
+  'user/checkDuplicateId',
+  async (checkDuplicateIdParam: CheckDuplicateIdParam) => {
+    const response = await checkDuplicateIdAPI(checkDuplicateIdParam)
+    return response.data
+  },
+)
+
+export const checkDuplicateEmail = createAsyncThunk(
+  'user/checkDuplicateEmail',
+  async (checkDuplicateEmailParam: CheckDuplicateEmailParam) => {
+    const response = await checkDuplicateEmailAPI(checkDuplicateEmailParam)
+    return response.data
+  },
+)
 
 export const user = createSlice({
   name: 'user',
@@ -100,6 +190,98 @@ export const user = createSlice({
     builder.addCase(loadMyInfo.rejected, (state, action) => {
       state.loadMyInfoLoading = false
       state.loadMyInfoError = action.error
+    })
+
+    // 사용자 id 찾기
+    builder.addCase(findUserId.pending, (state) => {
+      state.findUserIdLoading = true
+      state.findUserIdDone = false
+      state.findUserIdError = null
+    })
+    builder.addCase(findUserId.fulfilled, (state, action) => {
+      state.findUserIdLoading = false
+      state.findUserIdDone = true
+      state.findUserData = action.payload
+    })
+    builder.addCase(findUserId.rejected, (state, action) => {
+      state.findUserIdLoading = false
+      state.findUserIdError = action.error
+    })
+
+    // 인증 코드 발급
+    builder.addCase(getAuthCode.pending, (state) => {
+      state.getAuthCodeLoading = true
+      state.getAuthCodeDone = false
+      state.getAuthCodeError = null
+    })
+    builder.addCase(getAuthCode.fulfilled, (state, action) => {
+      state.getAuthCodeLoading = false
+      state.getAuthCodeDone = true
+      state.findUserData = action.payload
+    })
+    builder.addCase(getAuthCode.rejected, (state, action) => {
+      state.getAuthCodeLoading = false
+      state.getAuthCodeError = action.error
+    })
+
+    // 인증 코드 확인
+    builder.addCase(checkAuthCode.pending, (state) => {
+      state.checkAuthCodeLoading = true
+      state.checkAuthCodeDone = false
+      state.checkAuthCodeError = null
+    })
+    builder.addCase(checkAuthCode.fulfilled, (state) => {
+      state.checkAuthCodeLoading = false
+      state.checkAuthCodeDone = true
+    })
+    builder.addCase(checkAuthCode.rejected, (state, action) => {
+      state.checkAuthCodeLoading = false
+      state.checkAuthCodeError = action.error
+    })
+
+    // 비밀번호 변경
+    builder.addCase(updatePassword.pending, (state) => {
+      state.updatePasswordLoading = true
+      state.updatePasswordDone = false
+      state.updatePasswordError = null
+    })
+    builder.addCase(updatePassword.fulfilled, (state) => {
+      state.updatePasswordLoading = false
+      state.updatePasswordDone = true
+    })
+    builder.addCase(updatePassword.rejected, (state, action) => {
+      state.updatePasswordLoading = false
+      state.updatePasswordError = action.error
+    })
+
+    // 아이디 중복 체크
+    builder.addCase(checkDuplicateId.pending, (state) => {
+      state.checkDuplicateIdLoading = true
+      state.checkDuplicateIdDone = false
+      state.checkDuplicateIdError = null
+    })
+    builder.addCase(checkDuplicateId.fulfilled, (state) => {
+      state.checkDuplicateIdLoading = false
+      state.checkDuplicateIdDone = true
+    })
+    builder.addCase(checkDuplicateId.rejected, (state, action) => {
+      state.checkDuplicateIdLoading = false
+      state.checkDuplicateIdError = action.error
+    })
+
+    // 이메일 중복 체크
+    builder.addCase(checkDuplicateEmail.pending, (state) => {
+      state.checkDuplicateEmailLoading = true
+      state.checkDuplicateEmailDone = false
+      state.checkDuplicateEmailError = null
+    })
+    builder.addCase(checkDuplicateEmail.fulfilled, (state) => {
+      state.checkDuplicateEmailLoading = false
+      state.checkDuplicateEmailDone = true
+    })
+    builder.addCase(checkDuplicateEmail.rejected, (state, action) => {
+      state.checkDuplicateEmailLoading = false
+      state.checkDuplicateEmailError = action.error
     })
   },
 })

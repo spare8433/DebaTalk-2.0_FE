@@ -1,53 +1,54 @@
 import React from 'react'
-import useInput from '@hooks/useInput';
-import { Containor, ImgBox, InputBox, Line, MainButton, SubButton } from '@styles/commonStyle';
-import { LoginBox, LoginContainor, LogoBox, SubBox } from '@styles/pages/login.style';
-import { useAppDispatch } from '@store/store';
-import { useRouter } from 'next/router';
-import { logIn } from '@store/slices/user';
+import { useRouter } from 'next/router'
+import { NextImageBtn } from '@styles/commonStyle/buttons'
+import FitNextImage from '@components/common/fitNextImage'
+import styled from 'styled-components'
+import LoginForm from '@components/login/loginForm'
+
+const LoginLayout = styled.div`
+  width: 100%;
+  min-width: 800px;
+`
+
+const LoginContainor = styled.div`
+  width: 450px;
+  background-color: white;
+  padding: 3rem 2rem;
+  border: 1px solid ${({ theme }) => theme.colors.whiteGray};
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`
+
+const LogoBox = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+
+  ${NextImageBtn} {
+    margin: 0 auto;
+    width: 25rem;
+    height: 6rem;
+  }
+`
 
 const LoginPage = () => {
   const router = useRouter()
-
-  const [userId, onChangeUserId] = useInput('')
-  const [password, onChangePassword] = useInput('')
-
-  const dispatch = useAppDispatch()
-
-  const onSubmitForm = async (e:React.FormEvent) => {
-    e.preventDefault()
-    try {
-      await dispatch(logIn({ userId, password })).unwrap()
-      return await router.push('/')
-    } catch (error) {
-      return alert(`로그인 실패 : ${(error as Error).message}`)
-    }
-  }
-
   return (
-    <Containor width="800">
+    <LoginLayout>
       <LoginContainor>
-        <LogoBox><img alt="logo" src="./img/logo.png" /></LogoBox>
-        <LoginBox>
-          <h2>로그인</h2>
-          <form onSubmit={onSubmitForm}>
-            <InputBox width="350" height="40"><input placeholder="아이디" value={userId} onChange={onChangeUserId} /></InputBox>
-            <InputBox width="350" height="40"><input type="password" placeholder="비밀번호" value={password} onChange={onChangePassword} /></InputBox>
-            <MainButton width="350" height="40" type="submit" fontSize="18">로그인</MainButton>
-          </form>
-          <p>아이디 / 비밀번호 찾기</p>
-          <Line width="350" height="1" />
-          <SubBox>
-            <>
-              <ImgBox width="40" shadow><img alt="facebook" src="./img/facebook.png" /></ImgBox>
-              <ImgBox width="40" shadow><img alt="google" src="./img/google-plus.png" /></ImgBox>
-              <ImgBox width="40" shadow><img alt="kakao-talk" src="./img/kakao-talk.png" /></ImgBox>
-            </>
-            <SubButton width="160" height="40" fontSize="16" onClick={() => router.push('/signup')}>회원가입</SubButton>
-          </SubBox>
-        </LoginBox>
+        <LogoBox>
+          <NextImageBtn>
+            <FitNextImage alt="logo" src="/img/logo.png" onClick={() => router.push('/')} />
+          </NextImageBtn>
+        </LogoBox>
+        <LoginForm />
       </LoginContainor>
-    </Containor>
+    </LoginLayout>
   )
 }
 

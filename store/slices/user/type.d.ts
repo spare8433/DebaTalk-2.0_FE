@@ -10,6 +10,13 @@ export interface UserDataState {
   imgUrl?: string
   createdAt: string
   updatedAt: string
+  role: number
+}
+
+export interface FindUserDataState {
+  readonly id: number
+  readonly userId: string
+  createdAt: string
 }
 
 export interface UserState {
@@ -25,5 +32,25 @@ export interface UserState {
   logOutLoading: boolean
   logOutDone: boolean
   logOutError: null | SerializedError
+  findUserIdLoading: boolean
+  findUserIdDone: boolean
+  findUserIdError: null | SerializedError
+  getAuthCodeLoading: boolean
+  getAuthCodeDone: boolean
+  getAuthCodeError: null | SerializedError
+  checkAuthCodeLoading: boolean
+  checkAuthCodeDone: boolean
+  checkAuthCodeError: null | SerializedError
+  updatePasswordLoading: boolean
+  updatePasswordDone: boolean
+  updatePasswordError: null | SerializedError
+  checkDuplicateIdLoading: boolean
+  checkDuplicateIdDone: boolean
+  checkDuplicateIdError: null | SerializedError
+  checkDuplicateEmailLoading: boolean
+  checkDuplicateEmailDone: boolean
+  checkDuplicateEmailError: null | SerializedError
+
   myData: UserDataState | null
+  findUserData: FindUserDataState | null
 }

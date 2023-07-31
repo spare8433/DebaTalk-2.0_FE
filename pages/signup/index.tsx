@@ -1,71 +1,55 @@
 import React from 'react'
-import { Containor, InputBox } from '@styles/commonStyle'
-import { SginUpBox, SginUpButton, SginUpContainor } from '@styles/pages/signup.style'
-import useCheckInput from '@hooks/useCheckInput'
-import { useAppDispatch } from '@store/store'
-import { signUp } from '@store/slices/user'
+import styled from 'styled-components'
+import SignupForm from '@components/signup/signupForm'
+import { NextImageBtn } from '@styles/commonStyle/buttons'
+import FitNextImage from '@components/common/fitNextImage'
 import { useRouter } from 'next/router'
 
-const SginUpPage = () => {
-  const dispatch = useAppDispatch()
-  const router = useRouter()
-  const [userId, onChangeUserId, userIdMsg] = useCheckInput('', 'id')
-  const [email, onChangeUserEmail, emailMsg] = useCheckInput('', 'email')
-  const [nickname, onChangeUserNickName, nicknameMsg] = useCheckInput('', 'nickanme')
-  const [password, onChangeUserPw, passwordMsg] = useCheckInput('', 'password')
-  const [rePassword, onChangeUserRePw, rePasswordMsg] = useCheckInput('', 'repassword', password)
+const SignUpLayout = styled.div`
+  width: 100%;
+  min-width: 800px;
+`
 
-  const onSubmitForm = async (e:React.FormEvent) => {
-    e.preventDefault()
-    try {
-      await dispatch(signUp({
-        userId,
-        email,
-        nickname,
-        password,
-      })).unwrap()
-      alert('회원가입이 완료되었습니다.')
-      return await router.push('/')
-    } catch (error) {
-      return alert(`회원가입 실패 : ${(error as Error).message}`)
-    }
+const SignUpContainor = styled.div`
+  width: 450px;
+  background-color: white;
+  padding: 3rem 2rem;
+  border: 1px solid ${({ theme }) => theme.colors.whiteGray};
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`
+
+const LogoBox = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+
+  ${NextImageBtn} {
+    margin: 0 auto;
+    width: 25rem;
+    height: 6rem;
   }
+`
 
+const SignUpPage = () => {
+  const router = useRouter()
   return (
-    <Containor min-width="800">
-      <SginUpContainor>
-        <SginUpBox>
-          <h2>회원가입</h2>
-
-          <form onSubmit={onSubmitForm}>
-
-            <InputBox width="350" height="40">
-              <input placeholder="아이디" value={userId} onChange={onChangeUserId} /><span>{userIdMsg}</span>
-            </InputBox>
-
-            <InputBox width="350" height="40">
-              <input placeholder="이메일" value={email} onChange={onChangeUserEmail} /><span>{emailMsg}</span>
-            </InputBox>
-
-            <InputBox width="350" height="40">
-              <input placeholder="닉네임" value={nickname} onChange={onChangeUserNickName} /><span>{nicknameMsg}</span>
-            </InputBox>
-
-            <InputBox width="350" height="40">
-              <input placeholder="비밀번호" type="password" value={password} onChange={onChangeUserPw} /><span>{passwordMsg}</span>
-            </InputBox>
-
-            <InputBox width="350" height="40">
-              <input placeholder="비밀번호 확인" type="password" value={rePassword} onChange={onChangeUserRePw} /><span>{rePasswordMsg}</span>
-            </InputBox>
-
-            <SginUpButton width="350" height="40" type="submit" fontSize="18">회원가입</SginUpButton>
-          </form>
-        </SginUpBox>
-
-      </SginUpContainor>
-    </Containor>
+    <SignUpLayout>
+      <SignUpContainor>
+        <LogoBox>
+          <NextImageBtn>
+            <FitNextImage alt="logo" src="/img/logo.png" onClick={() => router.push('/')} />
+          </NextImageBtn>
+        </LogoBox>
+        <SignupForm />
+      </SignUpContainor>
+    </SignUpLayout>
   )
 }
 
-export default React.memo(SginUpPage)
+export default SignUpPage
