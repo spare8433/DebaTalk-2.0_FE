@@ -1,6 +1,4 @@
 import { LessStyleBtn } from '@styles/commonStyle/buttons'
-import getConfig from 'next/config'
-import { useRouter } from 'next/router'
 import React, { useCallback } from 'react'
 import {
   EmailShareButton,
@@ -39,12 +37,13 @@ const PrintButton = styled(LessStyleBtn)`
 `
 
 const SharePostButtons = ({ title }: Props) => {
-  const { publicRuntimeConfig } = getConfig()
-  const webServerUrl = publicRuntimeConfig.WEB_SERVER_URL
-  const router = useRouter()
   const handlePrint = useCallback(() => {
     if (typeof window !== 'undefined') window.print()
   }, [])
+
+  const currentUrl = typeof window !== 'undefined' ? window?.location.href : ''
+  const emailBody = '링크를 통해 디베이톡에서 토론을 즐겨보세요'
+  const currentTitle = `디베이톡 [${title}]`
 
   return (
     <ButtonBox>
@@ -53,13 +52,13 @@ const SharePostButtons = ({ title }: Props) => {
           <FitNextImage src="/img/print_white.png" alt="print" />
         </NextImageBox>
       </PrintButton>
-      <EmailShareButton subject={title} url={webServerUrl + router.pathname} body={webServerUrl}>
+      <EmailShareButton subject={currentTitle} url={currentUrl} body={emailBody}>
         <EmailIcon size={36} round />
       </EmailShareButton>
-      <FacebookShareButton quote={title} url={webServerUrl + router.pathname}>
+      <FacebookShareButton quote={currentTitle} url={currentUrl}>
         <FacebookIcon size={36} round />
       </FacebookShareButton>
-      <TwitterShareButton title={title} url={webServerUrl + router.pathname}>
+      <TwitterShareButton title={currentTitle} url={currentUrl}>
         <TwitterIcon size={36} round />
       </TwitterShareButton>
     </ButtonBox>

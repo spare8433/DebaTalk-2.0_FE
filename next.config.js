@@ -31,7 +31,6 @@ module.exports = {
   publicRuntimeConfig: {
     // Will be available on both server and client
     API_SERVER_URL: process.env.API_SERVER_URL,
-    WEB_SERVER_URL: process.env.WEB_SERVER_URL,
   },
   async headers() {
     return [
