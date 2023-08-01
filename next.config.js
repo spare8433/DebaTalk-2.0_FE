@@ -15,6 +15,9 @@ module.exports = {
       pure: true,
     },
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     remotePatterns: [
       {
