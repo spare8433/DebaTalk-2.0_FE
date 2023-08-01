@@ -69,7 +69,7 @@ const CarouselSlide = ({ data, method }: Props) => (
     ) : (
       <Keyword>
         <Link href={{ pathname: '/debate-forum', query: { method, page: '1' } }}>
-          {pathKeyword[method]}의 최신 내용이 없네요 토론장 페이지로 이동해보세요 ^_^
+          <h1>{pathKeyword[method]}의 최신 내용이 없네요 토론장 페이지로 이동해보세요 ^_^</h1>
         </Link>
       </Keyword>
     )}

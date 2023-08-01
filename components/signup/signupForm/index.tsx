@@ -53,7 +53,7 @@ const SignupForm = () => {
       setIsNotDuplcateId(true)
       alert(`"${userId}" 는 중복되지 않은 아이디입니다.`)
     } catch (error) {
-      alert(`"${userId}" 는 중복된 이메일입니다.`)
+      alert(`"${userId}" 는 중복된 아이디입니다.`)
     }
   }, [dispatch, userId])
 
