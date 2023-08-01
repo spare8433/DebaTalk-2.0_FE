@@ -12,7 +12,10 @@ import {
 } from './type'
 
 // 로그인 api
-export const loginAPI: LoginAPI = (data) => axiosInstance('user').post('login', data)
+export const loginAPI: LoginAPI = (data) => {
+  console.log(axiosInstance('user').getUri())
+  return axiosInstance('user').post('login', data)
+}
 
 // 로그아웃 api
 export const logoutAPI: AxiosAPI = () => axiosInstance('user').get('logout')
