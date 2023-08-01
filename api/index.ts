@@ -9,6 +9,8 @@ axios.defaults.withCredentials = true
 const { publicRuntimeConfig } = getConfig()
 const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
+console.log(APISeverUrl)
+
 export const axiosInstance = (url: string) => axios.create({ baseURL: `${APISeverUrl}${url}` })
 
 // export const axiosInstance = (url: string) => axios.create({ baseURL: `${1}${url}` })
