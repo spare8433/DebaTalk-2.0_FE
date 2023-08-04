@@ -50,13 +50,13 @@ const LoginForm = () => {
       <SubBox>
         <>
           <SocialImgBtn>
-            <FitNextImage alt="facebook" src="/img/facebook.png" />
+            <FitNextImage alt="facebook" src="/img/facebook.png" priority />
           </SocialImgBtn>
           <SocialImgBtn>
-            <FitNextImage alt="google" src="/img/google-plus.png" />
+            <FitNextImage alt="google" src="/img/google-plus.png" priority />
           </SocialImgBtn>
           <SocialImgBtn>
-            <FitNextImage alt="kakao-talk" src="/img/kakao-talk.png" />
+            <FitNextImage alt="kakao-talk" src="/img/kakao-talk.png" priority />
           </SocialImgBtn>
         </>
         <SubButton onClick={() => router.push('/signup')}>회원가입</SubButton>

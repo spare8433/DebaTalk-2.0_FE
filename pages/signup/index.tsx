@@ -43,7 +43,12 @@ const SignUpPage = () => {
       <SignUpContainor>
         <LogoBox>
           <NextImageBtn>
-            <FitNextImage alt="logo" src="/img/logo.png" onClick={() => router.push('/')} />
+            <FitNextImage
+              alt="logo"
+              src="/img/logo.png"
+              onClick={() => router.push('/')}
+              priority
+            />
           </NextImageBtn>
         </LogoBox>
         <SignupForm />

@@ -3,7 +3,6 @@ import { useAppSelector } from '@store/store'
 import Link from 'next/link'
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
-import getConfig from 'next/config'
 import { LimitOneLineText } from '@styles/commonStyle/texts'
 import FirstDebateContent from './firstDebateContent'
 import {
@@ -18,8 +17,6 @@ import {
 } from './style'
 
 const MainDebateContent = () => {
-  const { publicRuntimeConfig } = getConfig()
-  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
   const hotDebatePosts = useAppSelector((state) => state.debatePosts.hotDebatePosts)
 
   return (
@@ -34,8 +31,9 @@ const MainDebateContent = () => {
               <Link href={{ pathname: '/issue-post/[pid]', query: { pid: res.id } }}>
                 <NextImageBox>
                   <FitNextImage
-                    src={res.imgUrl ? `${APISeverUrl}${res.imgUrl}` : '/img/default-thumbnail.png'}
-                    alt="issue-post-thumbnail"
+                    src={res.imgUrl ?? '/img/default-thumbnail.png'}
+                    alt="thumbnail"
+                    priority
                   />
                 </NextImageBox>
                 <ContentInfoBox>

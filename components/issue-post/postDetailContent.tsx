@@ -29,7 +29,6 @@ import {
   PostHeaderBox,
   RelatedPostsBox,
 } from '@styles/detailPost.style'
-import getConfig from 'next/config'
 import SharePostButtons from '@components/common/sharePostButtons'
 import { useRouter } from 'next/router'
 import { AvgScore, OtherInfoBox } from './style'
@@ -44,8 +43,6 @@ const IssuePostDetailContent = ({ pid }: Props) => {
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const [score, onChangeScore] = useInput<HTMLSelectElement>('5')
   const postData = useAppSelector((state) => state.issueDebatePost.postData)
-  const { publicRuntimeConfig } = getConfig()
-  const APIServerUrl = publicRuntimeConfig.API_SERVER_URL
 
   // 실 참여 인원
   const realUserCount = useMemo(() => {
@@ -113,10 +110,9 @@ const IssuePostDetailContent = ({ pid }: Props) => {
           }}
         >
           <FitNextImage
-            src={
-              postData.imgUrl ? `${APIServerUrl}${postData.imgUrl}` : '/img/default-thumbnail.png'
-            }
+            src={postData.imgUrl ?? '/img/default-thumbnail.png'}
             alt="thumbnail"
+            priority
           />
         </NextImageBox>
 

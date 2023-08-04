@@ -29,7 +29,6 @@ import {
   RedText,
   RelatedPostsBox,
 } from '@styles/detailPost.style'
-import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 import SharePostButtons from '@components/common/sharePostButtons'
 import { BalanceOption, BalancePostCurrentSituationBox } from './style'
@@ -44,8 +43,6 @@ const BalancePostDetailContent = ({ pid }: Props) => {
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const [selection, onChangeSelection] = useInput<HTMLSelectElement>('A')
   const postData = useAppSelector((state) => state.balanceDebatePost.postData)
-  const { publicRuntimeConfig } = getConfig()
-  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
   const submitComment = useCallback(async () => {
     try {
@@ -101,10 +98,9 @@ const BalancePostDetailContent = ({ pid }: Props) => {
           }}
         >
           <FitNextImage
-            src={
-              postData.imgUrl ? `${APISeverUrl}${postData.imgUrl}` : '/img/default-thumbnail.png'
-            }
+            src={postData.imgUrl ?? '/img/default-thumbnail.png'}
             alt="thumbnail"
+            priority
           />
         </NextImageBox>
 

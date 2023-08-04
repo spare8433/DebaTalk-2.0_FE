@@ -21,10 +21,9 @@ module.exports = {
   images: {
     remotePatterns: [
       {
-        protocol: process.env.API_SERVER_PROTOCOL,
-        hostname: process.env.API_SERVER_HOST,
-        port: process.env.API_SERVER_PORT,
-        pathname: '/uploads/**',
+        protocol: process.env.IMAGE_SERVER_PROTOCOL,
+        hostname: process.env.IMAGE_SERVER_HOST,
+        pathname: '/original/**',
       },
     ],
   },

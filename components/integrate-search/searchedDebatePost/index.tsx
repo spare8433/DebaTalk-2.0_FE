@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { IssueDebatePostDataState } from '@store/slices/issueDebatePost/type'
 import { BalanceDebatePostDataState } from '@store/slices/balanceDebatePost/type'
 import { ProsConsDebatePostDataState } from '@store/slices/prosConsDebatePost/type'
-import getConfig from 'next/config'
 import dayjs from 'dayjs'
 import Pagination from '@components/common/pagination'
 import { useRouter } from 'next/router'
@@ -46,8 +45,6 @@ interface Props {
 
 const SearchedDebatePost = ({ page, limit, searchText }: Props) => {
   const router = useRouter()
-  const { publicRuntimeConfig } = getConfig()
-  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
   const searchedPostData = useAppSelector((state) => state.debatePosts.integratedDebatePostData)
   const currentPage = page ?? 1
   const currentLimit = limit ?? 8
@@ -83,8 +80,9 @@ const SearchedDebatePost = ({ page, limit, searchText }: Props) => {
                 }}
               >
                 <FitNextImage
-                  src={res.imgUrl ? `${APISeverUrl}${res.imgUrl}` : '/img/default-thumbnail.png'}
-                  alt=""
+                  src={res.imgUrl ?? '/img/default-thumbnail.png'}
+                  alt="thumbnail"
+                  priority
                 />
               </NextImageBox>
               <TextBox>

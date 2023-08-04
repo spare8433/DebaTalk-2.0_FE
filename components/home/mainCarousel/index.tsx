@@ -39,7 +39,7 @@ const MainCarousel = () => {
         option={option}
         banner={
           <BannerImageBox>
-            <FitNextImage alt="debatePeople" src="/img/mainBannerImg.png" />
+            <FitNextImage alt="debatePeople" src="/img/mainBannerImg.png" priority />
           </BannerImageBox>
         }
       >

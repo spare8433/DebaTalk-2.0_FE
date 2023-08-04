@@ -6,7 +6,6 @@ import { ProsConsDebateReplyDataState } from '@store/slices/prosConsDebatePost/t
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
 import { CssRem } from 'types/customCssType'
-import getConfig from 'next/config'
 import { DebateTopicReplyDataState } from '@store/slices/debateTopicPost/type'
 import { UserTag } from './writeReply/style'
 import WriteReply from './writeReply'
@@ -36,20 +35,13 @@ const DebateReply = ({ reply, mode, WriterId }: WrapperProps) => {
     issue: (reply as IssueDebateReplyDataState).IssueOpinionId,
   }
   const [isOnWriteReply, setIsOnWriteReply] = useState(false)
-  const { publicRuntimeConfig } = getConfig()
-  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
   return (
     <>
       <OpinionInfoLine>
         <OpinionInfo>
           <NextImageBox styleOption={{ width: new CssRem(2.4), height: new CssRem(2.4) }}>
-            <FitNextImage
-              src={
-                reply.User.imgUrl ? `${APISeverUrl}${reply.User.imgUrl}` : '/img/default_user.png'
-              }
-              alt=""
-            />
+            <FitNextImage src={reply.User.imgUrl ?? '/img/default_user.png'} alt="" />
           </NextImageBox>
           <h4>{reply.User.nickname}</h4>
         </OpinionInfo>

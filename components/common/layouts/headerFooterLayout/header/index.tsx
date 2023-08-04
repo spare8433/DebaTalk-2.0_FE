@@ -65,7 +65,7 @@ const Header = () => {
             {/* 좌측 로고 */}
             <Link href="/">
               <NextImageBox styleOption={{ width: new CssRem(25), height: new CssRem(6) }}>
-                <FitNextImage alt="logo" src="/img/logo.png" />
+                <FitNextImage alt="logo" src="/img/logo.png" priority />
               </NextImageBox>
             </Link>
           </LeftMenu>

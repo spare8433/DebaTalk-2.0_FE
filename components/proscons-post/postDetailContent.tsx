@@ -29,7 +29,6 @@ import {
   RedText,
   RelatedPostsBox,
 } from '@styles/detailPost.style'
-import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 import SharePostButtons from '@components/common/sharePostButtons'
 import { ProsConsOption, ProsConsPostCurrentSituationBox } from './style'
@@ -44,8 +43,6 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const [selection, onChangeSelection] = useInput<HTMLSelectElement>('찬성')
   const postData = useAppSelector((state) => state.prosConsDebatePost.postData)
-  const { publicRuntimeConfig } = getConfig()
-  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
   const submitComment = useCallback(async () => {
     try {
@@ -101,10 +98,9 @@ const ProsConsPostDetailContent = ({ pid }: Props) => {
           }}
         >
           <FitNextImage
-            src={
-              postData.imgUrl ? `${APISeverUrl}${postData.imgUrl}` : '/img/default-thumbnail.png'
-            }
-            alt="thumbnail-img"
+            src={postData.imgUrl ?? '/img/default-thumbnail.png'}
+            alt="thumbnail"
+            priority
           />
         </NextImageBox>
 

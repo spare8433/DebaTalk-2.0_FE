@@ -43,7 +43,12 @@ const LoginPage = () => {
       <LoginContainor>
         <LogoBox>
           <NextImageBtn>
-            <FitNextImage alt="logo" src="/img/logo.png" onClick={() => router.push('/')} />
+            <FitNextImage
+              alt="logo"
+              src="/img/logo.png"
+              onClick={() => router.push('/')}
+              priority
+            />
           </NextImageBtn>
         </LogoBox>
         <LoginForm />

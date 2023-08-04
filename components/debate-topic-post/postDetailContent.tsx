@@ -23,7 +23,6 @@ import {
   PostHeaderBox,
   RelatedPostsBox,
 } from '@styles/detailPost.style'
-import getConfig from 'next/config'
 import SharePostButtons from '@components/common/sharePostButtons'
 import { useRouter } from 'next/router'
 import { createDebateTopicOpinion, getDebateTopicPost } from '@store/slices/debateTopicPost'
@@ -37,8 +36,6 @@ const DebateTopicPostDetailContent = ({ pid }: Props) => {
   const router = useRouter()
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const postData = useAppSelector((state) => state.debateTopicPost.postData)
-  const { publicRuntimeConfig } = getConfig()
-  const APIServerUrl = publicRuntimeConfig.API_SERVER_URL
 
   const submitComment = useCallback(async () => {
     try {
@@ -97,10 +94,9 @@ const DebateTopicPostDetailContent = ({ pid }: Props) => {
           }}
         >
           <FitNextImage
-            src={
-              postData.imgUrl ? `${APIServerUrl}${postData.imgUrl}` : '/img/default-thumbnail.png'
-            }
+            src={postData.imgUrl ?? '/img/default-thumbnail.png'}
             alt="thumbnail"
+            priority
           />
         </NextImageBox>
 

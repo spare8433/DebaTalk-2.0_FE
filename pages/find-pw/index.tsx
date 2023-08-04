@@ -48,7 +48,12 @@ const FindIdPage = () => {
       <FindPwContainor>
         <LogoBox>
           <NextImageBtn>
-            <FitNextImage alt="logo" src="/img/logo.png" onClick={() => router.push('/')} />
+            <FitNextImage
+              alt="logo"
+              src="/img/logo.png"
+              onClick={() => router.push('/')}
+              priority
+            />
           </NextImageBtn>
         </LogoBox>
         {/* 사용자 정보 입력 및 인증 코드 발송 폼 */}

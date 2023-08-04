@@ -6,7 +6,7 @@ import { ProsConsDebateOpinionDataState } from '@store/slices/prosConsDebatePost
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
 import { CssRem } from 'types/customCssType'
-import getConfig from 'next/config'
+
 import { useAppSelector } from '@store/store'
 import { DebateTopicOpinionDataState } from '@store/slices/debateTopicPost/type'
 import DebateReply from './debateReply'
@@ -41,8 +41,6 @@ interface Props {
 const Opinion = ({ opinion, mode }: Props) => {
   const [isOnWriteReply, setIsOnWriteReply] = useState(false)
   const [isShowReplyListBox, setIsShowReplyListBox] = useState(false)
-  const { publicRuntimeConfig } = getConfig()
-  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
   const user = useAppSelector((state) => state.user.myData)
 
   const checkIsLogin = useCallback(() => {
@@ -56,14 +54,7 @@ const Opinion = ({ opinion, mode }: Props) => {
         <OpinionInfoLine>
           <OpinionInfo>
             <NextImageBox styleOption={{ width: new CssRem(2.4), height: new CssRem(2.4) }}>
-              <FitNextImage
-                src={
-                  opinion.User.imgUrl
-                    ? `${APISeverUrl}${opinion.User.imgUrl}`
-                    : '/img/default_user.png'
-                }
-                alt=""
-              />
+              <FitNextImage src={opinion.User.imgUrl ?? '/img/default_user.png'} alt="" />
             </NextImageBox>
             <h4>{opinion.User.nickname}</h4>
             {mode === 'issue' && (

@@ -4,7 +4,6 @@ import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
 import styled from 'styled-components'
 import { StyledCategory } from '@styles/commonStyle'
-import getConfig from 'next/config'
 import {
   HotBalanceDebatePost,
   HotIssueDebatePost,
@@ -66,9 +65,6 @@ interface Props {
 }
 
 const FirstDebateContent = ({ data, method }: Props) => {
-  const { publicRuntimeConfig } = getConfig()
-  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
-
   return (
     <MainContent>
       <Link href={{ pathname: `/${method}-post/[pid]`, query: { pid: data.id } }}>
@@ -82,8 +78,9 @@ const FirstDebateContent = ({ data, method }: Props) => {
 
         <NextImageBox>
           <FitNextImage
-            src={data.imgUrl ? `${APISeverUrl}${data.imgUrl}` : '/img/default-thumbnail.png'}
-            alt=""
+            src={data.imgUrl ?? '/img/default-thumbnail.png'}
+            alt="thumbnail"
+            priority
           />
         </NextImageBox>
       </Link>

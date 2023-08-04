@@ -4,7 +4,6 @@ import FitNextImage from '@components/common/fitNextImage'
 import { useAppSelector } from '@store/store'
 import Link from 'next/link'
 import dayjs from 'dayjs'
-import getConfig from 'next/config'
 import Pagination from '@components/common/pagination'
 import { useRouter } from 'next/router'
 import {
@@ -28,8 +27,6 @@ interface Props {
 const DebateContentList = ({ page, limit, searchText }: Props) => {
   const router = useRouter()
   const postData = useAppSelector((state) => state.debateTopicPosts.postsData)
-  const { publicRuntimeConfig } = getConfig()
-  const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
   const currentPage = page ?? 1
   const currentLimit = limit ?? 8
   const currentSearchText = searchText ?? ''
@@ -57,8 +54,9 @@ const DebateContentList = ({ page, limit, searchText }: Props) => {
           <PostBox>
             <NextImageBox>
               <FitNextImage
-                src={res.imgUrl ? `${APISeverUrl}${res.imgUrl}` : '/img/default-thumbnail.png'}
+                src={res.imgUrl ?? '/img/default-thumbnail.png'}
                 alt="thumnail"
+                priority
               />
             </NextImageBox>
             <InfoBox>

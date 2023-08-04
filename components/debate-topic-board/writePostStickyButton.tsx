@@ -42,7 +42,7 @@ const WritePostStickyButton = () => {
       >
         <WritePostButton>
           <NextImageBox>
-            <FitNextImage src="/img/edit-white.png" alt="edit-post" />
+            <FitNextImage src="/img/edit-white.png" alt="edit-post" priority />
           </NextImageBox>
         </WritePostButton>
       </Link>

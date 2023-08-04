@@ -47,7 +47,12 @@ const FindIdPage = () => {
       <FindIdContainor>
         <LogoBox>
           <NextImageBtn>
-            <FitNextImage alt="logo" src="/img/logo.png" onClick={() => router.push('/')} />
+            <FitNextImage
+              alt="logo"
+              src="/img/logo.png"
+              priority
+              onClick={() => router.push('/')}
+            />
           </NextImageBtn>
         </LogoBox>
         {/* 아이디 찾기 입력 화면 */}
