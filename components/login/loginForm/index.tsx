@@ -50,13 +50,28 @@ const LoginForm = () => {
       <SubBox>
         <>
           <SocialImgBtn>
-            <FitNextImage alt="facebook" src="/img/facebook.png" priority />
+            <FitNextImage
+              alt="facebook"
+              src="/img/facebook.png"
+              priority
+              onClick={() => alert('기능 준비 중입니다.')}
+            />
           </SocialImgBtn>
           <SocialImgBtn>
-            <FitNextImage alt="google" src="/img/google-plus.png" priority />
+            <FitNextImage
+              alt="google"
+              src="/img/google-plus.png"
+              priority
+              onClick={() => alert('기능 준비 중입니다.')}
+            />
           </SocialImgBtn>
           <SocialImgBtn>
-            <FitNextImage alt="kakao-talk" src="/img/kakao-talk.png" priority />
+            <FitNextImage
+              alt="kakao-talk"
+              src="/img/kakao-talk.png"
+              priority
+              onClick={() => alert('기능 준비 중입니다.')}
+            />
           </SocialImgBtn>
         </>
         <SubButton onClick={() => router.push('/signup')}>회원가입</SubButton>

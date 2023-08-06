@@ -97,7 +97,9 @@ const Header = () => {
             </li>
 
             <li>
-              <Link href="/community">커뮤니티</Link>
+              <Link href="" onClick={() => alert('페이지 준비 중입니다.')}>
+                커뮤니티
+              </Link>
             </li>
             <li>
               <Link href="/rank">랭킹</Link>
