@@ -10,7 +10,7 @@ const makeStore = () =>
   configureStore({
     reducer: rootReducer as Reducer<ReducerStates, AnyAction>,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
-    devTools: true,
+    devTools: process.env.NODE_ENV !== 'production',
   })
 
 export type AppStore = ReturnType<typeof makeStore> // `store` type
