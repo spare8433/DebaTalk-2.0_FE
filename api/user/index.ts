@@ -15,7 +15,10 @@ import {
 export const loginAPI: LoginAPI = (data) => axiosInstance('user').post('login', data)
 
 // 로그아웃 api
-export const logoutAPI: AxiosAPI = () => axiosInstance('user').get('logout')
+export const logoutAPI: AxiosAPI = () => axiosInstance('user').delete('logout')
+
+// 쿠키 초기화
+export const clearCookieAPI: AxiosAPI = () => axiosInstance('user').post('clear-cookie')
 
 // 회원가입 api
 export const signUpAPI: SignUpAPI = (data) => axiosInstance('user').post('', data)

@@ -14,6 +14,7 @@ import {
   checkAuthCodeAPI,
   checkDuplicateEmailAPI,
   checkDuplicateIdAPI,
+  clearCookieAPI,
   getAuthCodeAPI,
   getFindUserIdAPI,
   getUserAPI,
@@ -22,6 +23,7 @@ import {
   signUpAPI,
   updatePasswordAPI,
 } from '@api/user'
+// import Cookies from 'universal-cookie'
 import { UserState } from './type'
 
 const initialState: UserState = {
@@ -67,6 +69,7 @@ export const logIn = createAsyncThunk('user/login', async (loginData: LoginParam
 
 export const logOut = createAsyncThunk('user/logout', async () => {
   await logoutAPI()
+  await clearCookieAPI()
 })
 
 export const signUp = createAsyncThunk('user/signup', async (signUpData: SignUpParam) => {

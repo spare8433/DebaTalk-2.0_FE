@@ -31,7 +31,6 @@ const Header = () => {
 
   const dispatch = useAppDispatch()
   const router = useRouter()
-
   const user = useAppSelector((state: ReducerStates) => state.user)
 
   const handleDropListClick = useCallback(() => {
@@ -51,10 +50,9 @@ const Header = () => {
   }, [])
 
   const logout = useCallback(async () => {
-    await dispatch(logOut()).then(() => {
-      router.push('/')
-    })
+    await dispatch(logOut())
     setIsDropListToggleOn(!isDropListToggleOn)
+    return router.push('/')
   }, [dispatch, isDropListToggleOn, router])
 
   return (
