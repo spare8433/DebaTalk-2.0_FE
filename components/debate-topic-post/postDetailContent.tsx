@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 
 import { NextImageBox } from '@styles/commonStyle/imgBox'
 import { CssPercent, CssRem, CssString } from 'types/customCssType'
@@ -18,6 +18,7 @@ import {
   HeaderButtonBox,
   HeaderCategoryLine,
   HeaderInfoBox,
+  OpinionExplain,
   OpinionListBox,
   PostContentBox,
   PostHeaderBox,
@@ -26,6 +27,7 @@ import {
 import SharePostButtons from '@components/common/sharePostButtons'
 import { useRouter } from 'next/router'
 import { createDebateTopicOpinion, getDebateTopicPost } from '@store/slices/debateTopicPost'
+import { LessStyleBtn } from '@styles/commonStyle/buttons'
 
 interface Props {
   pid: string
@@ -36,8 +38,14 @@ const DebateTopicPostDetailContent = ({ pid }: Props) => {
   const router = useRouter()
   const [comment, onChangeComment, setComment] = useInput<HTMLTextAreaElement>('')
   const postData = useAppSelector((state) => state.debateTopicPost.postData)
+  const writeOpinionBoxRef = useRef<HTMLDivElement>(null)
+
+  const moveWriteOpinionBox = useCallback(() => {
+    writeOpinionBoxRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [])
 
   const submitComment = useCallback(async () => {
+    // 의견 생성
     try {
       await dispatch(
         createDebateTopicOpinion({
@@ -45,6 +53,13 @@ const DebateTopicPostDetailContent = ({ pid }: Props) => {
           content: comment,
         }),
       ).unwrap()
+      setComment('')
+    } catch (error) {
+      alert('의견 작성에 실패하셨습니다.')
+    }
+
+    // 게시물 다시 불러오기
+    try {
       await dispatch(getDebateTopicPost(pid)).unwrap()
     } catch (error) {
       alert('게시물을 불러오지 못 했습니다.')
@@ -53,7 +68,7 @@ const DebateTopicPostDetailContent = ({ pid }: Props) => {
         query: { page: 1, limit: 8 },
       })
     }
-  }, [comment, dispatch, pid, router])
+  }, [comment, dispatch, pid, router, setComment])
 
   if (postData === null) return <EmptyContent />
 
@@ -79,7 +94,9 @@ const DebateTopicPostDetailContent = ({ pid }: Props) => {
             ※ 다양한 토론 주제를 공유하고 의견을 나눠봄으로써 좀더 흥미로운 토론으로 이어지길
             바랍니다. ※
           </p>
-          <span>페이지 하단에서 의견을 남기실 수 있습니다. ↓↓</span>
+          <LessStyleBtn onClick={moveWriteOpinionBox}>
+            페이지 하단에서 의견을 남기실 수 있습니다. ↓↓
+          </LessStyleBtn>
         </HeaderInfoBox>
       </PostHeaderBox>
 
@@ -124,7 +141,10 @@ const DebateTopicPostDetailContent = ({ pid }: Props) => {
 
       {/* 의견 및 댓글 (따로 컴포넌트) */}
       <ContentTitle>[ 의견작성 ]</ContentTitle>
-      <CommentBox>
+      <OpinionExplain>
+        ※ 하나의 게시물당 하나의 의견을 남기실 수 있으니 신중하게 작성 부탁드립니다.
+      </OpinionExplain>
+      <CommentBox ref={writeOpinionBoxRef}>
         <Comment
           textState={comment}
           setState={setComment}

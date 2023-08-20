@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { CssValue } from 'types/customCssType'
+import { LessStyleBtn } from './commonStyle/buttons'
 
 export const DetailDebateContainor = styled.div`
   width: 1160px;
@@ -36,7 +37,7 @@ export const HeaderInfoBox = styled.div`
     margin-bottom: 1.6rem;
     font-weight: 300;
   }
-  span {
+  ${LessStyleBtn} {
     font-weight: 700;
     cursor: pointer;
   }
@@ -124,6 +125,12 @@ export const OpinionSelect = styled.select<{ width?: CssValue }>`
 export const OpinionListBox = styled.div`
   margin-top: 2rem;
   margin-bottom: 3rem;
+`
+
+export const OpinionExplain = styled.p`
+  font-size: 1.4rem;
+  color: ${({ theme }) => theme.colors.deepGray};
+  margin: 1.4rem 1rem;
 `
 
 export const CommentBox = styled.div`
