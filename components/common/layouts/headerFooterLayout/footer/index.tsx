@@ -21,13 +21,12 @@ const Footer = () => (
           <Link href="/">개인정보 취급방침</Link>
         </ServiceLine>
         <InformationLine>
-          사업자등록번호 : 0000-00-00000 <br />
-          주소 : 000 0000 0000 <br />
-          대표번호 : 070-0000-0000 <br />
-          팩스 : 0000-00-00000 <br />
-          E-mail : 000000@naver.com <br />
+          github: <Link href="https://github.com/spare8433">https://github.com/spare8433</Link>
           <br />
-          <span>Copyright © spare8433</span>
+          blog: <Link href="https://spare8433.tistory.com">https://spare8433.tistory.com</Link>
+          <br />
+          E-mail : byeongchan8433@gmail.com <br />
+          <h5>Copyright © spare8433</h5>
         </InformationLine>
       </FooterContentBox>
 

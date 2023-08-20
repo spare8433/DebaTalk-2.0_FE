@@ -2,14 +2,13 @@ import styled from 'styled-components'
 
 export const FooterLayout = styled.div`
   width: 100%;
-  height: 30rem;
   min-width: 1160px;
   background-color: #2b2b2b;
 `
 
 export const FooterContainor = styled.div`
   margin: 1.6rem 0;
-  padding: 3.2rem 1.6rem;
+  padding: 3.2rem 1.6rem 5rem;
   width: 1160px;
   margin: 0 auto;
   display: flex;
@@ -48,9 +47,13 @@ export const ServiceLine = styled.div`
 
 export const InformationLine = styled.div`
   font-size: 1.5rem;
+  line-height: 2.6rem;
   color: ${({ theme }) => theme.colors.gray};
-  line-height: 1.5;
-  span {
+  a {
+    color: ${({ theme }) => theme.colors.gray};
+  }
+  h5 {
+    margin-top: 2rem;
     color: white;
     font-size: 1.8rem;
   }
