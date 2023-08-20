@@ -10,6 +10,7 @@ export const ReplyTextAreaBox = styled.div`
   border-bottom: 2px solid black;
   padding: 4px 8px;
   margin-bottom: 16px;
+  font-size: 1.4rem;
 `
 export const UserTag = styled.span`
   color: ${({ theme }) => theme.colors.softBlue};

@@ -38,9 +38,11 @@ export const UserOpinion = styled.div`
 
 export const Selection = styled.span<{ selection: 'A' | 'B' | '찬성' | '반대' }>`
   color: ${({ selection, theme }) =>
-    selection === 'A' || '찬성' ? theme.colors.softBlue : theme.colors.softPink};
+    selection === 'A' || '찬성'
+      ? `${theme.colors.softBlue}!important`
+      : `${theme.colors.softPink}!important`};
   margin: 0 6px;
-  font-weight: 700;
+  font-weight: 600 !important;
 `
 
 export const Score = styled.span`
@@ -96,7 +98,7 @@ export const InteractButtonItem = styled(LessStyleBtn)`
 `
 export const ReplyListBox = styled.div``
 export const ReplyItem = styled.div`
-  padding: 20px 20px 20px 50px;
+  padding: 2rem 2rem 2rem 5rem;
   background-color: ${({ theme }) => theme.colors.background};
   position: relative;
 `
@@ -109,9 +111,9 @@ export const ReplyIcon = styled.div`
   border-bottom: 1px solid #c5cbd0;
 `
 export const OpinionWriteReplyBox = styled.div`
-  margin: 20px 20px 20px 50px;
+  margin: 1rem 2rem 2rem 5rem;
 `
 
 export const ReplyWriteReplyBox = styled.div`
-  margin: 20px 0px 0px 50px;
+  margin: 2rem 0 0 5rem;
 `

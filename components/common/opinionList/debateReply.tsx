@@ -7,6 +7,7 @@ import { NextImageBox } from '@styles/commonStyle/imgBox'
 import FitNextImage from '@components/common/fitNextImage'
 import { CssRem } from 'types/customCssType'
 import { DebateTopicReplyDataState } from '@store/slices/debateTopicPost/type'
+import { useAppSelector } from '@store/store'
 import { UserTag } from './writeReply/style'
 import WriteReply from './writeReply'
 import {
@@ -26,15 +27,15 @@ type WrapperProps = {
     | ProsConsDebateReplyDataState
     | DebateTopicReplyDataState
   mode: 'balance' | 'issue' | 'prosCons' | 'debate-topic'
-  WriterId: string
 }
 
-const DebateReply = ({ reply, mode, WriterId }: WrapperProps) => {
+const DebateReply = ({ reply, mode }: WrapperProps) => {
   const idType: { [index: string]: number } = {
     balance: (reply as BalanceDebateReplyDataState).BalanceOpinionId,
     issue: (reply as IssueDebateReplyDataState).IssueOpinionId,
   }
   const [isOnWriteReply, setIsOnWriteReply] = useState(false)
+  const user = useAppSelector((state) => state.user.myData)
 
   return (
     <>
@@ -59,9 +60,9 @@ const DebateReply = ({ reply, mode, WriterId }: WrapperProps) => {
       <ReplyInteractButtonLine>
         {/* <InteractButtonItem>신고</InteractButtonItem> */}
 
-        {WriterId !== reply.Target.userId && (
+        {(!user || user.userId !== reply.User.userId) && (
           <>
-            <InteractButtonItem>추천</InteractButtonItem>
+            {/* <InteractButtonItem>추천</InteractButtonItem> */}
             <InteractButtonItem onClick={() => setIsOnWriteReply(true)}>답글</InteractButtonItem>
           </>
         )}

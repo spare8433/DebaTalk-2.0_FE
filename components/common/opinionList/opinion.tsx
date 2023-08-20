@@ -103,9 +103,9 @@ const Opinion = ({ opinion, mode }: Props) => {
           <SubButtonLine>
             {/* <InteractButtonItem>신고</InteractButtonItem> */}
 
-            {(!user || user.userId !== opinion.User.userId) && (
+            {(!user || user.id !== opinion.User.id) && (
               <>
-                <InteractButtonItem>추천</InteractButtonItem>
+                {/* <InteractButtonItem>추천</InteractButtonItem> */}
                 <InteractButtonItem onClick={checkIsLogin}>답글</InteractButtonItem>
               </>
             )}
@@ -130,7 +130,7 @@ const Opinion = ({ opinion, mode }: Props) => {
         <ReplyListBox>
           {opinion.Replys.map((reply, index) => (
             <ReplyItem key={`replyItem_${index}`}>
-              <DebateReply reply={reply} mode={mode} WriterId={opinion.User.userId} />
+              <DebateReply reply={reply} mode={mode} />
             </ReplyItem>
           ))}
         </ReplyListBox>
