@@ -40,7 +40,7 @@ export const ReportCategory = [
 
 export const adminListData = [
   {
-    title: { name: '사용자 관리', imgUrl: '/img/edit_white.png' },
+    title: { name: '사용자 관리', imgUrl: '/img/edit-white.png' },
     list: [{ name: '사용자 리스트', link: '/admin/user-list' }],
   },
   {
