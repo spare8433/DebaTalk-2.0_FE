@@ -13,6 +13,7 @@ import { getDebateTopicPosts } from '@store/slices/debateTopicPosts'
 import DebateTopicContents from '@components/home/debateTopicContents'
 import UserRankContents from '@components/home/userRankContents'
 import { getUsersInfo } from '@store/slices/users'
+import Cookies from 'universal-cookie'
 
 export const ContentContainor = styled.div`
   width: 100%;
@@ -84,12 +85,17 @@ const Home = () => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  const { cookie } = req.headers
-  if (cookie) {
+  const cookies = new Cookies(req.headers.cookie)
+  const connectId = cookies.get('connect.sid')
+
+  if (connectId && connectId !== '') {
     // 서버쪽 쿠키 공유 버그
-    axios.defaults.headers.Cookie = cookie
+    axios.defaults.headers.Cookie = `connect.sid=${connectId}`
     await store.dispatch(loadMyInfo())
+
+    return { props: {} }
   }
+
   await store.dispatch(getDebateKeywords({ limit: 6 }))
   await store.dispatch(getDebateHotTopics())
   await store.dispatch(getDebateTopicPosts({ limit: 5 }))

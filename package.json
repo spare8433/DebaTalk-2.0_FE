@@ -25,7 +25,8 @@
     "react-share": "^4.4.1",
     "redux-logger": "^3.0.6",
     "styled-components": "^5.3.11",
-    "styled-normalize": "^8.0.7"
+    "styled-normalize": "^8.0.7",
+    "universal-cookie": "^6.1.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.4",

@@ -8,6 +8,7 @@ import { getIntegratedDebatePosts } from '@store/slices/debatePosts'
 import { loadMyInfo } from '@store/slices/user'
 import axios from 'axios'
 import HeaderFooterLayout from '@components/common/layouts/headerFooterLayout'
+import Cookies from 'universal-cookie'
 
 const IndexContainor = styled.div`
   width: 100%;
@@ -84,12 +85,15 @@ TotalSearchPage.getLayout = function getLayout(page: React.ReactElement) {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
   const { searchText, page, redirectMsg } = query
   const limit = 8
-  const { cookie } = req.headers
+  const cookies = new Cookies(req.headers.cookie)
+  const connectId = cookies.get('connect.sid')
 
-  if (cookie) {
+  if (connectId && connectId !== '') {
     // 서버쪽 쿠키 공유 버그
-    axios.defaults.headers.Cookie = cookie
+    axios.defaults.headers.Cookie = `connect.sid=${connectId}`
     await store.dispatch(loadMyInfo())
+
+    return { props: {} }
   }
 
   // redirected 인 경우

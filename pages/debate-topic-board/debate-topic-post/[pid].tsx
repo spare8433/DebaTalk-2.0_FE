@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { ReactElement, useEffect } from 'react'
 import styled from 'styled-components'
+import Cookies from 'universal-cookie'
 
 const IndexContainor = styled.div`
   width: 100%;
@@ -44,11 +45,15 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { pid } = query
   if (typeof pid !== 'string') return { notFound: true }
 
-  const { cookie } = req.headers
-  if (cookie) {
+  const cookies = new Cookies(req.headers.cookie)
+  const connectId = cookies.get('connect.sid')
+
+  if (connectId && connectId !== '') {
     // 서버쪽 쿠키 공유 버그
-    axios.defaults.headers.Cookie = cookie
+    axios.defaults.headers.Cookie = `connect.sid=${connectId}`
     await store.dispatch(loadMyInfo())
+
+    return { props: {} }
   }
 
   try {

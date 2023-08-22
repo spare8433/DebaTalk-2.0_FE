@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { ReactElement, useEffect } from 'react'
 import styled from 'styled-components'
+import Cookies from 'universal-cookie'
 
 const IndexContainor = styled.div`
   width: 100%;
@@ -37,14 +38,16 @@ RankingPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  const { cookie } = req.headers
+  const cookies = new Cookies(req.headers.cookie)
+  const connectId = cookies.get('connect.sid')
 
-  if (cookie) {
+  if (connectId && connectId !== '') {
     // 서버쪽 쿠키 공유 버그
-    axios.defaults.headers.Cookie = cookie
+    axios.defaults.headers.Cookie = `connect.sid=${connectId}`
     await store.dispatch(loadMyInfo())
-  }
 
+    return { props: {} }
+  }
   try {
     await store.dispatch(getUsersInfo({ limit: 10, key: 'level' })).unwrap()
   } catch (error) {

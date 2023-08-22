@@ -7,6 +7,7 @@ import { getIssueDebatePost } from '@store/slices/issueDebatePost'
 import IssuePostDetailContent from '@components/issue-post/postDetailContent'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
+import Cookies from 'universal-cookie'
 
 const IndexContainor = styled.div`
   width: 100%;
@@ -44,14 +45,17 @@ IssuePostPage.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
   const { pid } = query
   if (typeof pid !== 'string') return { notFound: true }
-  const { cookie } = req.headers
 
-  if (cookie) {
+  const cookies = new Cookies(req.headers.cookie)
+  const connectId = cookies.get('connect.sid')
+
+  if (connectId && connectId !== '') {
     // 서버쪽 쿠키 공유 버그
-    axios.defaults.headers.Cookie = cookie
+    axios.defaults.headers.Cookie = `connect.sid=${connectId}`
     await store.dispatch(loadMyInfo())
-  }
 
+    return { props: {} }
+  }
   try {
     await store.dispatch(getIssueDebatePost(pid)).unwrap()
   } catch (error) {

@@ -10,6 +10,7 @@ import { wrapper } from '@store/store'
 import axios from 'axios'
 import { loadMyInfo } from '@store/slices/user'
 import { getDebateTopicPosts } from '@store/slices/debateTopicPosts'
+import Cookies from 'universal-cookie'
 
 const HeaderInfoBox = styled.div`
   width: 100%;
@@ -90,13 +91,16 @@ DebateTopicBoardPage.getLayout = function getLayout(page: ReactElement) {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
   const { searchText, page, redirectMsg } = query
-  const { cookie } = req.headers
   const limit = 8
+  const cookies = new Cookies(req.headers.cookie)
+  const connectId = cookies.get('connect.sid')
 
-  if (cookie) {
+  if (connectId && connectId !== '') {
     // 서버쪽 쿠키 공유 버그
-    axios.defaults.headers.Cookie = cookie
+    axios.defaults.headers.Cookie = `connect.sid=${connectId}`
     await store.dispatch(loadMyInfo())
+
+    return { props: {} }
   }
 
   // redirected 인 경우
