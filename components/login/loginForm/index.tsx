@@ -43,7 +43,7 @@ const LoginForm = () => {
 
       <FindPwBox>
         <Link href="/find-id">아이디 찾기</Link> <span>/</span>
-        <Link href="/find-id">비밀번호 찾기</Link>
+        <Link href="/find-pw">비밀번호 찾기</Link>
       </FindPwBox>
 
       <Line />
