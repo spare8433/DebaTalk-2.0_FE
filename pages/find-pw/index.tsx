@@ -2,10 +2,11 @@ import FitNextImage from '@components/common/fitNextImage'
 import ChangePasswordForm from '@components/find-pw/changePasswordForm'
 import CheckAuthCodeForm from '@components/find-pw/checkAuthCodeForm'
 import SendAuthCodeForm from '@components/find-pw/sendAuthCodeForm'
-import { useAppSelector } from '@store/store'
+import { clearFindPwUserData } from '@store/slices/user'
+import { useAppDispatch, useAppSelector } from '@store/store'
 import { NextImageBtn } from '@styles/commonStyle/buttons'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 const FindPwLayout = styled.div`
@@ -41,7 +42,22 @@ const LogoBox = styled.div`
 
 const FindIdPage = () => {
   const user = useAppSelector((state) => state.user)
+  const dispatch = useAppDispatch()
   const router = useRouter()
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      dispatch(clearFindPwUserData)
+      e.returnValue =
+        '페이지를 벗어나면 처음부터 다시 시도해야합니다 정말로 페이지를 벗어나시겠습니까?'
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [dispatch])
 
   return (
     <FindPwLayout>

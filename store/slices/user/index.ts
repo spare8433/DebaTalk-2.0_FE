@@ -133,7 +133,26 @@ export const checkDuplicateEmail = createAsyncThunk(
 export const user = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    clearFindIdUserData: (state) => {
+      state.findUserIdLoading = false
+      state.findUserIdDone = false
+      state.findUserIdError = null
+      state.findUserData = null
+    },
+    clearFindPwUserData: (state) => {
+      state.getAuthCodeDone = false
+      state.getAuthCodeLoading = false
+      state.getAuthCodeError = null
+      state.checkAuthCodeLoading = false
+      state.checkAuthCodeDone = false
+      state.checkAuthCodeError = null
+      state.updatePasswordLoading = false
+      state.updatePasswordDone = false
+      state.updatePasswordError = null
+      state.findUserData = null
+    },
+  },
   extraReducers: (builder) => {
     // 로그인
     builder.addCase(logIn.pending, (state) => {
@@ -289,4 +308,5 @@ export const user = createSlice({
   },
 })
 
+export const { clearFindIdUserData, clearFindPwUserData } = user.actions
 export default user.reducer

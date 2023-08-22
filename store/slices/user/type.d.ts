@@ -15,8 +15,8 @@ export interface UserDataState {
 
 export interface FindUserDataState {
   readonly id: number
-  readonly userId: string
-  createdAt: string
+  readonly userId?: string
+  createdAt?: string
 }
 
 export interface UserState {

@@ -1,10 +1,11 @@
 import FitNextImage from '@components/common/fitNextImage'
 import FindIdForm from '@components/find-id/findIdForm'
 import FindIdResult from '@components/find-id/fintIdResult'
-import { useAppSelector } from '@store/store'
+import { clearFindIdUserData } from '@store/slices/user'
+import { useAppDispatch, useAppSelector } from '@store/store'
 import { NextImageBtn } from '@styles/commonStyle/buttons'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 const FindIdLayout = styled.div`
@@ -40,7 +41,12 @@ const LogoBox = styled.div`
 
 const FindIdPage = () => {
   const user = useAppSelector((state) => state.user)
+  const dispatch = useAppDispatch()
   const router = useRouter()
+
+  useEffect(() => {
+    dispatch(clearFindIdUserData)
+  }, [dispatch])
 
   return (
     <FindIdLayout>
