@@ -45,7 +45,9 @@ const FindIdPage = () => {
   const router = useRouter()
 
   useEffect(() => {
-    dispatch(clearFindIdUserData)
+    return () => {
+      dispatch(clearFindIdUserData())
+    }
   }, [dispatch])
 
   return (

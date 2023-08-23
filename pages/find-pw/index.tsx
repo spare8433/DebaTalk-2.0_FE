@@ -46,16 +46,34 @@ const FindIdPage = () => {
   const router = useRouter()
 
   useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault()
-      dispatch(clearFindPwUserData)
-      e.returnValue =
-        '페이지를 벗어나면 처음부터 다시 시도해야합니다 정말로 페이지를 벗어나시겠습니까?'
-    }
-    window.addEventListener('beforeunload', handleBeforeUnload)
+    // const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    //   e.preventDefault()
+    //   alert('test')
+    //   dispatch(clearFindPwUserData())
+    //   e.returnValue =
+    //     '페이지를 벗어나면 처음부터 다시 시도해야합니다 정말로 페이지를 벗어나시겠습니까?'
+    // }
+    // window.addEventListener('beforeunload', handleBeforeUnload)
+
+    // return () => {
+    //   window.removeEventListener('beforeunload', handleBeforeUnload)
+    // }
+
+    // const handleRouteChangeStart = (url) => {
+    //   const msg = '페이지를 벗어나면 처음부터 다시 시도해야합니다 정말로 페이지를 벗어나시겠습니까?'
+    //   if (window.confirm(msg)) {
+    //     dispatch(clearFindPwUserData())
+    //   } else {
+    //     router.events.emit('routeChangeError') // 취소를 선택하면 페이지 전환을 취소
+    //     router.
+    //     throw 'routeChange aborted'
+    //   }
+    // }
+
+    // router.events.on('routeChangeStart', handleRouteChangeStart)
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
+      dispatch(clearFindPwUserData())
     }
   }, [dispatch])
 
