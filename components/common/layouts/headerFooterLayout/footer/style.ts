@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const FooterLayout = styled.div`
+export const FooterLayout = styled.footer`
   width: 100%;
   min-width: 1160px;
   background-color: #2b2b2b;

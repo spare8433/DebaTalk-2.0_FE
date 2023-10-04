@@ -28,7 +28,7 @@ const SlideMenuList = styled.div`
   }
 `
 const AdminNav = () => (
-  <>
+  <nav>
     {adminListData.map((menu, menuIndex) => (
       <SlideMenu
         key={`slideMenu_${menuIndex}`}
@@ -50,7 +50,7 @@ const AdminNav = () => (
         ))}
       </SlideMenu>
     ))}
-  </>
+  </nav>
 )
 
 export default AdminNav

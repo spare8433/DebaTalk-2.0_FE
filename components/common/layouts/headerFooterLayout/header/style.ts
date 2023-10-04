@@ -5,7 +5,7 @@ interface NotiImgBox {
   isNotification: boolean
 }
 
-export const IndexContainor = styled.div`
+export const IndexContainor = styled.header`
   width: 100%;
 `
 

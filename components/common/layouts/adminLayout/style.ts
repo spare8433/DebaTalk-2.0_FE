@@ -6,7 +6,7 @@ export const AdminContainor = styled.div`
   display: flex;
 `
 
-export const Nav = styled.div`
+export const SideBar = styled.aside`
   min-width: 280px;
   padding: 30px 0;
   /* box-sizing: border-box; */

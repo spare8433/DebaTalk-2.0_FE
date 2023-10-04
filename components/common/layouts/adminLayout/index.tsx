@@ -13,7 +13,7 @@ import {
   LogoBox,
   MainBox,
   MenuBox,
-  Nav,
+  SideBar,
   ProfileBox,
 } from './style'
 
@@ -23,7 +23,7 @@ type WrapperProps = {
 
 const AdminLayout = ({ children }: WrapperProps) => (
   <AdminContainor>
-    <Nav>
+    <SideBar>
       <LogoBox>
         <Link href="/admin">
           <NextImageBox styleOption={{ width: new CssRem(20), height: new CssRem(4.8) }}>
@@ -38,7 +38,7 @@ const AdminLayout = ({ children }: WrapperProps) => (
       <MenuBox>
         <AdminNav />
       </MenuBox>
-    </Nav>
+    </SideBar>
     <MainBox>
       <BreadcrumbBox>
         <Breadcrumb />
