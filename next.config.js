@@ -44,6 +44,10 @@ module.exports = {
             key: 'X-XSS-Protection', // XSS 방지
             value: '1; mode=block',
           },
+          {
+            key: 'Content-Security-Policy', // CSP 설정
+            value: "script-src 'self'",
+          },
         ],
       },
     ]
