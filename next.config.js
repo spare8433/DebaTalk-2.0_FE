@@ -2,6 +2,17 @@
  * @type {import('next').NextConfig}
  */
 
+const ContentSecurityPolicy = `
+  default-src 'self';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app www.googletagmanager.com;
+  style-src 'self' 'unsafe-inline' fonts.googleapis.com fonts.gstatic.com;
+  img-src * blob: data:;
+  media-src 'none';
+  connect-src *;
+  font-src 'self' fonts.googleapis.com fonts.gstatic.com;
+  frame-src giscus.app
+`
+
 module.exports = {
   compiler: {
     // see https://styled-components.com/docs/tooling#babel-plugin for more info on the options.
@@ -46,7 +57,7 @@ module.exports = {
           },
           {
             key: 'Content-Security-Policy', // CSP 설정
-            value: "script-src 'self'",
+            value: ContentSecurityPolicy.replace(/\n/g, ''),
           },
         ],
       },
