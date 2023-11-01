@@ -22,7 +22,10 @@ const MainDebateContent = () => {
   return (
     <MainDebate>
       <DebateContentBox>
-        <h1>이슈토론</h1>
+        <Link href={{ pathname: '/debate-forum', query: { method: 'issue', page: 1 } }}>
+          <h1>이슈토론</h1>
+        </Link>
+
         {hotDebatePosts?.issue.map((res, index) => {
           if (index === 0)
             return <FirstDebateContent key="issuePost_primary" data={res} method="issue" />
@@ -49,7 +52,10 @@ const MainDebateContent = () => {
       </DebateContentBox>
 
       <DebateContentBox>
-        <h1>찬반토론</h1>
+        <Link href={{ pathname: '/debate-forum', query: { method: 'proscons', page: 1 } }}>
+          <h1>찬반토론</h1>
+        </Link>
+
         {hotDebatePosts?.prosCons.map((res, index) => {
           if (index === 0)
             return <FirstDebateContent key="prosConsPost_primary" data={res} method="proscons" />
@@ -78,7 +84,10 @@ const MainDebateContent = () => {
       </DebateContentBox>
 
       <DebateContentBox>
-        <h1>밸런스토론</h1>
+        <Link href={{ pathname: '/debate-forum', query: { method: 'balance', page: 1 } }}>
+          <h1>밸런스토론</h1>
+        </Link>
+
         {hotDebatePosts?.balance.map((res, index) => {
           if (index === 0)
             return <FirstDebateContent key="balancePost_primary" data={res} method="balance" />

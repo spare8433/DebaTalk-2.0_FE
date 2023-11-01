@@ -31,6 +31,9 @@ export const SubContentBox = styled.div`
   border-bottom: solid 0.1rem ${({ theme }) => theme.colors.whiteGray};
   h3 {
     font-size: 1.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `
 
@@ -52,9 +55,6 @@ export const ContentInfoBox = styled.div`
   margin-left: 1.2rem;
   h3 {
     width: 29rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   p {
     text-align: right;
