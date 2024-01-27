@@ -10,5 +10,3 @@ const { publicRuntimeConfig } = getConfig()
 const APISeverUrl = publicRuntimeConfig.API_SERVER_URL
 
 export const axiosInstance = (url: string) => axios.create({ baseURL: `${APISeverUrl}${url}` })
-
-// export const axiosInstance = (url: string) => axios.create({ baseURL: `${1}${url}` })

@@ -47,6 +47,7 @@ export default class MyDocument extends Document {
             <meta name="msapplication-TileColor" content="#ffffff" />
             <meta name="msapplication-TileImage" content="/img/icons/ms-icon-144x144.png" />
             <meta name="theme-color" content="#ffffff" />
+            <title>디베이톡</title>
             {initialProps.styles}
             {sheet.getStyleElement()}
           </>

@@ -25,7 +25,7 @@ const DebateTopicContents = () => {
   return (
     <DebateTopicBox>
       <BoradTitle>
-        <h3>주제 추천 게시판</h3>
+        <h3>랭킹</h3>
         <LessStyleBtn onClick={handleMoveDebateTopicBoard}>더보기 {'>'}</LessStyleBtn>
       </BoradTitle>
 

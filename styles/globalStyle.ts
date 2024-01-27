@@ -11,11 +11,11 @@ import { normalize } from 'styled-normalize'
 // })
 
 const GlobalStyles = createGlobalStyle`
-    ${normalize}
+    ${normalize}    
     * {
       font-family: 'Noto Sans KR', sans-serif;
       font-weight: 400;
-      box-sizing: border-box;
+      box-sizing: border-box;      
       color: #3b3b3b;
     }
     html, body, #__next{
