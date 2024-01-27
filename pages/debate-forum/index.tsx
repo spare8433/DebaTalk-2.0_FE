@@ -94,7 +94,6 @@ DebateForumPage.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
   const { method, page, redirectMsg, searchText } = query
   const limit = 6
-
   const cookies = new Cookies(req.headers.cookie)
   const connectId = cookies.get('connect.sid')
 
@@ -102,8 +101,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     // 서버쪽 쿠키 공유 버그
     axios.defaults.headers.Cookie = `connect.sid=${connectId}`
     await store.dispatch(loadMyInfo())
-
-    return { props: {} }
   }
 
   // redirected 인 경우
